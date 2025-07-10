@@ -1,0 +1,660 @@
+/* General font styling */
+* {
+    font-family: Garamond, Baskerville, Baskerville Old Face, Hoefler Text, Times New Roman, serif, monospace;
+    font-size: 1.3rem;
+}
+
+/* Hidden style for toggling element visibility */
+.hidden {
+    display: none !important;
+}
+
+/* Body style */
+body {
+    margin: 0;
+}
+
+/* TODO fix borders */
+
+/* Stuff for the header */
+.recipe-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0.6em;
+    border-bottom: 1px solid black;
+}
+
+/* Stuff for the glance bar */
+.recipe-glance {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+}
+
+/* Stuff for the grouping */
+.recipe-grouping {
+    margin: 0;
+    z-index: 1;
+    font-size: 2rem;
+    color: grey;
+}
+
+.recipe-grouping>a {
+    color: grey;
+    text-decoration: none;
+}
+
+.recipe-grouping>a:hover {
+    color: darkred;
+    text-decoration: underline;
+}
+
+.grouping-type::after {
+    content: "/";
+    font-weight: lighter;
+    font-size: 1.2em;
+}
+
+/* end Stuff for the recipe grouping */
+
+/* Stuff for icons section */
+.icons-list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.icons-list>li {
+    display: flex;
+}
+
+.icons-list>li svg {
+    padding: 0.08rem;
+}
+
+.icon-wrapper.clickable {
+    cursor: pointer;
+}
+
+.icon-wrapper.clickable:hover {
+    fill: darkred;
+}
+
+/* Additional rule for icons wrapped in anchor tags to fix vertical sizing */
+.icon-wrapper>a>svg {
+    vertical-align: sub;
+}
+
+/* end Stuff for icons section */
+
+/* end Stuff for the recipe glance bar */
+
+/* Stuff for the recipe name */
+.recipe-name {
+    margin: 0;
+    line-height: 0.6;
+    font-size: 3rem;
+}
+
+/* end Stuff for the recipe name */
+
+/* end Stuff for the header */
+
+/* Stuff for the content lump */
+.recipe-content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stuff for info section */
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stuff for attributes section */
+.attributes-wrapper {
+    /* display: flex; */
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.attributes-list {
+    margin: 0;
+}
+
+.untested {
+    display: block;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+
+.attribute-name {
+    font-weight: bold;
+}
+
+.attribute-name::after {
+    content: ":";
+}
+
+.yield-quantity {
+    border: none;
+    padding: 0;
+    border-bottom: 2px solid black;
+    border-radius: 0px;
+    text-align: center;
+}
+
+.yield-quantity:focus {
+    outline: none;
+    color: darkred;
+    border-bottom-color: darkred;
+}
+
+.cost-attribute-extra-wrapper {
+    display: none;
+    position: absolute;
+    max-width: 30%;
+    padding: 10px;
+    background-color: rgb(250, 255, 175);
+    border: 1px solid black;
+}
+
+.cost-attribute-extra {
+    margin: 0;
+}
+
+/* end Stuff for cost attribute extra info */
+
+/* end Stuff for attributes section */
+
+/* Stuff for notes section */
+.notes-wrapper {
+    padding: 1.4em;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+.notes-wrapper > p {
+    margin: 0;
+}
+
+/* end Stuff for notes section */
+
+/* Stuff for timers section */
+
+/* TODO clock */
+
+.timers-wrapper {
+    /* display: flex; */
+    /* justify-content: center; */
+    border-bottom: 1px solid black;
+}
+
+.timers {
+    display: flex;
+    overflow-x: scroll;
+    padding: 0.4em;
+}
+
+.timer {
+    padding: 0em;
+    background-color: transparent;
+    border: none;
+    color: grey;
+}
+
+.timer-content {
+    padding: 0.4em;
+    border-right: 1px solid black;
+}
+
+.timer:last-child>.timer-content {
+    border-right: none;
+}
+
+.timer-name {
+    white-space: nowrap;
+}
+
+/* Stuff for making timers feel interactive */
+
+.timers .active {
+    color: black;
+}
+
+.timers .elapsed {
+    color: red;
+}
+
+.timers .flashing {
+    font-weight: bold;
+}
+
+/* end Stuff for making timers feel interactive */
+
+/* Stuff for clock */
+
+.clock-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.clock {
+    background: none;
+    border: none;
+    font-size: 1.4em;
+}
+
+/* end Stuff for clock */
+
+/* end Stuff for timers section */
+
+/* Stuff for items section */
+
+.items-wrapper,
+.steps-wrapper {
+    padding: 0.4em;
+}
+
+.items-wrapper>h3,
+.steps-wrapper>h3 {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+
+.items-list-wrapper {}
+
+.items-list {
+    margin: 0;
+    padding: 0;
+}
+
+.items-group-title,
+.steps-group-title {
+    clear: both;
+    padding-top: 0.6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    font-family: Georgia, 'Arial Narrow Bold', sans-serif;
+}
+
+.items-list-gap,
+.steps-list-gap {
+    float: left;
+    clear: both;
+    height: 0.8rem;
+}
+
+.item {
+    width: 100%;
+    float: inline-start;
+    clear: both;
+}
+
+.item-name-wrapper {
+    float: left;
+}
+
+.item-details {
+    white-space: nowrap;
+}
+
+.item-name-extra {
+    color: darkgray;
+}
+
+.item-name-extra:not(:empty)::before {
+    content: "(";
+}
+
+.item-name-extra:not(:empty)::after {
+    content: ")";
+}
+
+.item:has(.item-name-extra:not(:empty)) .item-name::after {
+    content: " ";
+}
+
+.item-details {
+    float: right;
+}
+
+.item-quantity::after {
+    content: " ";
+}
+
+.item:has(.item-unit-extra:not(:empty)) .item-unit::after {
+    content: " ";
+}
+
+.item-unit-extra {
+    color: darkgray;
+}
+
+.item-unit-extra:not(:empty)::before {
+    content: "(";
+}
+
+.item-unit-extra:not(:empty)::after {
+    content: ")";
+}
+
+.items-list-float-clear {
+    clear: both;
+}
+
+/* end Stuff for items section */
+
+/* Stuff for steps section */
+.steps-wrapper {
+    padding: 0.4em;
+}
+
+.steps-list {
+    margin-top: 0;
+    padding-left: 0;
+    list-style-position: inside;
+}
+
+.steps-list>li {
+    padding-top: 0.6em;
+}
+
+.steps-list>li::marker {
+    line-height: 0;
+    font-size: 1.5em;
+}
+
+/* end Stuff for steps section */
+
+/* end Stuff for content lump */
+
+/* Stuff for image and diary */
+
+.recipe-image-background,
+.recipe-diary-background,
+.recipe-cost-background {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100vw;
+    z-index: 2;
+    background: white;
+}
+
+.recipe-image-wrapper,
+.recipe-diary-wrapper,
+.recipe-cost-wrapper {
+    padding: 10px;
+    position: relative;
+    background-color: white;
+}
+
+.recipe-image,
+.recipe-diary,
+.recipe-cost {
+    display: block;
+    max-height: 80vh;
+    max-width: 80vw;
+    border: 1px solid black;
+}
+
+.recipe-diary {
+    margin: 0;
+    overflow: scroll;
+    overscroll-behavior: contain;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.recipe-cost {
+    border-collapse: collapse;
+    overflow: auto;
+    /* margin: 0.1em 0.3em; */
+    /* padding-right: 0.3em; */
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+.recipe-cost thead tr {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.recipe-cost tbody tr:last-child {
+    border-bottom: none;
+}
+
+.recipe-cost th {
+    text-align: left;
+}
+
+.recipe-cost th,
+.recipe-cost td {
+    white-space: nowrap;
+    padding: 0.3em 0.6em;
+    /* padding-right: 0.5em; */
+}
+
+.recipe-cost tbody tr:not(:last-child) td {
+    padding-bottom: 0;
+}
+
+.recipe-cost tfoot tr {
+    border-top: 1px solid black;
+}
+
+.recipe-cost tr.cost-failed {
+    color: grey;
+}
+
+.recipe-cost td:empty::after {
+    content: "–";
+    /* background-color: red; */
+}
+
+.image-close-wrapper,
+.diary-close-wrapper,
+.cost-close-wrapper {
+    position: absolute;
+    right: 15px;
+}
+
+.image-close,
+.diary-close,
+.cost-close {
+    border: none;
+    background: none;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.image-close:hover,
+.diary-close:hover,
+.cost-close:hover {
+    color: darkred;
+}
+
+.recipe-diary>dt {
+    font-weight: bold;
+}
+
+.recipe-diary:empty::after {
+    content: "(none)";
+}
+
+/* end Stuff for image and diary */
+
+/* Stuff for landscape layout */
+
+@media not print {
+    @media (min-aspect-ratio: 3/3) {
+        /* Use multicolumn */
+        .recipe-content-wrapper {
+            flex-direction: row;
+        }
+
+        .info-wrapper {
+            width: 25%;
+        }
+
+        .items-wrapper,
+        .steps-wrapper {
+            width: 37.5%;
+        }
+
+        /* Adjust borders */
+        .items-wrapper,
+        .steps-wrapper {
+            border-left: 1px solid black;
+        }
+
+        .timers-wrapper {
+            border-bottom: none;
+        }
+
+        /* Conditionally remove bottom border of info pane if timers is hidden */
+        .info-wrapper:has(.timers-wrapper.hidden) .notes-wrapper {
+            border-bottom: none;
+        }
+
+
+
+        /* Make items list right-aligned and fit to content */
+        .items-wrapper>h3 {
+            text-align: right;
+        }
+
+        .items-list-wrapper {
+            display: flex;
+            justify-content: end;
+        }
+
+        .items-list {
+            list-style: none;
+        }
+
+        .item::marker {
+            display: none;
+        }
+
+        .item-name-wrapper {
+            margin-right: 0.4em;
+        }
+
+        /* Fixed page with individual scrollbars */
+        body {
+            display: flex;
+            min-height: 100vh;
+            max-height: 100vh;
+            max-width: 100vw;
+            overflow: hidden;
+        }
+
+        .recipe-wrapper {
+            display: flex;
+            max-width: 100vw;
+            min-width: 100vw;
+        }
+
+        .recipe {
+            display: flex;
+            flex-direction: column;
+            min-width: 100vw;
+            max-width: 100vw;
+        }
+
+        .recipe-content-wrapper {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .info-wrapper,
+        .notes-wrapper,
+        .items-wrapper,
+        .steps-wrapper {
+            overflow: scroll;
+        }
+
+        .notes-wrapper {
+            display: flex;
+            flex-grow: 1;
+        }
+    }
+}
+
+@media print {
+    /* Remove heading border */
+    .recipe-header-wrapper {
+        border-bottom: none;
+    }
+
+    /* Hide timers */
+    .timers-wrapper {
+        display: none !important;
+    }
+
+    /* Display all links in-text */
+    a {
+        text-decoration: none;
+        font-weight: bold;
+        color: black;
+    }
+
+    a::after {
+        content: " [" attr(href) "] ";
+        font-weight: normal;
+        text-decoration: none !important;
+    }
+
+    /* Show image and diary at bottom of recipe */
+    .recipe-image-background,
+    .recipe-diary-background {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: none;
+        page-break-before: always;
+    }
+
+    .recipe-image-background {
+        height: 100vh;
+    }
+
+    .recipe-image-background::before,
+    .recipe-diary-background::before {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .recipe-image-background::before {
+        content: "Image";
+    }
+
+    .recipe-diary-background::before {
+        content: "Diary";
+    }
+
+    .recipe-image,
+    .recipe-diary {
+        border: none;
+    }
+
+    .image-close-wrapper,
+    .diary-close-wrapper {
+        display: none;
+    }
+}

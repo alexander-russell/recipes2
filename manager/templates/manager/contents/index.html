@@ -1,0 +1,11 @@
+{% if all_recipes %}
+    <p>Here they is d-o-g:</p> 
+    <ul>
+    {% for recipe in all_recipes %}
+        <li><a href="{% url 'manager:view' recipe.slug %}">{{ recipe.name }}</a></li>
+    {% endfor %}
+    </ul>
+    das all
+{% else %}
+    <p>No recipes are available.</p>
+{% endif %}

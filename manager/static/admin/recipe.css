@@ -1,0 +1,9 @@
+#items-group .vTextField {
+    width: unset;
+}
+
+#items-group table,
+#steps-group table {
+    display: block;
+    max-width: 100%;
+}
