@@ -52,20 +52,20 @@ def get_conversion_path(subgraph, start, goal, ingredient):
     )
 
     # If ingredient rule ends at goal, return that
-    print("hey1")
-    print(f"goal={goal}")
-    print(f"ingredient_rule={ingredient_rule}")
-    print(f"ingredient_rule.to_unit.name={ingredient_rule.to_unit.name}")
-    print(f"ingredient_rule.from_unit.name={ingredient_rule.from_unit.name}")
-    print(f"path_to_ingredient_rule={path_to_ingredient_rule}")
-    print(f"path_from_ingredient_rule={path_from_ingredient_rule}")
-    print(
-        f"path_to_ingredient_rule[:-1] + path_from_ingredient_rule={path_to_ingredient_rule[:-1] + path_from_ingredient_rule}"
-    )
-    print(
-        f"path_to_ingredient_rule + path_from_ingredient_rule={path_to_ingredient_rule + path_from_ingredient_rule}"
-    )
-    print("hey2")
+    # print("hey1")
+    # print(f"goal={goal}")
+    # print(f"ingredient_rule={ingredient_rule}")
+    # print(f"ingredient_rule.to_unit.name={ingredient_rule.to_unit.name}")
+    # print(f"ingredient_rule.from_unit.name={ingredient_rule.from_unit.name}")
+    # print(f"path_to_ingredient_rule={path_to_ingredient_rule}")
+    # print(f"path_from_ingredient_rule={path_from_ingredient_rule}")
+    # print(
+    #     f"path_to_ingredient_rule[:-1] + path_from_ingredient_rule={path_to_ingredient_rule[:-1] + path_from_ingredient_rule}"
+    # )
+    # print(
+    #     f"path_to_ingredient_rule + path_from_ingredient_rule={path_to_ingredient_rule + path_from_ingredient_rule}"
+    # )
+    # print("hey2")
 
     if len(path_to_ingredient_rule) == 1:
         return path_to_ingredient_rule + path_from_ingredient_rule
@@ -83,10 +83,10 @@ def get_conversion_factor(start, goal, ingredient_id):
 
     # Print the edges before removal
     # print("Edges before removal:", list(graph.edges(data=True)))
-    print("Edges before removal:")
-    for edge in graph.edges(data=True, keys=True):
-        print(f"  {edge}")
-        # print(f"  {edge}")
+    # print("Edges before removal:")
+    # for edge in graph.edges(data=True, keys=True):
+    #     print(f"  {edge}")
+    #     # print(f"  {edge}")
 
     # Find the ingredient edge
     ingredient_edges = [
@@ -112,9 +112,9 @@ def get_conversion_factor(start, goal, ingredient_id):
 
     # Print the edges after removal
     # print("Edges after removal:", list(graph.edges(data=True)))
-    print("Edges after removal:")
-    for edge in graph.edges(data=True, keys=True):
-        print(f"  {edge}")
+    # print("Edges after removal:")
+    # for edge in graph.edges(data=True, keys=True):
+    #     print(f"  {edge}")
 
     # for a, b, key, attr in graph.edges(data=True, keys=True):
     #     print(
@@ -139,7 +139,7 @@ def get_conversion_factor(start, goal, ingredient_id):
         for a, b in zip(path[:-1], path[1:])
     ]
 
-    print(factors)
+    # print(factors)
 
     return Decimal(np.prod(factors))
 
