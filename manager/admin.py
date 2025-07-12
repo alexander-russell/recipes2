@@ -119,10 +119,11 @@ class DiaryInline(admin.TabularInline):
 
 
 @admin.register(Recipe)
-class RecipeAdmin(SortableAdminBase, admin.ModelAdmin):
+class RecipeAdmin(admin.ModelAdmin):
     # pass
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
-    inlines = [ItemInline, StepInline, ImageInline, TimerInline, DiaryInline]
+    # readonly_fields = ("slug",)
+    prepopulated_fields = {'slug': ('name',)}
     fieldsets = [
         (
             "Basic Information",
@@ -166,6 +167,7 @@ class RecipeAdmin(SortableAdminBase, admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin/recipe.css",)}
+        js = ('admin/recipe.js',)
 
 
 @admin.register(Conversion)

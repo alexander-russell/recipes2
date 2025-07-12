@@ -63,7 +63,7 @@ class Recipe(models.Model):
         ARCHIVED = "archived", "Archived"  # For formerly 'retired' recipes
 
     name = models.CharField(max_length=200, unique=True)
-    slug = models.CharField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
     classification = models.ForeignKey(
         Classification, on_delete=models.CASCADE, related_name="recipes"
     )
