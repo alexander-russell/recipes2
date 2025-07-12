@@ -1,6 +1,8 @@
+from decimal import Decimal
 import pdb
 import networkx as nx
 from networkx import bellman_ford_path
+from networkx import NetworkXNoPath
 import numpy as np
 from django.core.cache import cache
 from ..models import Unit, Conversion, Ingredient
@@ -73,8 +75,11 @@ def get_conversion_path(subgraph, start, goal, ingredient):
 
 def get_conversion_factor(start, goal, ingredient_id):
     # Build the graph from the database
-    graph = build_unit_conversion_graph()
-
+    graph = cache.get("unit_conversion_graph")
+    if not graph:
+        # If no cached graph, rebuild it and cache it
+        graph = build_unit_conversion_graph()
+        cache.set("unit_conversion_graph", graph, timeout=60 * 60 * 24)
 
     # Print the edges before removal
     # print("Edges before removal:", list(graph.edges(data=True)))
@@ -82,16 +87,23 @@ def get_conversion_factor(start, goal, ingredient_id):
     for edge in graph.edges(data=True, keys=True):
         print(f"  {edge}")
         # print(f"  {edge}")
-    
+
     # Find the ingredient edge
-    ingredient_edges = [(u, v, key, attr) for u, v, key, attr in graph.edges(data=True, keys=True) if attr.get('ingredient_id') == ingredient_id]
+    ingredient_edges = [
+        (u, v, key, attr)
+        for u, v, key, attr in graph.edges(data=True, keys=True)
+        if attr.get("ingredient_id") == ingredient_id
+    ]
 
     # Gather edges to remove in a list first
     edges_to_remove = []
     for u, v, key, attr in graph.edges(data=True, keys=True):
-        if attr['ingredient_id'] is not None and attr['ingredient_id'] != ingredient_id:
+        if attr["ingredient_id"] is not None and attr["ingredient_id"] != ingredient_id:
             edges_to_remove.append((u, v, key))
-        if ingredient_edges and any(u == edge[0] and v == edge[1] and key != edge[2] for edge in ingredient_edges):
+        elif ingredient_edges and any(
+            u == edge[0] and v == edge[1] and key != edge[2]
+            for edge in ingredient_edges
+        ):
             edges_to_remove.append((u, v, key))
 
     # Now remove the edges after the iteration
@@ -111,18 +123,25 @@ def get_conversion_factor(start, goal, ingredient_id):
 
     # print(graph)
 
-    path = nx.shortest_path(graph, start, goal)
+    try:
+        path = nx.shortest_path(graph, start, goal)
+    except NetworkXNoPath as e:
+        return None
+
     # path = get_conversion_path(graph, start, goal, ingredient)
 
     print(path)
 
     # pdb.set_trace()
 
-    factors = [next(iter(graph[a][b].items()))[1].get('factor') for a, b in zip(path[:-1], path[1:])]
+    factors = [
+        Decimal(next(iter(graph[a][b].items()))[1].get("factor"))
+        for a, b in zip(path[:-1], path[1:])
+    ]
 
     print(factors)
 
-    return np.prod(factors)
+    return Decimal(np.prod(factors))
 
 
 # to load into django shell: from manager.utils.cost_utils import *

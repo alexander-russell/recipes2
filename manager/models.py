@@ -111,6 +111,9 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+    def get_latest_price(self):
+        return self.prices.order_by("-date").first()
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=100)
@@ -181,23 +184,59 @@ class Item(models.Model):
 
     def get_cost(self):
         from manager.utils.cost_utils2 import get_conversion_factor
-        latest_price = (
-            IngredientPrice.objects.filter(ingredient=self.ingredient)
-            .order_by("-date")
-            .first()
-        )
+
+        result = {
+            "amount": None,
+            "success": False,
+            "reason": None,
+            "price": None,
+            "ingredientname": self.ingredient.name,
+            "itemquantity": self.quantity,
+            "pricequantity": None,
+            "itemunit": self.unit,
+            "priceunit": None,
+        }
+
+        if self.quantity == 0:
+            result["reason"] = "zeroquantity"
+            return result
+
+        latest_price = self.ingredient.get_latest_price()
 
         if not latest_price:
-            return None
+            result["reason"] = "noprice"
+            return result
+        
+        if latest_price.price == 0:
+            result["reason"] = "latestpriceiszero"
+            return result
 
-        conversion_factor = get_conversion_factor(
-            self.unit, latest_price.unit, self.ingredient.id
-        )
+        if self.unit.name == latest_price.unit.name:
+            conversion_factor = 1
+        else:
+            conversion_factor = get_conversion_factor(
+                self.unit.name, latest_price.unit.name, self.ingredient.id
+            )
+
+            if conversion_factor is None:
+                result["reason"] = "noconversion"
+                return result
 
         # Step 3: Calculate the cost
-        cost = self.quantity * latest_price.price * conversion_factor
+        amount = (
+            self.quantity
+            / latest_price.quantity
+            * latest_price.price
+            * conversion_factor
+        )
 
-        return cost
+        result["amount"] = amount
+        result["success"] = True
+        result["price"] = latest_price.price
+        result["priceunit"] = latest_price.unit
+        result["pricequantity"] = latest_price.quantity
+        result["unit"] = latest_price.unit
+        return result
 
 
 class StepGroup(models.Model):

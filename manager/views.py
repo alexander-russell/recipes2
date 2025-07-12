@@ -19,13 +19,19 @@ def contents(request):
 
 def view(request, recipe_slug):
     recipe = get_object_or_404(Recipe, slug=recipe_slug)
-    return render(request, "manager/view/index.html", {"recipe": recipe})
-
-
-# def results(request, question_id):
-#     response = "You're looking at the results of question %s."
-#     return HttpResponse(response % question_id)
-
-
-# def vote(request, question_id):
-#     return HttpResponse("You're voting on question %s." % question_id)
+    item_costs = [item.get_cost() for item in recipe.items.all()]
+    total_cost = sum(
+        item_cost["amount"] if item_cost["amount"] is not None else 0
+        for item_cost in item_costs
+    )
+    cost_per_serve = total_cost / recipe.yield_quantity
+    return render(
+        request,
+        "manager/view/index.html",
+        {
+            "recipe": recipe,
+            "item_costs": item_costs,
+            "total_cost": total_cost,
+            "cost_per_serve": cost_per_serve,
+        },
+    )
