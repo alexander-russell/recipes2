@@ -6,9 +6,7 @@
     <title>Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{% static 'manager/view/view.css' %}" />
-    {% comment %} <script src="/recipes/scripts/common.js"></script> {% endcomment %}
-    {% comment %} <script src="/recipes/scripts/viewer-timers.js"></script> {% endcomment %}
-    {% comment %} <script src="/recipes/scripts/viewer-main.js"></script> {% endcomment %}
+    {% comment %} <script src="{% static 'manager/view/timers.js' %}"></script> {% endcomment %}
   </head>
 
   <body>
@@ -252,5 +250,6 @@
         </div>
       </section>
     </div>
+    <script src="{% static 'manager/view/timers.js' %}"></script>
   </body>
 </html>
