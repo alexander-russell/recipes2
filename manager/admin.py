@@ -77,7 +77,15 @@ class IngredientSourceAdmin(admin.ModelAdmin):
 
 @admin.register(IngredientPrice)
 class IngredientPriceAdmin(admin.ModelAdmin):
-    list_display = ['ingredient', 'date', 'source', 'price', 'quantity', 'unit', 'detail'] 
+    list_display = [
+        "ingredient",
+        "date",
+        "source",
+        "price",
+        "quantity",
+        "unit",
+        "detail",
+    ]
     ordering = ["-date"]
 
 
@@ -85,7 +93,6 @@ class IngredientPriceAdmin(admin.ModelAdmin):
 class UnitAdmin(admin.ModelAdmin):
     search_fields = ["name"]
     ordering = ["name"]
-
 
 
 @admin.register(ItemGroup)
@@ -172,5 +179,5 @@ class RecipeAdmin(admin.ModelAdmin):
 
 @admin.register(Conversion)
 class ConversionAdmin(admin.ModelAdmin):
-    list_display = ['from_unit', 'factor', 'to_unit', 'ingredient'] 
-    ordering = ['ingredient', 'from_unit', 'to_unit']
+    list_display = ["from_unit", "factor", "to_unit", "ingredient"]
+    ordering = ["ingredient", "from_unit", "to_unit"]
