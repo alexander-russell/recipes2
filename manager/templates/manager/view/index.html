@@ -149,7 +149,7 @@
                 <div class="timers">
                   {% if recipe.timers.all %}
                     {% for timer in recipe.timers.all %}
-                      <button class="timer" name="{{ timer.name }}" total="10" started="1751705516506" remaining="10">
+                      <button class="timer" name="{{ timer.name }}" total="{{ timer.duration.total_seconds }}" remaining="{{ timer.duration.total_seconds }}">
                         <div class="timer-content">
                           <div class="timer-name">{{ timer.name }}</div>
                           <div class="timer-time">{{ timer.duration|format_timer }}</div>
@@ -158,7 +158,7 @@
                     {% endfor %}
                   {% else %}
                     <div class="clock-wrapper">
-                      <button class="clock">18:53:12</button>
+                      <button class="clock" ondblclick="hideTimers()">{% now 'H:i:s' %}</button>
                     </div>
                   {% endif %}
                 </div>
