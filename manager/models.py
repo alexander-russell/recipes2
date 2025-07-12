@@ -36,6 +36,9 @@ class YieldUnit(models.Model):
     plural = models.CharField(max_length=50)
     singular = models.CharField(max_length=50, null=True)
 
+    def __str__(self):
+        return self.name
+
     def label(self, quantity):
         return (
             self.singular
@@ -46,6 +49,10 @@ class YieldUnit(models.Model):
 
 class Cuisine(models.Model):
     name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+
 
 
 class Recipe(models.Model):
@@ -88,7 +95,6 @@ class Recipe(models.Model):
         Cuisine, on_delete=models.CASCADE, blank=True, null=True
     )
     description = models.TextField()
-
 
     def save(self, *args, **kwargs):
         if not self.pk or Recipe.objects.get(pk=self.pk).name != self.name:
@@ -203,7 +209,7 @@ class Item(models.Model):
         if not latest_price:
             result["reason"] = "noprice"
             return result
-        
+
         if latest_price.price == 0:
             result["reason"] = "latestpriceiszero"
             return result
