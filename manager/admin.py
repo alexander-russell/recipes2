@@ -8,6 +8,8 @@ from .models import (
     Diary,
     Image,
     Ingredient,
+    IngredientPrice,
+    IngredientSource,
     Item,
     ItemGroup,
     Recipe,
@@ -67,9 +69,23 @@ class IngredientAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
+@admin.register(IngredientSource)
+class IngredientSourceAdmin(admin.ModelAdmin):
+    list_display = ["name"]
+    ordering = ["name"]
+
+
+@admin.register(IngredientPrice)
+class IngredientPriceAdmin(admin.ModelAdmin):
+    list_display = ['ingredient', 'date', 'source', 'price', 'quantity', 'unit', 'detail'] 
+    ordering = ["-date"]
+
+
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
     search_fields = ["name"]
+    ordering = ["name"]
+
 
 
 @admin.register(ItemGroup)
@@ -154,4 +170,5 @@ class RecipeAdmin(SortableAdminBase, admin.ModelAdmin):
 
 @admin.register(Conversion)
 class ConversionAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['from_unit', 'factor', 'to_unit', 'ingredient'] 
+    ordering = ['ingredient', 'from_unit', 'to_unit']

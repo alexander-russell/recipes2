@@ -6,7 +6,6 @@ from django.utils.text import slugify
 from django.utils import timezone
 
 
-
 class Type(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -51,18 +50,18 @@ class Cuisine(models.Model):
 
 class Recipe(models.Model):
     class Status(models.TextChoices):
-        DRAFT = "draft", "Draft"
-        ACTIVE = "active", "Active"
-        HIDDEN = "hidden", "Hidden"
-        ARCHIVED = "archived", "Archived"
+        DRAFT = "draft", "Draft"  # For unfinished recipes
+        ACTIVE = "active", "Active"  # For most recipes
+        HIDDEN = "hidden", "Hidden"  # Unused as yet
+        ARCHIVED = "archived", "Archived"  # For formerly 'retired' recipes
 
     name = models.CharField(max_length=200, unique=True)
     slug = models.CharField(max_length=200, unique=True)
     classification = models.ForeignKey(
         Classification, on_delete=models.CASCADE, related_name="recipes"
     )
-    date_created = models.DateTimeField(default=timezone.now)
-    date_updated = models.DateTimeField(default=timezone.now)
+    date_created = models.DateField(default=timezone.now)
+    date_updated = models.DateField(default=timezone.now)
     status = models.CharField(
         max_length=10,
         choices=Status.choices,
@@ -90,11 +89,6 @@ class Recipe(models.Model):
     )
     description = models.TextField()
 
-    def format_time_quantity(self):
-        total_seconds = self.time_quantity.total_seconds()
-        hours = total_seconds // 3600
-        minutes = (total_seconds % 3600) / 60
-        return "%d hr %d min" % (hours, minutes) if hours > 0 else "%d min" % minutes
 
     def save(self, *args, **kwargs):
         if not self.pk or Recipe.objects.get(pk=self.pk).name != self.name:
@@ -143,6 +137,9 @@ class Conversion(models.Model):
 class IngredientSource(models.Model):
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class IngredientPrice(models.Model):
     ingredient = models.ForeignKey(
@@ -150,7 +147,7 @@ class IngredientPrice(models.Model):
     )
     date = models.DateField(default=timezone.now)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.DecimalField(max_digits=5, decimal_places=3)
+    quantity = models.DecimalField(max_digits=7, decimal_places=3)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     source = models.ForeignKey(IngredientSource, on_delete=models.CASCADE)
     detail = models.CharField(max_length=200)
@@ -268,7 +265,7 @@ class Timer(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="timers")
     position = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
-    duration = models.DurationField(blank=True)
+    duration = models.DurationField()
 
 
 class Image(models.Model):
