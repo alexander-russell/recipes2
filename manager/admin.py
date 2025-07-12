@@ -15,6 +15,7 @@ from .models import (
     Recipe,
     Step,
     StepGroup,
+    Tag,
     Timer,
     Type,
     Unit,
@@ -124,6 +125,10 @@ class DiaryInline(admin.TabularInline):
     model = Diary
     extra = 0
 
+class TagInline(admin.TabularInline):
+    model = Tag
+    extra = 0
+
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
@@ -131,6 +136,7 @@ class RecipeAdmin(admin.ModelAdmin):
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
     # readonly_fields = ("slug",)
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [ItemInline, StepInline, ImageInline, TimerInline, DiaryInline, TagInline]
     fieldsets = [
         (
             "Basic Information",
