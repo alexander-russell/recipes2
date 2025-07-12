@@ -105,7 +105,13 @@
             <div class="attributes-wrapper">
               <p class="attributes-list">
                 {% if not recipe.tested %}
-                  <span class="untested">Not Tested</span>
+                  <span class="warning">Not Tested</span>
+                {% endif %}
+                {% if recipe.needs_revision %}
+                  <span class="warning">Marked for Revision</span>
+                {% endif %}
+                {% if stale %}
+                  <span class="warning">Not Updated for Ages</span>
                 {% endif %}
                 {% if recipe.time_quantity %}
                   <span class="time">
