@@ -5,5 +5,4 @@
 *.sqlite3
 
 # Python temp stuff
-__pycache__/
-*/__pycache__
+*.pyc
