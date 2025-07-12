@@ -6,3 +6,4 @@
 
 # Python temp stuff
 __pycache__/
+*/__pycache__
