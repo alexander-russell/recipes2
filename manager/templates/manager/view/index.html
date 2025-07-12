@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Alex's Recipes!</title>
+    <title>{{ recipe.name }} | Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{% static 'manager/view/view.css' %}" />
     {% comment %} <script src="{% static 'manager/view/timers.js' %}"></script> {% endcomment %}
@@ -110,7 +110,7 @@
                 {% if recipe.time_quantity %}
                   <span class="time">
                     <span class="attribute-name">Time</span>
-                    <span class="time-value">{{ recipe.format_time_quantity }}</span>
+                    <span class="time-value">{{ recipe.time_quantity|format_duration }}</span>
                   </span>
                 {% endif %}
                 {% if recipe.yield_quantity %}
@@ -186,7 +186,9 @@
                     </span>
                     <span class="item-details">
                       {% if item.unit.name != 'manual' %}
-                        <span class="item-quantity scalable">{{ item.quantity|floatformat:'-3' }}</span>
+                        {% if item.quantity != 0 %}
+                          <span class="item-quantity scalable">{{ item.quantity|floatformat:'-3'|detrail }}</span>
+                        {% endif %}{{ cost.itemunit }}
                         <span class="item-unit">{{ item.unit.name }}</span>
                         {% if item.unit_detail %}
                           <span class="item-unit-extra">{{ item.unit_detail|wrap_scalable }}</span>
@@ -287,7 +289,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="3">Total</td>
-                    <td class="total-cell">$-</td>
+                    <td class="total-cell">${{ total_cost|floatformat:'-2'|detrail }}</td>
                   </tr>
                 </tfoot>
               </table>
