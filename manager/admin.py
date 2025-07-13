@@ -181,7 +181,6 @@ class RecipeAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin/recipe.css",)}
-        js = ("admin/recipe.js",)
 
 
 @admin.register(Conversion)

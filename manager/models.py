@@ -54,7 +54,6 @@ class Cuisine(models.Model):
         return self.name
 
 
-
 class Recipe(models.Model):
     class Status(models.TextChoices):
         DRAFT = "draft", "Draft"  # For unfinished recipes
@@ -96,10 +95,10 @@ class Recipe(models.Model):
     )
     description = models.TextField()
 
-    def save(self, *args, **kwargs):
-        if not self.pk or Recipe.objects.get(pk=self.pk).name != self.name:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.pk or Recipe.objects.get(pk=self.pk).name != self.name:
+    #         self.slug = slugify(self.name)
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
