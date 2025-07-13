@@ -125,6 +125,7 @@ class DiaryInline(admin.TabularInline):
     model = Diary
     extra = 0
 
+
 class TagInline(admin.TabularInline):
     model = Tag
     extra = 0
@@ -135,7 +136,7 @@ class RecipeAdmin(admin.ModelAdmin):
     # pass
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
     # readonly_fields = ("slug",)
-    prepopulated_fields = {'slug': ('name',)}
+    prepopulated_fields = {"slug": ("name",)}
     inlines = [ItemInline, StepInline, ImageInline, TimerInline, DiaryInline, TagInline]
     fieldsets = [
         (
@@ -180,7 +181,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin/recipe.css",)}
-        js = ('admin/recipe.js',)
+        js = ("admin/recipe.js",)
 
 
 @admin.register(Conversion)
