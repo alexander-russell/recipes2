@@ -1,21 +1,89 @@
+from collections import defaultdict
 from django.http import Http404, HttpResponse
 from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 
-from manager.models import Recipe
+from manager.models import Cuisine, Recipe
+
+
+def home(request):
+    recipes = Recipe.objects.all()
+    return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
 def index(request):
-    return HttpResponse(
-        "Hello, world. You're at the manager index. <a href=" "contents" ">hey</a>"
-    )
+    index_entries = []#defaultdict(list)
+    recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+
+    # Collect all recipes
+    for recipe in recipes:
+        index_entries.append(
+            {
+                "first_letter": recipe.name[0].upper(),
+                "group": recipe.name,
+                "name": None,
+                "slug": recipe.slug,
+            }
+        )
+
+        if recipe.cuisine is not None:
+            index_entries.append(
+                {
+                    "first_letter": recipe.cuisine.name[0].upper(),
+                    "group": recipe.cuisine.name,
+                    "name": recipe.name,
+                    "slug": recipe.slug,
+                }
+            )
+
+        if recipe.vegetarian:
+            index_entries.append(
+                {
+                    "first_letter": "V",
+                    "group": "Vegetarian",
+                    "name": recipe.name,
+                    "slug": recipe.slug,
+                }
+            )
+
+    index_entries.sort(key=lambda x: (x['first_letter'], x['group'], x['name']))
+
+    return render(request, "manager/index/index.html", {"recipes": recipes, "index_entries": index_entries})
+
+
+def gallery(request):
+    recipes = Recipe.objects.all()
+    return render(request, "manager/gallery/index.html", {"recipes": recipes})
+
+
+def explore(request):
+    recipes = Recipe.objects.all()
+    return render(request, "manager/explore/index.html", {"recipes": recipes})
 
 
 def contents(request):
-    all_recipes = Recipe.objects.all()
-    context = {"all_recipes": all_recipes}
-    return render(request, "manager/contents/index.html", context)
+    focus = request.GET.get("focus")
+    recipes = (
+        Recipe.objects.all()
+        .filter(status=Recipe.Status.ACTIVE)
+        .select_related("classification")
+        .order_by(
+            "classification__type__name", "classification__category__name", "name"
+        )
+    )
+
+    grouped = defaultdict(lambda: defaultdict(list))
+    for recipe in recipes:
+        type_ = recipe.classification.type
+        category = recipe.classification.category
+        grouped[type_][category].append(recipe)
+
+    return render(
+        request,
+        "manager/contents/index.html",
+        {"recipes": recipes, "grouped_recipes": grouped, "focus": focus},
+    )
 
 
 def view(request, recipe_slug):

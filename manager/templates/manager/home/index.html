@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'manager/master/master.css' %}" />
+    <link rel="stylesheet" href="{% static 'manager/master/forms.css' %}" />
+    <link rel="stylesheet" href="{% static 'manager/home/home.css' %}" />
+    <title>Alex's Recipes!</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Recipes</h1>
+    </header>
+    <nav>
+      <ul>
+        <li>
+          <a href="{% url 'manager:contents' %}"><button>Contents</button></a>
+        </li>
+        <li>
+          <a href="{% url 'manager:explore' %}"><button>Explore</button></a>
+        </li>
+        <li>
+          <a href="{% url 'manager:gallery' %}"><button>Gallery</button></a>
+        </li>
+        <li>
+          <a href="{% url 'manager:index' %}"><button>Index</button></a>
+        </li>
+      </ul>
+    </nav>
+    <section class="welcome">Welcome to my recipe site. I use it to remember what I'm doing when I cook, but I think the code is cool too. Find a recipe with the search box below, or using the table of contents, explore page, gallery or indices.</section>
+    <section class="search">
+      <h2>Search</h2>
+      <div class="form recipe-searchbox">
+        <div class="form-group basic-search">
+          <label for="name">Name:</label>
+          <input type="search" name="name" id="name" value="" />
+        </div>
+        <button class="search">Search</button>
+      </div>
+      <ul class="search-results">
+        {% for recipe in recipes %}
+          <li class="search-result hidden">
+            <a href="{% url 'manager:view' recipe.slug %}">{{ recipe.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+    <script src="{% static 'manager/home/home.js' %}"></script>
+  </body>
+</html>

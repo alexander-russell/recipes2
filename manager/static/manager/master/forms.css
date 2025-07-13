@@ -1,0 +1,59 @@
+.form {
+    font-weight: bold;
+    flex-direction: row;
+}
+
+.form input,
+.form select,
+.toggle label {
+    background: none;
+    border: none;
+    font-size: inherit;
+    border-bottom: 2px solid black;
+    border-radius: 0px;
+}
+
+.form-group {
+    display: inline-block;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+.form-group:not(:last-child) {
+    margin-right: 0.5em;
+}
+
+.form input:focus,
+.form select:focus {
+    outline: none;
+    color: darkred;
+    border-bottom-color: darkred;
+}
+
+.form .toggle input {
+    display: none;
+}
+
+.form .toggle:has(input:checked) label {
+    color: darkred;
+    border-bottom: 2px solid darkred;
+}
+
+.form button,
+.form .toggle label {
+    padding: 0px;
+    padding-bottom: 1px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: none;
+    font-size: inherit;
+    font-weight: bold;
+}
+
+.form button.search:focus,
+.form .toggle label:focus {
+    outline: 0 !important;
+    border-bottom: 2px solid darkred; 
+    color: darkred;
+}
