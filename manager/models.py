@@ -49,7 +49,7 @@ class YieldUnit(models.Model):
 
 class Cuisine(models.Model):
     name = models.CharField(max_length=100)
-    
+
     def __str__(self):
         return self.name
 
@@ -92,7 +92,7 @@ class Recipe(models.Model):
     vegan = models.BooleanField(default=False)
     gluten_free = models.BooleanField(default=False)
     cuisine = models.ForeignKey(
-        Cuisine, on_delete=models.CASCADE, blank=True, null=True
+        Cuisine, on_delete=models.SET_NULL, blank=True, null=True, related_name="recipes"
     )
     description = models.TextField()
 
