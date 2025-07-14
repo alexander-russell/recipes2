@@ -1,9 +1,11 @@
 from collections import defaultdict
+import os
+from django.conf import settings
 from django.http import Http404, HttpResponse
 from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
-
+from django.templatetags.static import static
 from manager.models import Cuisine, Recipe
 
 
@@ -59,7 +61,13 @@ def gallery(request):
 
 def explore(request):
     recipes = Recipe.objects.all()
-    return render(request, "manager/explore/index.html", {"recipes": recipes})
+
+    path = settings.MEDIA_ROOT
+    img_list = os.listdir(path + '/images')
+    context = {'images' : img_list}
+    return render(request, "manager/explore/index.html", context)
+    # return render(request, "myapp/index.html", context)
+
 
 
 def contents(request):

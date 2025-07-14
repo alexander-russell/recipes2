@@ -1,1 +1,9 @@
 not done yet girl
+
+{% if images %}
+	{% for image in images %}
+		<img src="{{ MEDIA_URL }}images/{{ image }}" alt="{{ image }} what the hell">
+	{% endfor %}
+{% else %}
+	<p>No image available.</p>
+{% endif %}
