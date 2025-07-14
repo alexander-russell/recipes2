@@ -291,13 +291,13 @@ class Image(models.Model):
     class Meta:
         unique_together = ("recipe", "name")
 
-    def clean(self):
-        if False and not self.image.name.lower().endswith(".avif"):
-            raise ValidationError("Only AVIF images are allowed.")
+    # def clean(self):
+    #     if False and not self.image.name.lower().endswith(".avif"):
+    #         raise ValidationError("Only AVIF images are allowed.")
 
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.full_clean()
+    #     super().save(*args, **kwargs)
 
 
 class Tag(models.Model):
