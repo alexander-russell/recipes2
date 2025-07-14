@@ -1,3 +1,4 @@
+import os
 from django import forms
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -273,11 +274,15 @@ class Timer(models.Model):
     duration = models.DurationField()
 
 
+def image_upload_to(instance, filename):
+    return os.path.join("manager", str(instance.recipe.id), "images", filename)
+
+
 class Image(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="images")
     position = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
-    image = models.ImageField()
+    image = models.ImageField(upload_to=image_upload_to)
 
     class Meta:
         unique_together = ("recipe", "name")
