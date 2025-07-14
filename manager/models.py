@@ -92,7 +92,11 @@ class Recipe(models.Model):
     vegan = models.BooleanField(default=False)
     gluten_free = models.BooleanField(default=False)
     cuisine = models.ForeignKey(
-        Cuisine, on_delete=models.SET_NULL, blank=True, null=True, related_name="recipes"
+        Cuisine,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="recipes",
     )
     description = models.TextField()
 
