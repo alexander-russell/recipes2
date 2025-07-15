@@ -11,5 +11,5 @@ urlpatterns = [
     path("gallery", views.gallery, name="gallery"),
     path("explore", views.explore, name="explore"),
     path("contents", views.contents, name="contents"),
-    path("<slug:recipe_slug>/", views.view, name="view"),
+    path("<slug:recipe_slug>", views.view, name="view"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
