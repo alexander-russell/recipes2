@@ -1,7 +1,7 @@
 from collections import defaultdict
 import os
 from django.conf import settings
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
@@ -63,15 +63,49 @@ def gallery(request):
     return render(request, "manager/gallery/index.html", {"recipes": recipes})
 
 
+# def explore(request):
+#     # recipes = Recipe.objects.all()
+#     # return render(request, "manager/explore/index.html", context)
+#     # return render(request, "myapp/index.html", context)
+#     # if this is a POST request we need to process the form data
+#     if request.method == "POST":
+#         # create a form instance and populate it with data from the request:
+#         form = SearchForm(request.POST)
+#         # check whether it's valid:
+#         if form.is_valid():
+#             # process the data in form.cleaned_data as required
+#             # ...
+#             # redirect to a new URL:
+#             return HttpResponseRedirect("/thanks/")
+
+#     # if a GET (or any other method) we'll create a blank form
+#     else:
+#         form = SearchForm()
+
+#     return render(request, "manager/explore/index.html", {"form": form})
+
+
 def explore(request):
+    form = SearchForm(request.GET or None)
     recipes = Recipe.objects.all()
 
-    path = settings.MEDIA_ROOT
-    img_list = os.listdir(path + '/images')
-    context = {'images' : img_list}
-    return render(request, "manager/explore/index.html", context)
-    # return render(request, "myapp/index.html", context)
+    if form.is_valid():
+        query = form.cleaned_data.get("query")
 
+        if query:
+            recipes = recipes.filter(name__icontains=query)
+
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        html = render_to_string(
+            "manager/explore/partials/_results.html",
+            {"recipes": recipes},
+            request=request,
+        )
+        return JsonResponse({"html": html})
+
+    return render(
+        request, "manager/explore/index.html", {"form": form, "recipes": recipes}
+    )
 
 
 def contents(request):

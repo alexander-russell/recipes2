@@ -1,0 +1,30 @@
+{% if recipes %}
+  <ul class="results">
+    {% for recipe in recipes %}
+      <li class="search-result">
+        <a class="search-result-link" href="{% url 'manager:view' recipe.slug %}">
+          <article class="search-result-article">
+            {% if recipe.images.all.first %}
+              <img src="{{ recipe.images.all.first.image.url }}" />
+            {% else %}
+              <img src="{{ MEDIA_URL }}manager/blank.avif" />
+            {% endif %}
+            <div class="body">
+              <h3 class="heading">{{ recipe.name }}</h3>
+              <ul class="attributes">
+                <li>{{ recipe.time_quantity }}</li>
+                <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
+                {% comment %} <li>$8.15 per unit</li> {% endcomment %}
+                {% if recipe.difficulty < 5 %}
+                  <li>easy</li>
+                {% endif %}
+              </ul>
+            </div>
+          </article>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No recipes found.</p>
+{% endif %}
