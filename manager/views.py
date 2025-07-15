@@ -6,7 +6,10 @@ from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
+from manager.forms import SearchForm
 from manager.models import Cuisine, Recipe
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
 def home(request):
@@ -142,7 +145,12 @@ def view(request, recipe_slug):
         item_cost["amount"] if item_cost["amount"] is not None else 0
         for item_cost in item_costs
     )
-    cost_per_serve = total_cost / recipe.yield_quantity
+
+    cost_per_serve = (
+        total_cost / recipe.yield_quantity
+        if recipe.yield_quantity is not None
+        else None
+    )
 
     # Determine if recipe hasn't been updated in over a month
     stale = recipe.date_updated < date.today() - timedelta(days=60)

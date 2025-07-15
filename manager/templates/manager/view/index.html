@@ -131,10 +131,14 @@
                     </span>
                   </span>
                 {% endif %}
-                {% if cost_per_serve %}
+                {% if cost_per_serve or total_cost %}
                   <span class="cost-wrapper">
                     <span class="attribute-name">Cost</span>
-                    <span class="cost-value">${{ cost_per_serve|floatformat:2 }} per {{ recipe.yield_unit.name }}</span>
+                    {% if cost_per_serve %}
+                      <span class="cost-value">${{ cost_per_serve|floatformat:2 }} per {{ recipe.yield_unit.name }}</span>
+                    {% else %}
+                      <span class="cost-value">${{ total_cost|floatformat:2 }} total</span>
+                    {% endif %}
                   </span>
                 {% endif %}
                 {% if recipe.difficulty %}
