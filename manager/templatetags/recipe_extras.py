@@ -9,7 +9,7 @@ register = template.Library()
 
 
 @register.filter(needs_autoescape=True)
-def wrap_scalable(value, autoescape=True):
+def wrap_marked_scalables(value, autoescape=True):
     # This regex matches @<int> patterns
     pattern = r"@(\d+(.\d+)?)"
 
@@ -20,15 +20,27 @@ def wrap_scalable(value, autoescape=True):
 
     # Function to wrap matched pattern with a span
     def replace(match):
-        return f'<span class="scalable">{match.group(1)}</span>'
+        return f'<span class="scalable" data-original-value="{match.group(1)}">{match.group(1)}</span>'
 
     # Use re.sub to replace the pattern with the wrapped version
     return mark_safe(re.sub(pattern, replace, esc(value)))
 
 
+@register.filter(needs_autoescape=True)
+def wrap_scalable(value, autoescape=True):
+    if autoescape:
+        esc = conditional_escape
+    else:
+        esc = lambda x: x
+
+    # Function to wrap matched pattern with a span
+    return mark_safe(f'<span class="scalable" data-original-value="{esc(value)}">{esc(value)}</span>')
+
+
 @register.filter()
 def pluralise_unit(value, quantity):
-    return value.singular if quantity <= 1 else value.plural
+    pluralised = value.singular if quantity <= 1 else value.plural
+    return pluralised if pluralised is not None else value.name
 
 
 @register.filter()

@@ -25,7 +25,7 @@
                   </a>
                 </li>
                 {% if recipe.images.all %}
-                  <li class="icon-wrapper clickable" data-overlay="image-overlay" onclick="toggleOverlay(event)" >
+                  <li class="icon-wrapper clickable" data-overlay="image-overlay" onclick="toggleOverlay(event)">
                     <svg height="27" xmlns="http://www.w3.org/2000/svg" width="27" viewBox="0 0 512 512" aria-labelledby="camera-icon" class="icon" role="img">
                       <title id="camera-icon">Picture of the recipe</title>
                       <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path>
@@ -122,11 +122,11 @@
                   <span class="yield">
                     <span class="attribute-name">Yields</span>
                     <span class="yield-value">
-                      <input class="yield-quantity" size="1" value="{{ recipe.yield_quantity }}" autocomplete="off" />
+                      <input class="yield-quantity" size="1" value="{{ recipe.yield_quantity }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" />
                       <span></span>
                       <span class="yield-unit">{{ recipe.yield_unit|pluralise_unit:recipe.yield_quantity }}</span>
                       {% if recipe.yield_detail %}
-                        <span class="yield-detail">({{ recipe.yield_detail|wrap_scalable }})</span>
+                        <span class="yield-detail">({{ recipe.yield_detail|wrap_marked_scalables }})</span>
                       {% endif %}
                     </span>
                   </span>
@@ -152,7 +152,7 @@
                 <p class="cost-attribute-extra"></p>
               </div>
             </div>
-            <div class="notes-wrapper">{{ recipe.description|wrap_scalable|render_markdown }}</div>
+            <div class="notes-wrapper">{{ recipe.description|wrap_marked_scalables|render_markdown }}</div>
             {% if recipe.timers %}
               <div class="timers-wrapper">
                 <div class="timers">
@@ -196,11 +196,11 @@
                     <span class="item-details">
                       {% if item.unit.name != 'manual' %}
                         {% if item.quantity != 0 %}
-                          <span class="item-quantity scalable">{{ item.quantity|floatformat:'-3'|detrail }}</span>
+                          <span class="item-quantity">{{ item.quantity|floatformat:'-3'|detrail|wrap_scalable }}</span>
                         {% endif %}{{ cost.itemunit }}
                         <span class="item-unit">{{ item.unit.name }}</span>
                         {% if item.unit_detail %}
-                          <span class="item-unit-extra">{{ item.unit_detail|wrap_scalable }}</span>
+                          <span class="item-unit-extra">{{ item.unit_detail|wrap_marked_scalables }}</span>
                         {% endif %}
                       {% else %}
                         <span class="item-unit">{{ item.unit_detail }}</span>
@@ -223,14 +223,14 @@
                   <div class="steps-list-gap"></div>
                 {% endif %}
                 {% endifchanged %}
-                <li>{{ step.content|wrap_scalable }}</li>
+                <li>{{ step.content|wrap_marked_scalables }}</li>
               {% endfor %}
             </ol>
           </div>
         </div>
         <div class="overlay-background recipe-image-background hidden" data-overlay="image-overlay" onclick="toggleOverlay(event)" id="image-overlay">
           <div class="recipe-image-wrapper">
-            <img class="recipe-image" src="{{ recipe.images.all.first.image.url }}" alt="{{recipe.images.all.first.image.name}}" onclick="event.stopPropagation()" />
+            <img class="recipe-image" src="{{ recipe.images.all.first.image.url }}" alt="{{ recipe.images.all.first.image.name }}" onclick="event.stopPropagation()" />
             <div class="image-close-wrapper clickable">
               <button class="image-close">Close</button>
             </div>
@@ -273,10 +273,11 @@
                   {% for cost in item_costs %}
                     <tr>
                       <td>{{ cost.ingredientname }}</td>
-                      <td class="scalable">
+                      <td>
                         {% if cost.itemquantity != 0 %}
-                          {{ cost.itemquantity|floatformat:'-3'|detrail }}
-                        {% endif %}{{ cost.itemunit }}
+                          {{ cost.itemquantity|floatformat:'-3'|detrail|wrap_scalable }}
+                        {% endif %}
+                        {{ cost.itemunit }}
                       </td>
                       <td>
                         {% if cost.success %}
@@ -285,9 +286,9 @@
                           &ndash;
                         {% endif %}
                       </td>
-                      <td class="scalable">
+                      <td>
                         {% if cost.success %}
-                          ${{ cost.amount|floatformat:'-2'|detrail }}
+                          ${{ cost.amount|floatformat:'-2'|detrail|wrap_scalable }}
                         {% else %}
                           &ndash;
                         {% endif %}
@@ -298,7 +299,9 @@
                 <tfoot>
                   <tr>
                     <td colspan="3">Total</td>
-                    <td class="total-cell scalable">${{ total_cost|floatformat:'-2'|detrail }}</td>
+                    <td class="total-cell">
+                      ${{ total_cost|floatformat:'-2'|detrail|wrap_scalable }}
+                    </td>
                   </tr>
                 </tfoot>
               </table>
