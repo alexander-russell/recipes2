@@ -273,7 +273,7 @@
                   {% for cost in item_costs %}
                     <tr>
                       <td>{{ cost.ingredientname }}</td>
-                      <td>
+                      <td class="scalable">
                         {% if cost.itemquantity != 0 %}
                           {{ cost.itemquantity|floatformat:'-3'|detrail }}
                         {% endif %}{{ cost.itemunit }}
@@ -285,7 +285,7 @@
                           &ndash;
                         {% endif %}
                       </td>
-                      <td>
+                      <td class="scalable">
                         {% if cost.success %}
                           ${{ cost.amount|floatformat:'-2'|detrail }}
                         {% else %}
@@ -298,7 +298,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="3">Total</td>
-                    <td class="total-cell">${{ total_cost|floatformat:'-2'|detrail }}</td>
+                    <td class="total-cell scalable">${{ total_cost|floatformat:'-2'|detrail }}</td>
                   </tr>
                 </tfoot>
               </table>
