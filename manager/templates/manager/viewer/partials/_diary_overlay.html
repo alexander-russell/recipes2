@@ -1,0 +1,16 @@
+{% extends 'manager/viewer/partials/_overlay.html' %}
+
+{% block content %}
+  <dl class="recipe-diary" onclick="event.stopPropagation()">
+    {% regroup recipe.diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
+    {% for day in diaryentries_by_day %}
+      <dt>{{ day.grouper }}</dt>
+      <dd>
+        {% for diaryentry in day.list %}
+          <strong>{{ diaryentry.date|date:'H:i' }}</strong>
+          {{ diaryentry.content }}
+        {% endfor %}
+      </dd>
+    {% endfor %}
+  </dl>
+{% endblock %}

@@ -377,44 +377,12 @@ body {
 
 /* Stuff for image and diary */
 
-.recipe-image-background,
-.recipe-diary-background,
-.recipe-cost-background {
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    top: 0px;
-    left: 0px;
-    height: 100%;
-    width: 100vw;
-    z-index: 2;
-    background: white;
-}
-
-.recipe-image-wrapper,
-.recipe-diary-wrapper,
-.recipe-cost-wrapper {
-    padding: 10px;
-    position: relative;
-    background-color: white;
-}
-
-.recipe-image,
-.recipe-diary,
-.recipe-cost {
-    display: block;
-    max-height: 80vh;
-    max-width: 80vw;
-    border: 1px solid black;
-}
-
 .recipe-diary {
     margin: 0;
     overflow: scroll;
     overscroll-behavior: contain;
-    border: none;
-    border-bottom: 1px solid black;
+    border: none !important;
+    border-bottom: 1px solid black !important;
 }
 
 .recipe-cost {
@@ -422,8 +390,8 @@ body {
     overflow: auto;
     /* margin: 0.1em 0.3em; */
     /* padding-right: 0.3em; */
-    border: none;
-    border-bottom: 2px solid black;
+    border: none !important;
+    border-bottom: 2px solid black !important;
 }
 
 .recipe-cost thead tr {
@@ -461,28 +429,6 @@ body {
 .recipe-cost td:empty::after {
     content: "–";
     /* background-color: red; */
-}
-
-.image-close-wrapper,
-.diary-close-wrapper,
-.cost-close-wrapper {
-    position: absolute;
-    right: 15px;
-}
-
-.image-close,
-.diary-close,
-.cost-close {
-    border: none;
-    background: none;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.image-close:hover,
-.diary-close:hover,
-.cost-close:hover {
-    color: darkred;
 }
 
 .recipe-diary>dt {

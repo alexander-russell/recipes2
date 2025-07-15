@@ -1,0 +1,48 @@
+{% extends 'manager/viewer/partials/_overlay.html' %}
+{% load recipe_extras %}
+
+{% block content %}
+  <table class="recipe-cost" onclick="event.stopPropagation()">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cost in item_costs %}
+        <tr>
+          <td>{{ cost.ingredientname }}</td>
+          <td>
+            {% if cost.itemquantity != 0 %}
+              {{ cost.itemquantity|floatformat:'-3'|detrail|wrap_scalable }}
+            {% endif %}
+            {{ cost.itemunit }}
+          </td>
+          <td>
+            {% if cost.success %}
+              ${{ cost.price|floatformat:'-2'|detrail }} per {{ cost.pricequantity|floatformat:'-3'|detrail }} {{ cost.priceunit }}
+            {% else %}
+              &ndash;
+            {% endif %}
+          </td>
+          <td>
+            {% if cost.success %}
+              ${{ cost.amount|floatformat:'-2'|detrail|wrap_scalable }}
+            {% else %}
+              &ndash;
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">Total</td>
+        <td class="total-cell">${{ total_cost|floatformat:'-2'|detrail|wrap_scalable }}</td>
+      </tr>
+    </tfoot>
+  </table>
+{% endblock %}

@@ -6,6 +6,7 @@
     <title>{{ recipe.name }} | Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{% static 'manager/viewer/viewer.css' %}" />
+    <link rel="stylesheet" href="{% static 'manager/viewer/overlay.css' %}" />
   </head>
 
   <body>
@@ -232,87 +233,9 @@
             </ol>
           </div>
         </div>
-        <div class="overlay-background recipe-image-background hidden" data-overlay="image-overlay" onclick="toggleOverlay(event)" id="image-overlay">
-          <div class="recipe-image-wrapper">
-            <img class="recipe-image" src="{{ recipe.images.all.first.image.url }}" alt="{{ recipe.images.all.first.image.name }}" onclick="event.stopPropagation()" />
-            <div class="image-close-wrapper clickable">
-              <button class="image-close">Close</button>
-            </div>
-          </div>
-        </div>
-        <div class="overlay-background recipe-diary-background hidden" data-overlay="diary-overlay" onclick="toggleOverlay(event)" id="diary-overlay">
-          <div class="recipe-diary-wrapper">
-            <div>
-              <dl class="recipe-diary" onclick="event.stopPropagation()">
-                {% regroup recipe.diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
-                {% for day in diaryentries_by_day %}
-                  <dt>{{ day.grouper }}</dt>
-                  <dd>
-                    {% for diaryentry in day.list %}
-                      <strong>{{ diaryentry.date|date:'H:i' }}</strong>
-                      {{ diaryentry.content }}
-                    {% endfor %}
-                  </dd>
-                {% endfor %}
-              </dl>
-              <div class="diary-close-wrapper">
-                <button class="diary-close">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="overlay-background recipe-cost-background hidden" data-overlay="cost-overlay" onclick="toggleOverlay(event)" id="cost-overlay">
-          <div class="recipe-cost-wrapper">
-            <div>
-              <table class="recipe-cost" onclick="event.stopPropagation()">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Cost</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for cost in item_costs %}
-                    <tr>
-                      <td>{{ cost.ingredientname }}</td>
-                      <td>
-                        {% if cost.itemquantity != 0 %}
-                          {{ cost.itemquantity|floatformat:'-3'|detrail|wrap_scalable }}
-                        {% endif %}
-                        {{ cost.itemunit }}
-                      </td>
-                      <td>
-                        {% if cost.success %}
-                          ${{ cost.price|floatformat:'-2'|detrail }} per {{ cost.pricequantity|floatformat:'-3'|detrail }} {{ cost.priceunit }}
-                        {% else %}
-                          &ndash;
-                        {% endif %}
-                      </td>
-                      <td>
-                        {% if cost.success %}
-                          ${{ cost.amount|floatformat:'-2'|detrail|wrap_scalable }}
-                        {% else %}
-                          &ndash;
-                        {% endif %}
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="3">Total</td>
-                    <td class="total-cell">${{ total_cost|floatformat:'-2'|detrail|wrap_scalable }}</td>
-                  </tr>
-                </tfoot>
-              </table>
-              <div class="cost-close-wrapper">
-                <button class="cost-close">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% include 'manager/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" %}
+        {% include 'manager/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" %}
+        {% include 'manager/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
       </section>
     </div>
     <script src="{% static 'manager/viewer/scaling.js' %}"></script>

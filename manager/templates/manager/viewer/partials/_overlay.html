@@ -1,0 +1,12 @@
+<div class="overlay-background hidden" data-overlay="{{ overlay_name }}" onclick="toggleOverlay(event)" id="{{ overlay_name }}">
+  <div class="overlay-content-wrapper-wrapper">
+    <div class="overlay-content-wrapper">
+      {% block content %}
+        you need to override this block
+      {% endblock %}
+      <div class="overlay-close-wrapper">
+        <button class="overlay-close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

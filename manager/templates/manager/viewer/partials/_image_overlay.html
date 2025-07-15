@@ -1,0 +1,5 @@
+{% extends 'manager/viewer/partials/_overlay.html' %}
+
+{% block content %}
+  <img class="" src="{{ recipe.images.all.first.image.url }}" alt="{{ recipe.images.all.first.image.name }}" onclick="event.stopPropagation()" />
+{% endblock %}
