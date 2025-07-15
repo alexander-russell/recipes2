@@ -5,7 +5,7 @@
   <head>
     <title>{{ recipe.name }} | Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'manager/view/view.css' %}" />
+    <link rel="stylesheet" href="{% static 'manager/viewer/viewer.css' %}" />
   </head>
 
   <body>
@@ -315,9 +315,9 @@
         </div>
       </section>
     </div>
-    <script src="{% static 'manager/view/scaling.js' %}"></script>
-    <script src="{% static 'manager/view/timers.js' %}"></script>
-    <script src="{% static 'manager/view/overlays.js' %}"></script>
+    <script src="{% static 'manager/viewer/scaling.js' %}"></script>
+    <script src="{% static 'manager/viewer/timers.js' %}"></script>
+    <script src="{% static 'manager/viewer/overlays.js' %}"></script>
     {% if yield_param %}
       <script>
         scale()

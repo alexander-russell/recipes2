@@ -34,7 +34,7 @@
           {% for group in group_entries %}
             {% if group.list|length == 1 and group.list.0.name == None %}
               <li>
-                <a href="{% url 'manager:view' group.list.0.slug %}">{{ group.grouper }}</a>
+                <a href="{% url 'manager:viewer' group.list.0.slug %}">{{ group.grouper }}</a>
               </li>
             {% else %}
               <details>
@@ -44,7 +44,7 @@
                 <ol>
                   {% for entry in group.list %}
                     <li>
-                      <a href="{% url 'manager:view' entry.slug %}">{{ entry.name }}</a>
+                      <a href="{% url 'manager:viewer' entry.slug %}">{{ entry.name }}</a>
                     </li>
                   {% endfor %}
                 </ol>

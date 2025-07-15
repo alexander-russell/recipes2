@@ -60,7 +60,7 @@
               <ul>
                 {% for recipe in category_group.list %}
                   <li>
-                    <a href="{% url 'manager:view' recipe.slug %}">{{ recipe.name }}</a>                    
+                    <a href="{% url 'manager:viewer' recipe.slug %}">{{ recipe.name }}</a>                    
                   </li>
                 {% endfor %}
               </ul>

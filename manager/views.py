@@ -135,7 +135,7 @@ def contents(request):
     )
 
 
-def view(request, recipe_slug):
+def viewer(request, recipe_slug):
     # Get recipe
     recipe = get_object_or_404(Recipe, slug=recipe_slug)
 
@@ -160,7 +160,7 @@ def view(request, recipe_slug):
 
     return render(
         request,
-        "manager/view/index.html",
+        "manager/viewer/index.html",
         {
             "recipe": recipe,
             "item_costs": item_costs,

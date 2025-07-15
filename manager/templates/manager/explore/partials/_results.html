@@ -2,7 +2,7 @@
   <ul class="results">
     {% for recipe in recipes %}
       <li class="search-result">
-        <a class="search-result-link" href="{% url 'manager:view' recipe.slug %}">
+        <a class="search-result-link" href="{% url 'manager:viewer' recipe.slug %}">
           <article class="search-result-article">
             {% if recipe.images.all.first %}
               <img src="{{ recipe.images.all.first.image.url }}" />
