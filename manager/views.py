@@ -152,6 +152,9 @@ def view(request, recipe_slug):
         else None
     )
 
+    # Get URL yield paramter if specified
+    yield_param = request.GET.get('yield')
+
     # Determine if recipe hasn't been updated in over a month
     stale = recipe.date_updated < date.today() - timedelta(days=60)
 
@@ -164,5 +167,6 @@ def view(request, recipe_slug):
             "total_cost": total_cost,
             "cost_per_serve": cost_per_serve,
             "stale": stale,
+            "yield_param": yield_param
         },
     )
