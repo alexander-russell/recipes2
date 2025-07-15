@@ -15,7 +15,7 @@ def home(request):
 
 
 def index(request):
-    index_entries = []#defaultdict(list)
+    index_entries = []  # defaultdict(list)
     recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE)
 
     # Collect all recipes
@@ -49,9 +49,13 @@ def index(request):
                 }
             )
 
-    index_entries.sort(key=lambda x: (x['first_letter'], x['group'], x['name']))
+    index_entries.sort(key=lambda x: (x["first_letter"], x["group"], x["name"]))
 
-    return render(request, "manager/index/index.html", {"recipes": recipes, "index_entries": index_entries})
+    return render(
+        request,
+        "manager/index/index.html",
+        {"recipes": recipes, "index_entries": index_entries},
+    )
 
 
 def gallery(request):
