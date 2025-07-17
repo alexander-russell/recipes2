@@ -12,4 +12,5 @@ urlpatterns = [
     path("explore", views.explore, name="explore"),
     path("contents", views.contents, name="contents"),
     path("<slug:recipe_slug>", views.viewer, name="viewer"),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("<slug:recipe_slug>/diary/add", views.add_diary_entry, name="add_diary_entry"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

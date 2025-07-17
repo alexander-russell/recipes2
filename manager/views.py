@@ -1,13 +1,13 @@
 from collections import defaultdict
 import os
 from django.conf import settings
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseBadRequest
 from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
 from manager.forms import SearchForm
-from manager.models import Cuisine, Recipe
+from manager.models import Cuisine, Diary, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 
@@ -170,3 +170,23 @@ def viewer(request, recipe_slug):
             "yield_param": yield_param
         },
     )
+
+
+def add_diary_entry(request, recipe_slug):
+    if request.method == "POST":
+        recipe = get_object_or_404(Recipe, slug=recipe_slug)
+        content = request.POST.get("content")
+        if not content:
+            return HttpResponseBadRequest("Missing content")
+
+        Diary.objects.create(recipe=recipe, date=now(), content=content)
+        recipe.refresh_from_db()
+        html = render_to_string(
+            "manager/viewer/partials/_diary_overlay.html",
+            {
+                "diaryentries": recipe.diaryentries.all(),
+                "overlay_name": "diary-overlay",
+            },
+        )
+        return JsonResponse({"html": html})
+    return HttpResponseBadRequest("Invalid request")

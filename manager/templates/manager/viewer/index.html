@@ -5,8 +5,11 @@
   <head>
     <title>{{ recipe.name }} | Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'manager/master/forms.css' %}" />
     <link rel="stylesheet" href="{% static 'manager/viewer/viewer.css' %}" />
     <link rel="stylesheet" href="{% static 'manager/viewer/overlay.css' %}" />
+    <link rel="stylesheet" href="{% static 'manager/viewer/diary.css' %}" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
   </head>
 
   <body>
@@ -238,6 +241,7 @@
         {% include 'manager/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
       </section>
     </div>
+    <script src="{% static 'manager/viewer/diary.js' %}"></script>
     <script src="{% static 'manager/viewer/scaling.js' %}"></script>
     <script src="{% static 'manager/viewer/timers.js' %}"></script>
     <script src="{% static 'manager/viewer/overlays.js' %}"></script>

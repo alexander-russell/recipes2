@@ -12,5 +12,10 @@
         {% endfor %}
       </dd>
     {% endfor %}
+    <dt>{% now "Y-m-d" %}</dt>
+    <dd class="form">
+      <strong id="diary-current-time">{% now 'H:i' %}</strong>
+      <span id="diary-input" contenteditable="true"></span>
+    </dd>
   </dl>
 {% endblock %}
