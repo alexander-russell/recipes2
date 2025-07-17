@@ -67,28 +67,6 @@ def gallery(request):
     return render(request, "manager/gallery/index.html", {"recipes": recipes})
 
 
-# def explore(request):
-#     # recipes = Recipe.objects.all()
-#     # return render(request, "manager/explore/index.html", context)
-#     # return render(request, "myapp/index.html", context)
-#     # if this is a POST request we need to process the form data
-#     if request.method == "POST":
-#         # create a form instance and populate it with data from the request:
-#         form = SearchForm(request.POST)
-#         # check whether it's valid:
-#         if form.is_valid():
-#             # process the data in form.cleaned_data as required
-#             # ...
-#             # redirect to a new URL:
-#             return HttpResponseRedirect("/thanks/")
-
-#     # if a GET (or any other method) we'll create a blank form
-#     else:
-#         form = SearchForm()
-
-#     return render(request, "manager/explore/index.html", {"form": form})
-
-
 def explore(request):
     form = SearchForm(request.GET or None)
     recipes = Recipe.objects.all()
@@ -154,7 +132,7 @@ def viewer(request, recipe_slug):
     )
 
     # Get URL yield paramter if specified
-    yield_param = request.GET.get('yield')
+    yield_param = request.GET.get("yield")
 
     # Determine if recipe hasn't been updated in over a month
     stale = recipe.date_updated < date.today() - timedelta(days=60)
@@ -168,7 +146,7 @@ def viewer(request, recipe_slug):
             "total_cost": total_cost,
             "cost_per_serve": cost_per_serve,
             "stale": stale,
-            "yield_param": yield_param
+            "yield_param": yield_param,
         },
     )
 
