@@ -10,6 +10,7 @@ from manager.forms import SearchForm
 from manager.models import Cuisine, Diary, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from django.utils.timezone import now
 
 
 def home(request):
