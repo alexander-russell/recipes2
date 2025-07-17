@@ -2,7 +2,7 @@
 
 {% block content %}
   <dl class="recipe-diary" onclick="event.stopPropagation()">
-    {% regroup recipe.diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
+    {% regroup diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
     {% for day in diaryentries_by_day %}
       <dt>{{ day.grouper }}</dt>
       <dd>

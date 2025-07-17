@@ -234,7 +234,7 @@
           </div>
         </div>
         {% include 'manager/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" %}
-        {% include 'manager/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" %}
+        {% include 'manager/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" diaryentries=recipe.diaryentries %}
         {% include 'manager/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
       </section>
     </div>
