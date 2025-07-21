@@ -286,6 +286,8 @@ class Image(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="images")
     position = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
+    alt_text = models.CharField(max_length=200, null=True)
+    show_in_gallery = models.BooleanField()
     image = models.ImageField(upload_to=image_upload_to)
 
     class Meta:
