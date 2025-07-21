@@ -190,60 +190,87 @@ class Item(models.Model):
         return self.ingredient.name
 
     def get_cost(self):
-        from manager.utils.cost_utils2 import get_conversion_factor
+        # Get or create item cost instance for this item
+        try:
+            item_cost = self.cost
+        except ItemCost.DoesNotExist:
+            item_cost = ItemCost(item=self)
 
-        result = {
-            "amount": None,
-            "success": False,
-            "reason": None,
-            "price": None,
-            "ingredientname": self.ingredient.name,
-            "itemquantity": self.quantity,
-            "pricequantity": None,
-            "itemunit": self.unit,
-            "priceunit": None,
-        }
+        # Set starting values
+        item_cost.success = False
+        item_cost.reason = None
+        item_cost.amount = None
+        item_cost.ingredient_name = self.ingredient.name
+        item_cost.item_quantity = self.quantity
+        item_cost.item_unit = self.unit
+        item_cost.price = None
+        item_cost.price_quantity = None
+        item_cost.price_unit = None
 
+        # If quantity is zero, stop. Otherwise get price
         if self.quantity == 0:
-            result["reason"] = "zeroquantity"
-            return result
-
-        latest_price = self.ingredient.get_latest_price()
-
-        if not latest_price:
-            result["reason"] = "noprice"
-            return result
-
-        if latest_price.price == 0:
-            result["reason"] = "latestpriceiszero"
-            return result
-
-        if self.unit.name == latest_price.unit.name:
-            conversion_factor = 1
+            item_cost.reason = "zeroquantity"
+            item_cost.save()
+            return item_cost
         else:
-            conversion_factor = get_conversion_factor(
-                self.unit.name, latest_price.unit.name, self.ingredient.id
-            )
+            latest_price = self.ingredient.get_latest_price()
 
-            if conversion_factor is None:
-                result["reason"] = "noconversion"
-                return result
+            # Stop if no price or price is zero, otherwise calculate conversion factor
+            if not latest_price:
+                item_cost.reason = "noprice"
+                item_cost.save()
+                return item_cost
+            elif latest_price.price == 0:
+                item_cost.reason = "latestpriceiszero"
+                item_cost.save()
+                return item_cost
+            else:
+                # If units are the same use 1, otherwise calculate it with unit graph
+                if self.unit.name == latest_price.unit.name:
+                    conversion_factor = 1
+                else:
+                    from manager.utils.cost_utils2 import get_conversion_factor
 
-        # Step 3: Calculate the cost
-        amount = (
-            self.quantity
-            / latest_price.quantity
-            * latest_price.price
-            * conversion_factor
-        )
+                    conversion_factor = get_conversion_factor(
+                        self.unit.name, latest_price.unit.name, self.ingredient.id
+                    )
+                # If conversion failed, stop, otherwise calculate amount and return
+                if conversion_factor is None:
+                    item_cost.reason = "noconversion"
+                    item_cost.save()
+                    return item_cost
+                else:
+                    item_cost.success = True
+                    item_cost.amount = (
+                        self.quantity
+                        / latest_price.quantity
+                        * latest_price.price
+                        * conversion_factor
+                    )
+                    item_cost.price = latest_price.price
+                    item_cost.price_quantity = latest_price.quantity
+                    item_cost.price_unit = (
+                        latest_price.unit.name if latest_price.unit else None
+                    )
+                    item_cost.save()
+                    return item_cost
 
-        result["amount"] = amount
-        result["success"] = True
-        result["price"] = latest_price.price
-        result["priceunit"] = latest_price.unit
-        result["pricequantity"] = latest_price.quantity
-        result["unit"] = latest_price.unit
-        return result
+
+class ItemCost(models.Model):
+    item = models.OneToOneField(Item, on_delete=models.CASCADE, related_name="cost")
+    success = models.BooleanField(default=False)
+    reason = models.TextField(null=True, blank=True)
+    ingredient_name = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    item_quantity = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    item_unit = models.CharField(max_length=50, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_quantity = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    price_unit = models.CharField(max_length=50, null=True, blank=True)
 
 
 class StepGroup(models.Model):
