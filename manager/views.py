@@ -121,7 +121,7 @@ def viewer(request, recipe_slug):
     # Calculate costs
     item_costs = [item.get_cost() for item in recipe.items.all()]
     total_cost = sum(
-        item_cost["amount"] if item_cost["amount"] is not None else 0
+        item_cost.amount if item_cost.amount is not None else 0
         for item_cost in item_costs
     )
 

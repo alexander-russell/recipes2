@@ -254,6 +254,12 @@ class Item(models.Model):
                     )
                     item_cost.save()
                     return item_cost
+    
+    def get_cost(self):
+        try:
+            return self.cost
+        except:
+            return self.update_cost()
 
 
 class ItemCost(models.Model):
