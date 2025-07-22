@@ -4,11 +4,13 @@
       <li class="search-result">
         <a class="search-result-link" href="{% url 'manager:viewer' recipe.slug %}">
           <article class="search-result-article">
-            {% if recipe.images.all.first %}
-              <img src="{{ recipe.images.all.first.image.url }}" />
-            {% else %}
-              <img src="{{ MEDIA_URL }}manager/blank.avif" />
-            {% endif %}
+            {% with image=recipe.images.all|first %}
+              {% if image %}
+                <img src="{{ image.image.url }}" />
+              {% else %}
+                <img src="{{ MEDIA_URL }}manager/blank.avif" />
+              {% endif %}
+            {% endwith %}
             <div class="body">
               <h3 class="heading">{{ recipe.name }}</h3>
               <ul class="attributes">
@@ -17,7 +19,7 @@
                   <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
                 {% endif %}
                 {% if recipe.cost.amount_per_unit %}
-                  <li>${{ recipe.cost.amount_per_unit|floatformat:2 }} per {{recipe.cost.yield_unit.name}}</li>
+                  <li>${{ recipe.cost.amount_per_unit|floatformat:2 }} per {{ recipe.cost.yield_unit.name }}</li>
                 {% elif recipe.cost.amount %}
                   <li>${{ recipe.cost.total|floatformat:2 }}</li>
                 {% endif %}

@@ -69,7 +69,11 @@ def gallery(request):
 
 def explore(request):
     form = SearchForm(request.GET or None)
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.select_related("cost__yield_unit").select_related("yield_unit").prefetch_related("images").all()
+
+    # Ensure all recipes have a cost
+    for recipe in recipes:
+        recipe.get_cost()
 
     if form.is_valid():
         query = form.cleaned_data.get("query")
