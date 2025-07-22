@@ -189,7 +189,7 @@ class Item(models.Model):
     def __str__(self):
         return self.ingredient.name
 
-    def get_cost(self):
+    def update_cost(self):
         # Get or create item cost instance for this item
         try:
             item_cost = self.cost
