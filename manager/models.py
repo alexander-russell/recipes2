@@ -189,7 +189,7 @@ class Item(models.Model):
     def __str__(self):
         return self.ingredient.name
 
-    def update_cost(self):
+    def update_cost(self) -> "ItemCost":
         # Get or create item cost instance for this item
         try:
             item_cost = self.cost
@@ -255,7 +255,7 @@ class Item(models.Model):
                     item_cost.save()
                     return item_cost
     
-    def get_cost(self):
+    def get_cost(self) -> "ItemCost":
         try:
             return self.cost
         except:
