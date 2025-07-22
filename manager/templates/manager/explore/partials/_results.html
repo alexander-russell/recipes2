@@ -1,4 +1,5 @@
 {% if recipes %}
+{% load recipe_extras %}
   <ul class="results">
     {% for recipe in recipes %}
       <li class="search-result">
@@ -14,7 +15,9 @@
             <div class="body">
               <h3 class="heading">{{ recipe.name }}</h3>
               <ul class="attributes">
-                <li>{{ recipe.time_quantity }}</li>
+                {% if recipe.time_quantity %}
+                <li>{{ recipe.time_quantity|format_duration }}</li>
+                {% endif %}
                 {% if recipe.yield_quantity %}
                   <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
                 {% endif %}
