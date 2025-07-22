@@ -2,7 +2,7 @@ from threading import Timer
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
-from .models import Item, ItemGroup, Recipe, Step, StepGroup, Tag
+from .models import IngredientPrice, Item, ItemGroup, Recipe, Step, StepGroup, Tag
 
 @receiver(post_save, sender=Item)
 @receiver(post_delete, sender=Item)
@@ -22,3 +22,12 @@ def related_model_changed(sender, instance, **kwargs):
     recipe = instance if isinstance(instance, Recipe) else instance.recipe
     recipe.date_updated = timezone.now()
     recipe.save(update_fields=['date_updated'])
+
+@receiver(post_save, sender=Item)
+def update_item_cost_on_item_change(sender, instance, **kwargs):
+    instance.update_cost()
+
+@receiver(post_save, sender=IngredientPrice)
+def refresh_item_costs_on_price_change(sender, instance, **kwargs):
+    for item in Item.objects.filter(ingredient=instance.ingredient):
+        item.update_cost()
