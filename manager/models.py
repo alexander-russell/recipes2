@@ -109,13 +109,41 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-    def get_total_cost(self) -> Decimal:
+    def update_cost(self) -> "RecipeCost":
+        # Get or create associated RecipeCost
+        try:
+            recipe_cost = self.cost
+        except RecipeCost.DoesNotExist:
+            recipe_cost = RecipeCost(recipe=self)
+
+        # Calculate total
         total = Decimal("0.00")
+        full_success = True
         for item in self.items.all():
             item_cost = item.get_cost()
+            full_success &= item_cost.success
             if item_cost.amount is not None:
                 total += item_cost.amount
-        return total
+        
+        # Populate model fields and save
+        recipe_cost.recipe = self
+        recipe_cost.total = total
+        recipe_cost.full_success = full_success
+        recipe_cost.save()
+        return recipe_cost
+
+    def get_cost(self) -> "RecipeCost":
+        try:
+            return self.cost
+        except:
+            return self.update_cost()
+
+
+class RecipeCost(models.Model):
+    recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="cost")
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    full_success = models.BooleanField()
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Ingredient(models.Model):

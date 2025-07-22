@@ -14,7 +14,7 @@
               <ul class="attributes">
                 <li>{{ recipe.time_quantity }}</li>
                 <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
-                {% comment %} <li>$8.15 per unit</li> {% endcomment %}
+                <li>${{ recipe.get_cost.total|floatformat:2 }}</li>
                 {% if recipe.difficulty < 5 %}
                   <li>easy</li>
                 {% endif %}
