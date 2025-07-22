@@ -277,6 +277,7 @@ class ItemCost(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True
     )
     price_unit = models.CharField(max_length=50, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, default=timezone.now())
 
 
 class StepGroup(models.Model):
