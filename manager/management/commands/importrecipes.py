@@ -57,7 +57,7 @@ class Command(BaseCommand):
                     date_updated = entry.get("DateUpdated") or timezone.now(),
                     status=Recipe.Status.ACTIVE if not entry.get("Retired", False) else Recipe.Status.ARCHIVED,
                     needs_revision=entry["NeedsRevision"],
-                    yield_quantity=entry["Yield"]["Quantity"],
+                    yield_quantity=entry["Yield"]["Quantity"] if entry["Yield"]["Quantity"] != 0 else None,
                     yield_unit=yield_unit_instance,
                     yield_detail=entry["Yield"].get("Extra", ""),
                     time_quantity=timedelta(minutes=entry["Time"]["Minutes"]) if entry["Time"]["Minutes"] != 0 else None,
