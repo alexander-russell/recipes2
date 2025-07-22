@@ -14,7 +14,11 @@
               <ul class="attributes">
                 <li>{{ recipe.time_quantity }}</li>
                 <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
-                <li>${{ recipe.get_cost.total|floatformat:2 }}</li>
+                {% if recipe.cost.amount_per_unit %}
+                  <li>${{ recipe.cost.amount_per_unit|floatformat:2 }} per {{recipe.cost.yield_unit.name}}</li>
+                {% elif recipe.cost.amount %}
+                  <li>${{ recipe.cost.total|floatformat:2 }}</li>
+                {% endif %}
                 {% if recipe.difficulty < 5 %}
                   <li>easy</li>
                 {% endif %}

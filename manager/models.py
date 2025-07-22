@@ -124,10 +124,17 @@ class Recipe(models.Model):
             full_success &= item_cost.success
             if item_cost.amount is not None:
                 total += item_cost.amount
-        
+
         # Populate model fields and save
         recipe_cost.recipe = self
         recipe_cost.total = total
+        if (
+            self.yield_unit is not None
+            and self.yield_quantity is not None
+            and self.yield_quantity is not 0
+        ):  # TODO this last check shouldn't be necessary with proper data import
+            recipe_cost.amount_per_unit = total / self.yield_quantity
+            recipe_cost.yield_unit = self.yield_unit
         recipe_cost.full_success = full_success
         recipe_cost.save()
         return recipe_cost
@@ -142,6 +149,10 @@ class Recipe(models.Model):
 class RecipeCost(models.Model):
     recipe = models.OneToOneField(Recipe, on_delete=models.CASCADE, related_name="cost")
     total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    amount_per_unit = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    yield_unit = models.ForeignKey(YieldUnit, on_delete=models.SET_NULL, null=True)
     full_success = models.BooleanField()
     updated_at = models.DateTimeField(auto_now=True)
 
