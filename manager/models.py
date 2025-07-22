@@ -109,7 +109,7 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
-    def get_cost(self) -> Decimal:
+    def get_total_cost(self) -> Decimal:
         total = Decimal("0.00")
         for item in self.items.all():
             item_cost = item.get_cost()
