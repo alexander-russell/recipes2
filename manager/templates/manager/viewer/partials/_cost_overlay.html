@@ -14,16 +14,16 @@
     <tbody>
       {% for cost in item_costs %}
         <tr>
-          <td>{{ cost.ingredientname }}</td>
+          <td>{{ cost.ingredient_name }}</td>
           <td>
-            {% if cost.itemquantity != 0 %}
-              {{ cost.itemquantity|floatformat:'-3'|detrail|wrap_scalable }}
+            {% if cost.item_quantity != 0 %}
+              {{ cost.item_quantity|floatformat:'-3'|detrail|wrap_scalable }}
             {% endif %}
-            {{ cost.itemunit }}
+            {{ cost.item_unit }}
           </td>
           <td>
             {% if cost.success %}
-              ${{ cost.price|floatformat:'-2'|detrail }} per {{ cost.pricequantity|floatformat:'-3'|detrail }} {{ cost.priceunit }}
+              ${{ cost.price|floatformat:'-2'|detrail }} per {{ cost.price_quantity|floatformat:'-3'|detrail }} {{ cost.price_unit }}
             {% else %}
               &ndash;
             {% endif %}
