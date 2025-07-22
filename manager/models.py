@@ -1,3 +1,4 @@
+from decimal import Decimal
 import os
 from django import forms
 from django.db import models
@@ -107,6 +108,14 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_cost(self) -> Decimal:
+        total = Decimal("0.00")
+        for item in self.items.all():
+            item_cost = item.get_cost()
+            if item_cost.amount is not None:
+                total += item_cost.amount
+        return total
 
 
 class Ingredient(models.Model):
@@ -254,7 +263,7 @@ class Item(models.Model):
                     )
                     item_cost.save()
                     return item_cost
-    
+
     def get_cost(self) -> "ItemCost":
         try:
             return self.cost
