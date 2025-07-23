@@ -85,8 +85,7 @@ def gallery(request):
 def explore(request):
     form = SearchForm(request.GET or None)
     recipes = (
-        Recipe.objects
-        .filter(status=Recipe.Status.ACTIVE)
+        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
         .select_related("cost__yield_unit", "yield_unit")
         .prefetch_related("images")
         .order_by("name")
@@ -150,7 +149,8 @@ def viewer(request, recipe_slug):
             "classification__type",
             "classification__category",
             "yield_unit",
-        ).prefetch_related(
+        )
+        .prefetch_related(
             "items",
             "items__ingredient",
             "items__unit",
