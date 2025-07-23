@@ -14,13 +14,15 @@ from django.utils.timezone import now
 
 
 def home(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.only("name", "slug")
     return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
 def index(request):
     index_entries = []  # defaultdict(list)
-    recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+    recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE).select_related(
+        "cuisine"
+    )
 
     # Collect all recipes
     for recipe in recipes:
@@ -69,7 +71,12 @@ def gallery(request):
 
 def explore(request):
     form = SearchForm(request.GET or None)
-    recipes = Recipe.objects.select_related("cost__yield_unit").select_related("yield_unit").prefetch_related("images").all()
+    recipes = (
+        Recipe.objects.select_related("cost__yield_unit")
+        .select_related("yield_unit")
+        .prefetch_related("images")
+        .all()
+    )
 
     # Ensure all recipes have a cost
     for recipe in recipes:
@@ -103,6 +110,9 @@ def contents(request):
         .order_by(
             "classification__type__name", "classification__category__name", "name"
         )
+        .select_related(
+            "classification", "classification__type", "classification__category"
+        )
     )
 
     grouped = defaultdict(lambda: defaultdict(list))
@@ -120,7 +130,24 @@ def contents(request):
 
 def viewer(request, recipe_slug):
     # Get recipe
-    recipe = get_object_or_404(Recipe, slug=recipe_slug)
+    recipe = get_object_or_404(
+        Recipe.objects.select_related(
+            "classification",
+            "classification__type",
+            "classification__category",
+            "yield_unit",
+        ).prefetch_related(
+            "items",
+            "items__ingredient",
+            "items__unit",
+            "items__cost",
+            "steps",
+            "images",
+            "timers",
+            "diaryentries",
+        ),
+        slug=recipe_slug,
+    )
 
     # Calculate costs
     item_costs = [item.get_cost() for item in recipe.items.all()]
