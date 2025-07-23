@@ -72,10 +72,11 @@ def gallery(request):
 def explore(request):
     form = SearchForm(request.GET or None)
     recipes = (
-        Recipe.objects.select_related("cost__yield_unit")
-        .select_related("yield_unit")
+        Recipe.objects
+        .filter(status=Recipe.Status.ACTIVE)
+        .select_related("cost__yield_unit", "yield_unit")
         .prefetch_related("images")
-        .all().order_by("name")
+        .order_by("name")
     )
 
     # Ensure all recipes have a cost
