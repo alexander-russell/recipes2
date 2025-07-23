@@ -14,7 +14,11 @@ from django.utils.timezone import now
 
 
 def home(request):
-    recipes = Recipe.objects.only("name", "slug").order_by("name")
+    recipes = (
+        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+        .only("name", "slug")
+        .order_by("name")
+    )
     return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
