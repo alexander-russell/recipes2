@@ -24,7 +24,7 @@ def home(request):
 
 def quick_search(request):
     recipes = (
-        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+        Recipe.objects.excluse(status=Recipe.Status.ARCHIVED)
         .only("name", "slug")
         .order_by("name")
     )
