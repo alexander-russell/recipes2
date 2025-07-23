@@ -159,7 +159,8 @@ def viewer(request, recipe_slug):
             "images",
             "timers",
             "diaryentries",
-        ),
+        )
+        .exclude(status=Recipe.Status.ARCHIVED),
         slug=recipe_slug,
     )
 
