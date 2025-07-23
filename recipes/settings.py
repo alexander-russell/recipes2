@@ -140,3 +140,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # From ChatGPT to set up debug toolbar
 INTERNAL_IPS = ["127.0.0.1"]
+
+# Disable redirect that suffixes a trailing slash to URLs
+APPEND_SLASH = False
