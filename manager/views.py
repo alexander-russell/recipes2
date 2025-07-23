@@ -14,7 +14,7 @@ from django.utils.timezone import now
 
 
 def home(request):
-    recipes = Recipe.objects.only("name", "slug")
+    recipes = Recipe.objects.only("name", "slug").order_by("name")
     return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
