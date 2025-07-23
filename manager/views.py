@@ -18,6 +18,15 @@ def home(request):
     return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
+def quick_search(request):
+    recipes = (
+        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+        .only("name", "slug")
+        .order_by("name")
+    )
+    return render(request, "manager/quick_search/index.html", {"recipes": recipes})
+
+
 def index(request):
     index_entries = []  # defaultdict(list)
     recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE).select_related(

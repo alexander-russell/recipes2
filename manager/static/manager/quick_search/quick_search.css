@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 100vh;
+    /* max-height: 100vh; */
+    margin: 0px;
+    padding: 0px;
+}
+
+section.search {
+    margin-top: 25vh;
+}
+
+input {
+    width: 35vw;
+    max-width: 100%;
+    /* padding: 0.5rem; */
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    font-size: 3.5rem !important;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    display: flex;
+    font-size: 2rem;
+}
+
+a {
+    padding: 0.3rem;
+    width: 100%;
+}
+
+li:hover,
+li.focused {
+    background-color: #f9f9f9;
+    text-decoration: underline;
+    color: inherit;
+}
+
+a:visited {
+    color: black;
+}
