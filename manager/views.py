@@ -75,7 +75,7 @@ def explore(request):
         Recipe.objects.select_related("cost__yield_unit")
         .select_related("yield_unit")
         .prefetch_related("images")
-        .all()
+        .all().order_by("name")
     )
 
     # Ensure all recipes have a cost
