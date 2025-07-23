@@ -1,19 +1,17 @@
-document.getElementById('search-form').addEventListener('submit', function(e) {
+document.getElementById('search-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const form = this;
-	const params = new URLSearchParams(new FormData(form)).toString();
-	//const url = form.action + '?' + params;
-    const url = form.action; //"{% url 'manager:explore' %}";
+    const url = form.action.split("?")[0] + '?' + new URLSearchParams(new FormData(form))
 
-	history.pushState(null, '', url);
+    history.pushState(null, '', url);
 
-    fetch(url + '?' + new URLSearchParams(new FormData(form)), {
+    fetch(url, {
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        document.querySelector('.results-wrapper').innerHTML = data.html;
-    });
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.results-wrapper').innerHTML = data.html;
+        });
 });
