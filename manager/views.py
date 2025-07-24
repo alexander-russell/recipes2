@@ -6,7 +6,7 @@ from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
-from manager.diagnostics import ingredients, items, recipes
+import manager.diagnostics as diagnostics
 from manager.forms import SearchForm
 from manager.models import Cuisine, Diary, Ingredient, Recipe
 from django.template.loader import render_to_string
@@ -224,9 +224,9 @@ def diagnostics_index_view(request):
     summary = {}
 
     for category_name, module in [
-        ("Recipes", recipes),
-        ("Items", items),
-        ("Ingredients", ingredients),
+        ("Recipes", diagnostics.recipes),
+        ("Items", diagnostics.items),
+        ("Ingredients", diagnostics.ingredients),
     ]:
         tests = module.run()
         counts = {
@@ -247,7 +247,7 @@ def diagnostics_index_view(request):
 def diagnostics_recipes_view(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Recipe Diagnostics",
-        "diagnostics": recipes.run(),
+        "diagnostics": diagnostics.recipes.run(),
     })
 
 
@@ -255,7 +255,7 @@ def diagnostics_recipes_view(request):
 def diagnostics_items_view(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Item Diagnostics",
-        "diagnostics": items.run(),
+        "diagnostics": diagnostics.items.run(),
     })
 
 
@@ -263,5 +263,5 @@ def diagnostics_items_view(request):
 def diagnostics_ingredients_view(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Ingredient Diagnostics",
-        "diagnostics": ingredients.run(),
+        "diagnostics": diagnostics.ingredients.run(),
     })
