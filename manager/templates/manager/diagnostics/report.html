@@ -1,5 +1,14 @@
 {% extends "admin/base_site.html" %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'manager:diagnostics_index' %}">Diagnostics</a>
+  {% if title %}
+    › {{ title }}
+  {% endif %}
+</div>
+{% endblock %}
+
 {% block content %}
   {% for title, test in diagnostics.items %}
     <section class="mb-6">

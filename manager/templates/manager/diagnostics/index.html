@@ -1,5 +1,14 @@
 {% extends 'admin/base_site.html' %}
 
+{% block title %}Manager diagnostics{% endblock title %}
+
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'manager:diagnostics_index' %}">Manager diagnostics</a></h1>
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
 {% block content %}
   {% for category, details in summary.items %}
     <h2 class="text-lg font-semibold mt-6 mb-2">
