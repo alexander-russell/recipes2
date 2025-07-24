@@ -224,9 +224,9 @@ def diagnostics_index(request):
     summary = {}
 
     for category_name, module in [
-        ("Recipes", diagnostics.recipe),
-        ("Items", diagnostics.item),
-        ("Ingredients", diagnostics.ingredient),
+        ("Recipe", diagnostics.recipe),
+        ("Item", diagnostics.item),
+        ("Ingredient", diagnostics.ingredient),
     ]:
         tests = module.run()
         counts = {
