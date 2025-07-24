@@ -221,14 +221,27 @@ def add_diary_entry(request, recipe_slug):
 
 @staff_member_required
 def diagnostics_index_view(request):
-    # Run diagnostics for summary counts only
-    summary = {
-        "Recipes": sum(len(section["data"]) for section in recipes.run().values()),
-        "Items": sum(len(section["data"]) for section in items.run().values()),
-        "Ingredients": sum(len(section["data"]) for section in ingredients.run().values()),
-    }
-    return render(request, "manager/diagnostics/index.html", {"summary": summary})
+    summary = {}
 
+    for category_name, module in [
+        ("Recipes", recipes),
+        ("Items", items),
+        ("Ingredients", ingredients),
+    ]:
+        tests = module.run()
+        counts = {
+            test_name: len(test_data["data"])
+            for test_name, test_data in tests.items()
+        }
+        summary[category_name] = {
+            "tests": counts,
+            "total": sum(counts.values()),
+        }
+
+    return render(request, "manager/diagnostics/index.html", {
+        "title": "Diagnostics Summary",
+        "summary": summary,
+    })
 
 @staff_member_required
 def diagnostics_recipes_view(request):

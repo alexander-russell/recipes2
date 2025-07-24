@@ -3,7 +3,7 @@
 {% block content %}
   {% for title, test in diagnostics.items %}
     <section class="mb-6">
-      <h2 class="text-lg font-semibold mb-2">{{ title }}</h2>
+      <h2 id="section-{{ title|slugify }}" class="text-lg font-semibold mb-2">{{ title }}</h2>
       {% include test.template with data=test.data only %}
     </section>
   {% empty %}

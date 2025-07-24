@@ -1,10 +1,28 @@
-{% extends "admin/base_site.html" %}
+{% extends 'admin/base_site.html' %}
 
 {% block content %}
-  <h1 class="text-xl font-bold mb-4">Diagnostics Summary</h1>
-  <ul class="list-disc list-inside">
-    <li><a href="{% url 'manager:diagnostics_recipes' %}">Recipes</a>: {{ summary.Recipes }} issue{{ summary.Recipes|pluralize }}</li>
-    <li><a href="{% url 'manager:diagnostics_items' %}">Items</a>: {{ summary.Items }} issue{{ summary.Items|pluralize }}</li>
-    <li><a href="{% url 'manager:diagnostics_ingredients' %}">Ingredients</a>: {{ summary.Ingredients }} issue{{ summary.Ingredients|pluralize }}</li>
-  </ul>
+  {% for category, details in summary.items %}
+    <h2 class="text-lg font-semibold mt-6 mb-2">
+      <a href="{% url 'manager:diagnostics_'|add:category|lower %}" class="text-blue-600 underline hover:text-blue-800">{{ category }} ({{ details.total }} issue{{ details.total|pluralize }})</a>
+    </h2>
+    {% comment %} <h2 class="text-lg font-semibold mt-6 mb-2">{{ category }} ({{ details.total }} issue{{ details.total|pluralize }})</h2> {% endcomment %}
+    <table class="table-auto w-full border border-collapse mb-4">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="text-left px-3 py-2 border">Test</th>
+          <th class="text-left px-3 py-2 border">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for test_name, count in details.tests.items %}
+          <tr>
+            <td class="px-3 py-1 border">
+              <a href="{% url 'manager:diagnostics_'|add:category|lower %}#section-{{ test_name|slugify }}">{{ test_name }}</a>
+            </td>
+            <td class="px-3 py-1 border">{{ count }} issue{{ count|pluralize }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
 {% endblock %}
