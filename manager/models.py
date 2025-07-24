@@ -273,6 +273,13 @@ class Item(models.Model):
                 item_cost.save()
                 return item_cost
             else:
+                # Fill out price details
+                item_cost.price = latest_price.price
+                item_cost.price_quantity = latest_price.quantity
+                item_cost.price_unit = (
+                    latest_price.unit.name if latest_price.unit else None
+                )
+
                 # If units are the same use 1, otherwise calculate it with unit graph
                 if self.unit.name == latest_price.unit.name:
                     conversion_factor = 1
@@ -294,11 +301,6 @@ class Item(models.Model):
                         / latest_price.quantity
                         * latest_price.price
                         * conversion_factor
-                    )
-                    item_cost.price = latest_price.price
-                    item_cost.price_quantity = latest_price.quantity
-                    item_cost.price_unit = (
-                        latest_price.unit.name if latest_price.unit else None
                     )
                     item_cost.save()
                     return item_cost
