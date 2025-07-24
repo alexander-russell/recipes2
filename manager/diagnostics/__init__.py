@@ -1,8 +1,8 @@
-from . import items, recipes, ingredients
+from . import item, recipe, ingredient
 
 def run_all():
     results = {}
-    results.update(items.run())
-    results.update(recipes.run())
-    results.update(ingredients.run())
+    results.update(item.run())
+    results.update(recipe.run())
+    results.update(ingredient.run())
     return results

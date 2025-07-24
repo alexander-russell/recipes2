@@ -220,13 +220,13 @@ def add_diary_entry(request, recipe_slug):
 
 
 @staff_member_required
-def diagnostics_index_view(request):
+def diagnostics_index(request):
     summary = {}
 
     for category_name, module in [
-        ("Recipes", diagnostics.recipes),
-        ("Items", diagnostics.items),
-        ("Ingredients", diagnostics.ingredients),
+        ("Recipes", diagnostics.recipe),
+        ("Items", diagnostics.item),
+        ("Ingredients", diagnostics.ingredient),
     ]:
         tests = module.run()
         counts = {
@@ -244,24 +244,24 @@ def diagnostics_index_view(request):
     })
 
 @staff_member_required
-def diagnostics_recipes_view(request):
+def diagnostics_recipe(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Recipe Diagnostics",
-        "diagnostics": diagnostics.recipes.run(),
+        "diagnostics": diagnostics.recipe.run(),
     })
 
 
 @staff_member_required
-def diagnostics_items_view(request):
+def diagnostics_item(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Item Diagnostics",
-        "diagnostics": diagnostics.items.run(),
+        "diagnostics": diagnostics.item.run(),
     })
 
 
 @staff_member_required
-def diagnostics_ingredients_view(request):
+def diagnostics_ingredient(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Ingredient Diagnostics",
-        "diagnostics": diagnostics.ingredients.run(),
+        "diagnostics": diagnostics.ingredient.run(),
     })
