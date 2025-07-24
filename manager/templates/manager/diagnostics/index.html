@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <h1 class="text-xl font-bold mb-4">Diagnostics Summary</h1>
+  <ul class="list-disc list-inside">
+    <li><a href="{% url 'manager:diagnostics_recipes' %}">Recipes</a>: {{ summary.Recipes }} issue{{ summary.Recipes|pluralize }}</li>
+    <li><a href="{% url 'manager:diagnostics_items' %}">Items</a>: {{ summary.Items }} issue{{ summary.Items|pluralize }}</li>
+    <li><a href="{% url 'manager:diagnostics_ingredients' %}">Ingredients</a>: {{ summary.Ingredients }} issue{{ summary.Ingredients|pluralize }}</li>
+  </ul>
+{% endblock %}

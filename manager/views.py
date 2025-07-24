@@ -6,11 +6,13 @@ from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
+from manager.diagnostics import ingredients, items, recipes
 from manager.forms import SearchForm
-from manager.models import Cuisine, Diary, Recipe
+from manager.models import Cuisine, Diary, Ingredient, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def home(request):
@@ -215,3 +217,38 @@ def add_diary_entry(request, recipe_slug):
         )
         return JsonResponse({"html": html})
     return HttpResponseBadRequest("Invalid request")
+
+
+@staff_member_required
+def diagnostics_index_view(request):
+    # Run diagnostics for summary counts only
+    summary = {
+        "Recipes": sum(len(section["data"]) for section in recipes.run().values()),
+        "Items": sum(len(section["data"]) for section in items.run().values()),
+        "Ingredients": sum(len(section["data"]) for section in ingredients.run().values()),
+    }
+    return render(request, "manager/diagnostics/index.html", {"summary": summary})
+
+
+@staff_member_required
+def diagnostics_recipes_view(request):
+    return render(request, "manager/diagnostics/report.html", {
+        "title": "Recipe Diagnostics",
+        "diagnostics": recipes.run(),
+    })
+
+
+@staff_member_required
+def diagnostics_items_view(request):
+    return render(request, "manager/diagnostics/report.html", {
+        "title": "Item Diagnostics",
+        "diagnostics": items.run(),
+    })
+
+
+@staff_member_required
+def diagnostics_ingredients_view(request):
+    return render(request, "manager/diagnostics/report.html", {
+        "title": "Ingredient Diagnostics",
+        "diagnostics": ingredients.run(),
+    })

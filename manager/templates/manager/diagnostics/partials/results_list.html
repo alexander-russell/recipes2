@@ -1,0 +1,11 @@
+{% if data %}
+  <ul class="list-disc list-inside mb-4">
+    {% for obj in data %}
+      <li>
+        {{ obj.name }} (ID: {{ obj.id }})
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-gray-500 italic">No issues found.</p>
+{% endif %}
