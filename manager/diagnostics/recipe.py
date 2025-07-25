@@ -1,6 +1,8 @@
 from datetime import timedelta
 from django.utils.timezone import now
 from manager.models import Recipe
+from django.db.models import Count
+
 
 def run():
     old_threshold = now().date() - timedelta(days=60)
@@ -8,14 +10,18 @@ def run():
     return {
         "Missing Yield Quantity": Recipe.objects.filter(yield_quantity__isnull=True),
         "Missing Time Quantity": Recipe.objects.filter(time_quantity__isnull=True),
-        "Recipes Not Updated Recently": Recipe.objects.filter(date_updated__lt=old_threshold),
+        "Recipes Not Updated Recently": Recipe.objects.filter(
+            date_updated__lt=old_threshold
+        ),
         "Untested Recipes": Recipe.objects.filter(tested=False),
         "Recipes Needing Revision": Recipe.objects.filter(needs_revision=True),
     }
 
+
 from datetime import timedelta
 from django.utils.timezone import now
 from manager.models import Recipe
+
 
 def run():
     old_threshold = now().date() - timedelta(days=60)
