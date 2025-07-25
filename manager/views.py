@@ -17,7 +17,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 def home(request):
     recipes = (
-        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+        Recipe.objects.active()
         .only("name", "slug")
         .order_by("name")
     )
@@ -35,7 +35,7 @@ def quick_search(request):
 
 def index(request):
     index_entries = []  # defaultdict(list)
-    recipes = Recipe.objects.filter(status=Recipe.Status.ACTIVE).select_related(
+    recipes = Recipe.objects.active().select_related(
         "cuisine"
     )
 
@@ -87,7 +87,7 @@ def gallery(request):
 def explore(request):
     form = SearchForm(request.GET or None)
     recipes = (
-        Recipe.objects.filter(status=Recipe.Status.ACTIVE)
+        Recipe.objects.active()
         .select_related("cost__yield_unit", "yield_unit")
         .prefetch_related("images")
         .order_by("name")
@@ -119,8 +119,8 @@ def explore(request):
 def contents(request):
     focus = request.GET.get("focus")
     recipes = (
-        Recipe.objects.all()
-        .filter(status=Recipe.Status.ACTIVE)
+        Recipe.objects
+        .active()
         .select_related("classification")
         .order_by(
             "classification__type__name", "classification__category__name", "name"
@@ -247,6 +247,7 @@ def diagnostics_index(request):
 def diagnostics_recipe(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Recipe Diagnostics",
+        "admin_change_url": "admin:manager_recipe_change",
         "diagnostics": diagnostics.recipe.run(),
     })
 
@@ -255,6 +256,7 @@ def diagnostics_recipe(request):
 def diagnostics_item(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Item Diagnostics",
+        "admin_change_url": "admin:manager_item_change",
         "diagnostics": diagnostics.item.run(),
     })
 
@@ -263,5 +265,6 @@ def diagnostics_item(request):
 def diagnostics_ingredient(request):
     return render(request, "manager/diagnostics/report.html", {
         "title": "Ingredient Diagnostics",
+        "admin_change_url": "admin:manager_ingredient_change",
         "diagnostics": diagnostics.ingredient.run(),
     })

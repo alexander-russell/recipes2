@@ -56,6 +56,19 @@ class Cuisine(models.Model):
         return self.name
 
 
+class RecipeQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(status=Recipe.Status.ACTIVE)
+
+
+class RecipeManager(models.Manager):
+    def get_queryset(self):
+        return RecipeQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+
 class Recipe(models.Model):
     class Status(models.TextChoices):
         DRAFT = "draft", "Draft"  # For unfinished recipes
@@ -101,6 +114,9 @@ class Recipe(models.Model):
     )
     description = models.TextField()
 
+    # Use custom manager (gives me access to custom queryset)
+    objects = RecipeManager()
+
     # def save(self, *args, **kwargs):
     #     if not self.pk or Recipe.objects.get(pk=self.pk).name != self.name:
     #         self.slug = slugify(self.name)
@@ -108,6 +124,9 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_queryset(self):
+        return RecipeQuerySet(self.model, using=self._db)
 
     def update_cost(self) -> "RecipeCost":
         # Get or create associated RecipeCost
