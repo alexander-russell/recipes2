@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Ingredient Price</title>
+  </head>
+  <body>
+    <h1>Add Ingredient Price</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <datalist id="ingredient-list">
+        {% for obj in form.ingredients_by_name.values %}
+          <option value="{{ obj.name }}"></option>
+        {% endfor %}
+      </datalist>
+      <datalist id="unit-list">
+        {% for obj in form.units_by_name.values %}
+          <option value="{{ obj.name }}"></option>
+        {% endfor %}
+      </datalist>
+      <datalist id="source-list">
+        {% for obj in form.sources_by_name.values %}
+          <option value="{{ obj.name }}"></option>
+        {% endfor %}
+      </datalist>
+      <button type="submit">Add</button>
+    </form>
+    {% if messages %}
+      <div id="toast-container">
+        {% for message in messages %}
+          <div class="toast {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <script src="{% static 'manager/ingredient_price/add/index.js' %}"></script>
+  </body>
+</html>

@@ -13,6 +13,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
 
 
 def home(request):
@@ -209,21 +210,21 @@ def add_diary_entry(request, recipe_slug):
         return JsonResponse({"html": html})
     return HttpResponseBadRequest("Invalid request")
 
+
 def add_ingredient_price(request):
+    # Use form data and save date in session
     if request.method == "POST":
         form = IngredientPriceForm(request.POST)
         if form.is_valid():
             form.save()
-            if request.htmx:
-                return render(request, "partials/ingredient_price_success.html")
-            return redirect("ingredient_price_add")
-    else:
-        form = IngredientPriceForm()
+            messages.success(request, "Ingredient price added.")
+            request.session["last_price_date"] = form.cleaned_data["date"].isoformat()
 
-    if request.htmx:
-        return render(request, "partials/ingredient_price_form.html", {"form": form})
+    # Construct form with date prefilled from session
+    initial_date = request.session.get("last_price_date") or now().date().isoformat()
+    form = IngredientPriceForm(initial={"date": initial_date})
 
-    return render(request, "ingredient_price_add.html", {"form": form})
+    return render(request, "manager/ingredient_price/add/index.html", {"form": form})
 
 
 @staff_member_required

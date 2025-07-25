@@ -1,33 +1,58 @@
-from manager.models import IngredientPrice, Ingredient, Unit
+from manager.models import IngredientPrice, Ingredient, IngredientSource, Unit
 from django import forms
 
 
 class SearchForm(forms.Form):
     query = forms.CharField(label="Query", max_length=100, required=False)
 
-class IngredientPriceForm(forms.ModelForm):
-    ingredient_name = forms.CharField()
-    unit_name = forms.CharField()
 
+class IngredientPriceForm(forms.ModelForm):
     class Meta:
         model = IngredientPrice
-        fields = ["date", "price", "quantity", "source", "detail"]
+        fields = ["date", "ingredient", "price", "quantity", "unit", "source", "detail"]
 
-    def clean_ingredient_name(self):
-        name = self.cleaned_data["ingredient_name"].strip()
-        try:
-            return Ingredient.objects.get(name__iexact=name)
-        except Ingredient.DoesNotExist:
-            raise forms.ValidationError("Unknown ingredient")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    def clean_unit_name(self):
-        name = self.cleaned_data["unit_name"].strip()
-        try:
-            return Unit.objects.get(name__iexact=name)
-        except Unit.DoesNotExist:
-            raise forms.ValidationError("Unknown unit")
+        # Create dictionary of instances by name for all the datalist fields
+        self.ingredients_by_name = {obj.name: obj for obj in Ingredient.objects.all()}
+        self.units_by_name = {obj.name: obj for obj in Unit.objects.all()}
+        self.sources_by_name = {obj.name: obj for obj in IngredientSource.objects.all()}
 
-    def save(self, commit=True):
-        self.instance.ingredient = self.cleaned_data["ingredient_name"]
-        self.instance.unit = self.cleaned_data["unit_name"]
-        return super().save(commit=commit)
+        # Style the foreign key fields as text inputs with data lists, autofocus ingredient input
+        self.fields["ingredient"] = forms.CharField(
+            label="Ingredient",
+            widget=forms.TextInput(
+                attrs={
+                    "list": "ingredient-list",
+                    "autofocus": "autofocus",
+                }
+            ),
+        )
+        self.fields["unit"] = forms.CharField(
+            label="Unit", widget=forms.TextInput(attrs={"list": "unit-list"})
+        )
+        self.fields["source"] = forms.CharField(
+            label="Source", widget=forms.TextInput(attrs={"list": "source-list"})
+        )
+
+    def clean_ingredient(self):
+        name = self.cleaned_data.get("ingredient")
+        object = self.ingredients_by_name.get(name)
+        if not object:
+            raise forms.ValidationError(f"No ingredient named '{name}' found.")
+        return object
+
+    def clean_unit(self):
+        name = self.cleaned_data.get("unit")
+        object = self.units_by_name.get(name)
+        if not object:
+            raise forms.ValidationError(f"No unit named '{name}' found.")
+        return object
+
+    def clean_source(self):
+        name = self.cleaned_data.get("source")
+        object = self.sources_by_name.get(name)
+        if not object:
+            raise forms.ValidationError(f"No source named '{name}' found.")
+        return object
