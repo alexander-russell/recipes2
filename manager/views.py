@@ -93,27 +93,25 @@ def explore(request):
         .order_by("name")
     )
 
+    # Get results
+    if form.is_valid():
+        query = form.cleaned_data.get("query")
+        if query:
+            recipes = recipes.filter(name__icontains=query)
+
     # Ensure all recipes have a cost
     for recipe in recipes:
         recipe.get_cost()
 
-    if form.is_valid():
-        query = form.cleaned_data.get("query")
-
-        if query:
-            recipes = recipes.filter(name__icontains=query)
-
-    if request.headers.get("x-requested-with") == "XMLHttpRequest":
-        html = render_to_string(
-            "manager/explore/partials/_results.html",
-            {"recipes": recipes},
-            request=request,
+    # Render template (partial for htmx request, whole thing otherwise)
+    if request.headers.get("Hx-Request"):
+        return render(
+            request, "manager/explore/partials/_results.html", {"recipes": recipes}
         )
-        return JsonResponse({"html": html})
-
-    return render(
-        request, "manager/explore/index.html", {"form": form, "recipes": recipes}
-    )
+    else:
+        return render(
+            request, "manager/explore/index.html", {"form": form, "recipes": recipes}
+        )
 
 
 def contents(request):

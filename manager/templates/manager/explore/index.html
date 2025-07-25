@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'manager/master/master.css' %}" />
     <link rel="stylesheet" href="{% static 'manager/master/forms.css' %}" />
     <link rel="stylesheet" href="{% static 'manager/explore/explore.css' %}" />
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <title>Explore | Alex's Recipes</title>
   </head>
   <body>
@@ -28,7 +29,7 @@
             </li>
         </ul>
     </header>
-    <form id="search-form" class="search form">
+    <form id="search-form" class="search form" hx-get="{% url 'manager:explore' %}" hx-target=".results-wrapper" hx-push-url="true" hx-trigger="submit">
       {{ form }}
       <button type="submit" class="search">Go</button>
     </form>
@@ -36,6 +37,5 @@
     <div class="results-wrapper">
       {% include 'manager/explore/partials/_results.html' %}
     </div>
-    <script src="{% static 'manager/explore/explore.js' %}"></script>
   </body>
 </html>
