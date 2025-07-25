@@ -124,7 +124,7 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def get_queryset(self):
         return RecipeQuerySet(self.model, using=self._db)
 
@@ -250,13 +250,19 @@ class ItemGroup(models.Model):
 class Item(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="items")
     position = models.PositiveIntegerField(default=0, db_index=True)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name="items")
+    ingredient = models.ForeignKey(
+        Ingredient, on_delete=models.CASCADE, related_name="items"
+    )
     ingredient_detail = models.CharField(max_length=100, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=3)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name="items")
     unit_detail = models.CharField(max_length=100, blank=True)
     group = models.ForeignKey(
-        ItemGroup, on_delete=models.SET_NULL, blank=True, null=True, related_name="items"
+        ItemGroup,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="items",
     )
 
     class Meta:
