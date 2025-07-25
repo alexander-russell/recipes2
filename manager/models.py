@@ -179,6 +179,9 @@ class RecipeCost(models.Model):
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        ordering = ["name"]
+
     def __str__(self):
         return self.name
 
@@ -188,6 +191,9 @@ class Ingredient(models.Model):
 
 class Unit(models.Model):
     name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -213,6 +219,9 @@ class Conversion(models.Model):
 
 class IngredientSource(models.Model):
     name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
