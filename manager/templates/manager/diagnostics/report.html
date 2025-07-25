@@ -13,7 +13,7 @@
   {% for title, test in diagnostics.items %}
     <section class="mb-6">
       <h2 id="section-{{ title|slugify }}" class="text-lg font-semibold mb-2">{{ title }}</h2>
-      {% include test.template with data=test.data only %}
+      {% include test.template with data=test.data admin_change_url=admin_change_url only %}
     </section>
   {% empty %}
     <p>No diagnostics found.</p>

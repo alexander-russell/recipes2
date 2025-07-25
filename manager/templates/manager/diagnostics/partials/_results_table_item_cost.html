@@ -1,0 +1,23 @@
+{% extends "manager/diagnostics/partials/_results_table_base.html" %}
+
+{% block name_value %}
+  {{ obj.ingredient.name }}
+{% endblock %}
+
+{% block extra_headers_before %}
+<th class="text-left border px-2 py-1">Recipe</th>
+<th class="text-left border px-2 py-1">Open in viewer</th>
+{% endblock %}
+
+{% block extra_columns_before %}
+<td class="border px-2 py-1">{{ obj.recipe.name }}</td>
+<td class="border px-2 py-1"><a href="{{ obj.recipe.slug }}">View</a></td>
+{% endblock %}
+
+{% block extra_headers_after %}
+<th class="text-left border px-2 py-1">Cost Reason</th>
+{% endblock %}
+
+{% block extra_columns_after %}
+<td class="border px-2 py-1">{{ obj.cost.reason }}</td>
+{% endblock %}

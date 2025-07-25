@@ -10,14 +10,7 @@ def run():
     )
     return {
         "Items with Failed Cost Lookup": {
-            "template": "manager/diagnostics/partials/cost_results_table.html",
-            "data": [
-                {
-                    "item": item,
-                    "price_unit": item.cost.price_unit,
-                    "reason": item.cost.reason,
-                }
-                for item in failed_items
-            ],
+            "template": "manager/diagnostics/partials/_results_table_item_cost.html",
+            "data": failed_items
         }
     }

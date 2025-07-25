@@ -1,0 +1,11 @@
+{% extends "manager/diagnostics/partials/_results_table_base.html" %}
+
+{% block extra_headers_before %}
+<th class="text-left border px-2 py-1">Recipe</th>
+<th class="text-left border px-2 py-1">Open in viewer</th>
+{% endblock %}
+
+{% block extra_columns_before %}
+<td class="border px-2 py-1">{{ obj.items.first.recipe.name }}</td>
+<td class="border px-2 py-1"><a href="{{ obj.items.first.recipe.slug }}">View</a></td>
+{% endblock %}

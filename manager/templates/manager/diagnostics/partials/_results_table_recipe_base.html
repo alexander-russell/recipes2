@@ -1,0 +1,11 @@
+{% extends 'manager/diagnostics/partials/_results_table_base.html' %}
+
+{% block extra_headers_after %}
+  <th class="text-left border px-2 py-1">Open in viewer</th>
+{% endblock %}
+
+{% block extra_columns_after %}
+  <td class="border px-2 py-1">
+    <a href="{% url "manager:viewer" obj.slug %}">View</a>
+  </td>
+{% endblock %}
