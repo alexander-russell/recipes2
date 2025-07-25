@@ -16,11 +16,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 
 def home(request):
-    recipes = (
-        Recipe.objects.active()
-        .only("name", "slug")
-        .order_by("name")
-    )
+    recipes = Recipe.objects.active().only("name", "slug").order_by("name")
     return render(request, "manager/home/index.html", {"recipes": recipes})
 
 
@@ -35,9 +31,7 @@ def quick_search(request):
 
 def index(request):
     index_entries = []  # defaultdict(list)
-    recipes = Recipe.objects.active().select_related(
-        "cuisine"
-    )
+    recipes = Recipe.objects.active().select_related("cuisine")
 
     # Collect all recipes
     for recipe in recipes:
@@ -117,8 +111,7 @@ def explore(request):
 def contents(request):
     focus = request.GET.get("focus")
     recipes = (
-        Recipe.objects
-        .active()
+        Recipe.objects.active()
         .select_related("classification")
         .order_by(
             "classification__type__name", "classification__category__name", "name"
@@ -228,41 +221,57 @@ def diagnostics_index(request):
     ]:
         tests = module.run()
         counts = {
-            test_name: len(test_data["data"])
-            for test_name, test_data in tests.items()
+            test_name: len(test_data["data"]) for test_name, test_data in tests.items()
         }
         summary[category_name] = {
             "tests": counts,
             "total": sum(counts.values()),
         }
 
-    return render(request, "manager/diagnostics/index.html", {
-        "title": "Diagnostics Summary",
-        "summary": summary,
-    })
+    return render(
+        request,
+        "manager/diagnostics/index.html",
+        {
+            "title": "Diagnostics Summary",
+            "summary": summary,
+        },
+    )
+
 
 @staff_member_required
 def diagnostics_recipe(request):
-    return render(request, "manager/diagnostics/report.html", {
-        "title": "Recipe Diagnostics",
-        "admin_change_url": "admin:manager_recipe_change",
-        "diagnostics": diagnostics.recipe.run(),
-    })
+    return render(
+        request,
+        "manager/diagnostics/report.html",
+        {
+            "title": "Recipe Diagnostics",
+            "admin_change_url": "admin:manager_recipe_change",
+            "diagnostics": diagnostics.recipe.run(),
+        },
+    )
 
 
 @staff_member_required
 def diagnostics_item(request):
-    return render(request, "manager/diagnostics/report.html", {
-        "title": "Item Diagnostics",
-        "admin_change_url": "admin:manager_item_change",
-        "diagnostics": diagnostics.item.run(),
-    })
+    return render(
+        request,
+        "manager/diagnostics/report.html",
+        {
+            "title": "Item Diagnostics",
+            "admin_change_url": "admin:manager_item_change",
+            "diagnostics": diagnostics.item.run(),
+        },
+    )
 
 
 @staff_member_required
 def diagnostics_ingredient(request):
-    return render(request, "manager/diagnostics/report.html", {
-        "title": "Ingredient Diagnostics",
-        "admin_change_url": "admin:manager_ingredient_change",
-        "diagnostics": diagnostics.ingredient.run(),
-    })
+    return render(
+        request,
+        "manager/diagnostics/report.html",
+        {
+            "title": "Ingredient Diagnostics",
+            "admin_change_url": "admin:manager_ingredient_change",
+            "diagnostics": diagnostics.ingredient.run(),
+        },
+    )
