@@ -14,6 +14,7 @@ urlpatterns = [
     path("gallery", views.gallery, name="gallery"),
     path("explore", views.explore, name="explore"),
     path("contents", views.contents, name="contents"),
+    path("ingredient-price/add", views.add_ingredient_price, name="add_ingredient_price"),
     path("diagnostics", views.diagnostics_index, name="diagnostics_index"),
     path("diagnostics/recipe", views.diagnostics_recipe, name="diagnostics_recipe"),
     path("diagnostics/item", views.diagnostics_item, name="diagnostics_item"),

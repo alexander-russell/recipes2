@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
 import manager.diagnostics as diagnostics
-from manager.forms import SearchForm
+from manager.forms import IngredientPriceForm, SearchForm
 from manager.models import Cuisine, Diary, Ingredient, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
@@ -208,6 +208,22 @@ def add_diary_entry(request, recipe_slug):
         )
         return JsonResponse({"html": html})
     return HttpResponseBadRequest("Invalid request")
+
+def add_ingredient_price(request):
+    if request.method == "POST":
+        form = IngredientPriceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            if request.htmx:
+                return render(request, "partials/ingredient_price_success.html")
+            return redirect("ingredient_price_add")
+    else:
+        form = IngredientPriceForm()
+
+    if request.htmx:
+        return render(request, "partials/ingredient_price_form.html", {"form": form})
+
+    return render(request, "ingredient_price_add.html", {"form": form})
 
 
 @staff_member_required
