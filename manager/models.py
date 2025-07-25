@@ -227,7 +227,7 @@ class IngredientPrice(models.Model):
     quantity = models.DecimalField(max_digits=7, decimal_places=3)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     source = models.ForeignKey(IngredientSource, on_delete=models.CASCADE)
-    detail = models.CharField(max_length=200)
+    detail = models.CharField(max_length=200, null=True, blank=True)
 
 
 class ItemGroup(models.Model):
