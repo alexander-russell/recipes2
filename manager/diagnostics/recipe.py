@@ -47,4 +47,16 @@ def run():
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(needs_revision=True),
         },
+        "Recipes Missing Main Image": {
+            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "data": Recipe.objects.active().exclude(images__name="main"),
+        },
+        "Only Recipe in Classification": {
+            "template": "manager/diagnostics/partials/_results_table_recipe_classification.html",
+            "data": (
+                Recipe.objects.active()
+                .annotate(recipe_in_classification_count=Count("classification__recipes"))
+                .filter(recipe_in_classification_count=1)
+            ),
+        },
     }
