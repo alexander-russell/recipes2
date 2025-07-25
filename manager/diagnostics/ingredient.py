@@ -1,9 +1,9 @@
-from manager.models import Ingredient
+from manager.models import Ingredient, Recipe
 
 def run():
     return {
         "Ingredients Missing Price Records": {
-            "template": "manager/diagnostics/partials/results_list.html",
-            "data": Ingredient.objects.filter(prices__isnull=True),
+            "template": "manager/diagnostics/partials/_results_table_ingredient_base.html",
+            "data": Ingredient.objects.filter(items__recipe__status=Recipe.Status.ACTIVE, items__quantity__gt=0).filter(prices__isnull=True).distinct(),
         }
     }

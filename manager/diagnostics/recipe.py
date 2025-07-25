@@ -23,22 +23,22 @@ def run():
     return {
         "Missing Yield Quantity": {
             "template": "manager/diagnostics/partials/results_list.html",
-            "data": Recipe.objects.filter(yield_quantity__isnull=True),
+            "data": Recipe.objects.active().filter(yield_quantity__isnull=True),
         },
         "Missing Time Quantity": {
             "template": "manager/diagnostics/partials/results_list.html",
-            "data": Recipe.objects.filter(time_quantity__isnull=True),
+            "data": Recipe.objects.active().filter(time_quantity__isnull=True),
         },
         "Recipes Not Updated Recently": {
             "template": "manager/diagnostics/partials/results_list.html",
-            "data": Recipe.objects.filter(date_updated__lt=old_threshold),
+            "data": Recipe.objects.active().filter(date_updated__lt=old_threshold),
         },
         "Untested Recipes": {
             "template": "manager/diagnostics/partials/results_list.html",
-            "data": Recipe.objects.filter(tested=False),
+            "data": Recipe.objects.active().filter(tested=False),
         },
         "Recipes Needing Revision": {
             "template": "manager/diagnostics/partials/results_list.html",
-            "data": Recipe.objects.filter(needs_revision=True),
+            "data": Recipe.objects.active().filter(needs_revision=True),
         },
     }

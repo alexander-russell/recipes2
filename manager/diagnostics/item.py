@@ -1,9 +1,9 @@
-from manager.models import Item
+from manager.models import Item, Recipe
 
 
 def run():
     failed_items = (
-        Item.objects.filter(cost__success=False)
+        Item.objects.filter(recipe__status=Recipe.Status.ACTIVE).filter(cost__success=False)
         .exclude(cost__reason__in=["zeroquantity", "latestpriceiszero"])
         .select_related("cost")
         .order_by("ingredient__name")
