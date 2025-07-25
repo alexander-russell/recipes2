@@ -27,23 +27,23 @@ def run():
     old_threshold = now().date() - timedelta(days=60)
 
     return {
-        "Missing Yield Quantity": {
+        "No Yield Quantity": {
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(yield_quantity__isnull=True),
         },
-        "Missing Time Quantity": {
+        "No Time Quantity": {
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(time_quantity__isnull=True),
         },
-        "Recipes Not Updated Recently": {
+        "Stale": {
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(date_updated__lt=old_threshold),
         },
-        "Untested Recipes": {
+        "Untested": {
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(tested=False),
         },
-        "Recipes Needing Revision": {
+        "Marked For Revision": {
             "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(needs_revision=True),
         },

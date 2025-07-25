@@ -9,7 +9,7 @@ def run():
         .order_by("ingredient__name")
     )
     return {
-        "Items with Failed Cost Lookup": {
+        "No Cost": {
             "template": "manager/diagnostics/partials/_results_table_item_cost.html",
             "data": failed_items
         }
