@@ -8,7 +8,7 @@ from django.template import loader
 from django.templatetags.static import static
 import manager.diagnostics as diagnostics
 from manager.forms import IngredientPriceForm, SearchForm
-from manager.models import Cuisine, Diary, Ingredient, Recipe
+from manager.models import Cuisine, Diary, Ingredient, IngredientPrice, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
@@ -226,6 +226,27 @@ def add_ingredient_price(request):
 
     return render(request, "manager/ingredient_price/add/index.html", {"form": form})
 
+
+def get_latest_ingredient_price(request):
+    name = request.GET.get("name")
+    try:
+        ingredient = Ingredient.objects.get(name=name)
+        latest = (
+            IngredientPrice.objects.filter(ingredient=ingredient)
+            .order_by("-date")
+            .select_related("unit", "source")
+            .first()
+        )
+        if latest:
+            return JsonResponse({
+                "price": latest.price,
+                "quantity": latest.quantity,
+                "unit": latest.unit.name,
+                "source": latest.source.name,
+            })
+    except Ingredient.DoesNotExist:
+        pass
+    return JsonResponse({}, status=404)
 
 @staff_member_required
 def diagnostics_index(request):

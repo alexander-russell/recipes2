@@ -15,6 +15,7 @@ urlpatterns = [
     path("explore", views.explore, name="explore"),
     path("contents", views.contents, name="contents"),
     path("ingredient-price/add", views.add_ingredient_price, name="add_ingredient_price"),
+    path("api/latest-ingredient/", views.get_latest_ingredient_price, name="latest-ingredient"),
     path("diagnostics", views.diagnostics_index, name="diagnostics_index"),
     path("diagnostics/recipe", views.diagnostics_recipe, name="diagnostics_recipe"),
     path("diagnostics/item", views.diagnostics_item, name="diagnostics_item"),
