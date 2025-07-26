@@ -108,6 +108,23 @@ def explore(request):
             request, "manager/explore/index.html", {"form": form, "recipes": recipes}
         )
 
+def gallery(request):
+    recipes = Recipe.objects.active().prefetch_related('images')
+
+    images = []
+    for recipe in recipes:
+        first_image = recipe.images.first()
+        if first_image:
+            images.append({
+                'slug': recipe.slug,
+                'image_url': first_image.image.url,
+                'alt_text': first_image.alt_text,
+            })
+
+    context = {
+        'images': images,
+    }
+    return render(request, 'manager/gallery/index.html', context)
 
 def contents(request):
     focus = request.GET.get("focus")
