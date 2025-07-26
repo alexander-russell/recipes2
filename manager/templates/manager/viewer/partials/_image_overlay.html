@@ -2,6 +2,6 @@
 
 {% block content %}
   {% with image=recipe.images.all|first %}
-    <img class="" src="{{ image.image.url }}" alt="{{ image.image.name }}" onclick="event.stopPropagation()" />
+    <img class="" src="{{ image.image.url }}" alt="{{ image.alt_text }}" onclick="event.stopPropagation()" />
   {% endwith %}
 {% endblock %}
