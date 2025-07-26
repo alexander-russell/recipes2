@@ -399,6 +399,11 @@ class Timer(models.Model):
 def image_upload_to(instance, filename):
     return os.path.join("manager", str(instance.recipe.id), "images", filename)
 
+def validate_avif_extension(value):
+    extension = os.path.splitext(value.name)[1].lower()
+    if extension not in ['.avif']:
+        raise ValidationError('Must be an AVIF image.')
+
 
 class Image(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="images")
@@ -406,7 +411,7 @@ class Image(models.Model):
     name = models.CharField(max_length=100)
     alt_text = models.CharField(max_length=200, null=True)
     show_in_gallery = models.BooleanField()
-    image = models.ImageField(upload_to=image_upload_to)
+    image = models.FileField(upload_to=image_upload_to, validators=[validate_avif_extension])
 
     class Meta:
         unique_together = ("recipe", "name")

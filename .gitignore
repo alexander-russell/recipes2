@@ -7,3 +7,6 @@
 # Python temp stuff
 *.pyc
 /backups
+
+# Ignore recipe images
+media/manager/*/images/
