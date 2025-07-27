@@ -8,6 +8,9 @@
       <dd>
         {% for diaryentry in day.list %}
           <strong>{{ diaryentry.date|date:'H:i' }}</strong>
+          {% if diaryentry.user and diaryentry.user.username != 'admin' %}
+            <span class="diary-username">&lt;{{ diaryentry.user.username }}&gt;</span>
+          {% endif %}
           {{ diaryentry.content }}
         {% endfor %}
       </dd>
