@@ -10,3 +10,6 @@
 
 # Ignore recipe images
 media/manager/*/images/
+
+# Ignore .env
+.env
