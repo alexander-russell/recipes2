@@ -187,3 +187,12 @@ class RecipeAdmin(admin.ModelAdmin):
 class ConversionAdmin(admin.ModelAdmin):
     list_display = ["from_unit", "factor", "to_unit", "ingredient"]
     ordering = ["ingredient", "from_unit", "to_unit"]
+
+# class UserAdmin(admin.ModelAdmin):
+
+@admin.register(Diary)
+class DiaryAdmin(admin.ModelAdmin):
+    list_display = ("date", "user", "recipe", "content")
+    list_filter = ("user", "date", "recipe")
+    search_fields = ("content", "recipe__name", "user__username")
+    date_hierarchy = "date"
