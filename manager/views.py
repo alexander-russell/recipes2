@@ -13,7 +13,9 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.middleware.csrf import get_token
 
 
 def home(request):
@@ -207,15 +209,28 @@ def viewer(request, recipe_slug):
         },
     )
 
+@login_required
+def get_csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
+
+@login_required
+def accounts_login_success(request):
+    return render(request, "manager/accounts/login/success/index.html")
 
 def add_diary_entry(request, recipe_slug):
     if request.method == "POST":
+        if not request.user.has_perm("manager.add_diary"):
+            return JsonResponse({
+                "success": False,
+                "reason": "lackspermission"
+            }, status=403)
+        
         recipe = get_object_or_404(Recipe, slug=recipe_slug)
         content = request.POST.get("content")
         if not content:
             return HttpResponseBadRequest("Missing content")
 
-        Diary.objects.create(recipe=recipe, date=now(), content=content)
+        Diary.objects.create(recipe=recipe, date=now(), content=content, user=request.user)
         recipe.refresh_from_db()
         html = render_to_string(
             "manager/viewer/partials/_diary_overlay.html",

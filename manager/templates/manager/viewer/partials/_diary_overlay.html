@@ -15,7 +15,7 @@
     <dt>{% now "Y-m-d" %}</dt>
     <dd class="form">
       <strong id="diary-current-time">{% now 'H:i' %}</strong>
-      <span id="diary-input" contenteditable="true"></span>
+      <span id="diary-input" contenteditable="true"></span><span id="diary-add-login-tip" class="hidden">you might need to log in <a href="{% url 'manager:login' %}" target="_blank" class="clickable">here</a></span>
     </dd>
   </dl>
 {% endblock %}

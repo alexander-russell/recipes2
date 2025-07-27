@@ -32,6 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
+LOGIN_REDIRECT_URL = "/accounts/login/success/"
 
 # Application definition
 
