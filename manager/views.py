@@ -16,7 +16,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.middleware.csrf import get_token
-
+from django.db.models import Q
 
 def home(request):
     recipes = Recipe.objects.active().only("name", "slug").order_by("name")
@@ -93,8 +93,63 @@ def explore(request):
     # Get results
     if form.is_valid():
         query = form.cleaned_data.get("query")
+        search_scope = form.cleaned_data.get("search_scope", "title")
         if query:
-            recipes = recipes.filter(name__icontains=query)
+            if search_scope == "title":
+                recipes = recipes.filter(name__icontains=query)
+            else:  # everywhere
+                # Search in name OR description OR steps.content OR items.ingredient__name
+                recipes = recipes.filter(
+                    Q(name__icontains=query) |
+                    Q(description__icontains=query) |
+                    Q(steps__content__icontains=query) |
+                    Q(items__ingredient__name__icontains=query)
+                ).distinct()
+
+        # Filter by type and category via Classification (join)
+        if form.cleaned_data.get("type"):
+            recipes = recipes.filter(classification__type=form.cleaned_data["type"])
+
+        if form.cleaned_data.get("category"):
+            recipes = recipes.filter(classification__category=form.cleaned_data["category"])
+
+        # Dietary filters
+        if form.cleaned_data.get("vegetarian"):
+            recipes = recipes.filter(vegetarian=True)
+
+        if form.cleaned_data.get("vegan"):
+            recipes = recipes.filter(vegan=True)
+
+        if form.cleaned_data.get("gluten_free"):
+            recipes = recipes.filter(gluten_free=True)
+
+        # Cuisine filter
+        if form.cleaned_data.get("cuisine"):
+            recipes = recipes.filter(cuisine=form.cleaned_data["cuisine"])
+
+        # Sorting
+        sort = form.cleaned_data.get("sort", "name")
+        sort_dir = form.cleaned_data.get("sort_direction", "asc")
+        
+        # Determine sort field
+        if sort == "time_quantity":
+            sort_field = "time_quantity"
+        elif sort == "difficulty":
+            sort_field = "difficulty"
+        elif sort == "cost":
+            sort_field = "cost__total"
+        elif sort == "cost_per_serve":
+            # cost per serve uses amount_per_unit, join on cost and yield_unit
+            sort_field = "cost__amount_per_unit"
+        else:
+            sort_field = "name"
+
+        # Prefix with '-' if descending
+        if sort_dir == "desc":
+            sort_field = "-" + sort_field
+
+        recipes = recipes.order_by(sort_field)
+
 
     # Ensure all recipes have a cost
     for recipe in recipes:

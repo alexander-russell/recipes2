@@ -1,3 +1,12 @@
+.form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form>* {
+    padding-left: 0.2em;
+}
+
 .search {
     padding: 15px;
     border-bottom: 1px solid black;
