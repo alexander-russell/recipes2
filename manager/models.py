@@ -6,6 +6,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.forms import ValidationError
 from django.utils.text import slugify
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Type(models.Model):
@@ -385,6 +386,7 @@ class Diary(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name="diaryentries"
     )
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     date = models.DateTimeField(default=timezone.now)
     content = models.TextField()
 
