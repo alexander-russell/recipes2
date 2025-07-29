@@ -60,12 +60,9 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key === 'Enter' && itemsArray.length != 0) {
         // Open focused item (or first one if none are focused)
         e.preventDefault();
-        if (focusedIndex >= 0 && focusedIndex < itemsArray.length) {
-            window.location.href = itemsArray[focusedIndex].querySelector('a').href;
-        } else {
-            // no focus, open first item if exists
-            window.location.href = itemsArray[0].querySelector('a').href;
-        }
+        item = (focusedIndex >= 0 && focusedIndex < itemsArray.length) ? itemsArray[focusedIndex] : itemsArray[0];
+        link = item.querySelector('a').href;
+        window.open(link);
     } else if (e.key === 'Escape') {
         console.log('escapin')
         input.value = '';
