@@ -20,6 +20,13 @@ function registerInputListeners() {
                 .then(submitNewDiaryEntry);
         }
     })
+
+    // When input has no text, make sure it is properly empty so css :empty works
+    document.getElementById("diary-input").addEventListener('input', (event) => {
+        if (event.target.textContent == "") {
+            event.target.innerHTML = "";
+        }
+    })
 }
 
 // Submits a post request and replaces the diary using the JSON response
