@@ -28,14 +28,11 @@ def wrap_marked_scalables(value, autoescape=True):
 
 @register.filter(needs_autoescape=True)
 def wrap_scalable(value, autoescape=True):
-    if autoescape:
-        esc = conditional_escape
-    else:
-        esc = lambda x: x
+    # Deal with autoescape
+    clean_value = conditional_escape(value) if autoescape else value
 
-    # Function to wrap matched pattern with a span
-    return mark_safe(f'<span class="scalable" data-original-value="{esc(value)}">{esc(value)}</span>')
-
+    # Wrap value with a span
+    return mark_safe(f'<span class="scalable" data-original-value="{clean_value}">{clean_value}</span>')
 
 @register.filter()
 def pluralise_unit(value, quantity):
