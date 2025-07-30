@@ -1,29 +1,12 @@
-.form {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.form>* {
-    padding-left: 0.2em;
-}
-
-.search {
+form {
     padding: 15px;
     border-bottom: 1px solid black;
-}
-
-form.search {
     font-size: 1.2em;
-}
-
-form .advanced:not(.visible) {
-    display: none;
 }
 
 .results {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    /* flex-wrap: wrap; */
     padding: 15px;
 }
 
@@ -72,14 +55,6 @@ form .advanced:not(.visible) {
 }
 
 @media only screen and (min-width: 992px) {
-    form.search {
-        justify-content: left;
-    }
-
-    button.search {
-        /* margin-left: 0.8em; */
-    }
-
     .results {
         grid-template-columns: repeat(2, 1fr);
     }
