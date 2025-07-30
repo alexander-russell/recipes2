@@ -62,7 +62,11 @@ document.addEventListener('keydown', (e) => {
         e.preventDefault();
         item = (focusedIndex >= 0 && focusedIndex < itemsArray.length) ? itemsArray[focusedIndex] : itemsArray[0];
         link = item.querySelector('a').href;
-        window.open(link);
+        if (e.ctrlKey || e.metaKey) {
+            window.open(link);
+        } else {
+            window.location.href = link;
+        }
     } else if (e.key === 'Escape') {
         console.log('escapin')
         input.value = '';
