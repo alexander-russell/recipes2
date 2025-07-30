@@ -10,8 +10,7 @@ for (const timer of timers) {
 
 // Handle timer state
 function toggleTimer(event) {
-    alert()
-    const timer = event.target
+    const timer = event.currentTarget
     if (!timer.classList.contains("active")) {
         // Start timer
         timer.classList.add("active");
@@ -30,7 +29,7 @@ function toggleTimer(event) {
 
 // Handle timer reset
 function resetTimer(event) {
-    const timer = event.target
+    const timer = event.currentTarget
     timer.querySelector(".timer-time").textContent = formatTime(timer.getAttribute("total"));
     timer.setAttribute("remaining", timer.getAttribute("total"));
     timer.classList.remove("active", "elapsed", "flashing");
@@ -44,6 +43,16 @@ function hideTimers() {
 function showTimers() {
     document.querySelector(".timers").classList.remove("hidden")
     document.querySelector("li:has(title[id='clock-icon'])").classList.add("hidden")
+}
+
+function formatTime(seconds) {
+    const SECONDS_PER_HOUR = 3600
+    if (seconds >= SECONDS_PER_HOUR) {
+        startIdx = 12
+    } else {
+        startIdx = 14
+    }
+    return new Date(seconds * 1000).toISOString().slice(startIdx, 19);
 }
 
 // Update active timers or clock
