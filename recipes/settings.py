@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'recipes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'recipes2db',
-        'USER': 'alex',
-        'PASSWORD': 'alexpass',
-        'HOST': 'localhost',
-        'PORT': '3307',
+        'NAME': os.getenv("DB_NAME", "recipes2db"),
+        'USER': os.getenv("DB_USER", ""),
+        'PASSWORD': os.getenv("DB_PASSWORD", ""),
+        'HOST': os.getenv("DB_HOST", "localhost"),
+        'PORT': os.getenv("DB_PORT", "3306"),
     }
 }
 
