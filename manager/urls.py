@@ -26,4 +26,4 @@ urlpatterns = [
     path("diagnostics/ingredient/", views.diagnostics_ingredient, name="diagnostics_ingredient"),
     path("<slug:recipe_slug>/", views.viewer, name="viewer"),
     path("<slug:recipe_slug>/diary/add/", views.add_diary_entry, name="add_diary_entry"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
