@@ -1,6 +1,8 @@
 import json
+from zoneinfo import ZoneInfo
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
 from manager.models import (
     Timer, Type, Category, Classification, YieldUnit, Cuisine,
@@ -8,6 +10,9 @@ from manager.models import (
 )
 from django.db import IntegrityError
 
+User = get_user_model()
+
+sydney_tz = ZoneInfo("Australia/Sydney")
 
 class Command(BaseCommand):
     help = 'Imports recipes from JSON file'
@@ -121,7 +126,8 @@ class Command(BaseCommand):
                 for diary_data in (entry.get("Diary") or [] if entry.get("Diary") != "null" else []):
                     diary_entry = Diary(
                         recipe=recipe,
-                        date=diary_data["Date"],
+                        date=datetime.fromisoformat(diary_data["Date"]).replace(tzinfo=sydney_tz),
+                        user=User.objects.get(id=1),
                         content=diary_data["Content"]
                     )
                     diary_entry.save()
