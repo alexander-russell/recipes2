@@ -13,3 +13,6 @@ media/manager/*/images/
 
 # Ignore .env
 .env
+
+# Ignore static files
+staticfiles/
