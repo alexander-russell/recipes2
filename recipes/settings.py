@@ -32,7 +32,9 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
-LOGIN_REDIRECT_URL = "/accounts/login/success/"
+# TODO use better urls here (shouldn't have app specific stuff in global settings)
+LOGIN_URL = "/yum/accounts/login/"
+LOGIN_REDIRECT_URL = "/yum/accounts/login/success/"
 
 # Application definition
 

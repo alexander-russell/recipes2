@@ -1,6 +1,6 @@
 // Updatee CSRF token from user
 async function refreshCSRFToken() {
-    return fetch('/csrf/')
+    return fetch('/yum/csrf/') //TODO use a better url here
         .then(response => { if (response.ok) { return response.json() } else { return Promise.reject("") } })
         .then(data => {
             const meta = document.querySelector("meta[name='csrf-token']");
@@ -32,7 +32,7 @@ function registerInputListeners() {
 // Submits a post request and replaces the diary using the JSON response
 function submitNewDiaryEntry() {
     const content = document.getElementById("diary-input").innerText;
-    const endpoint = `${window.location.pathname}/diary/add`
+    const endpoint = `${window.location.pathname}diary/add/`
 
     fetch(endpoint, {
         method: 'POST',

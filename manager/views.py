@@ -13,6 +13,7 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.middleware.csrf import get_token
@@ -264,7 +265,7 @@ def viewer(request, recipe_slug):
         },
     )
 
-@login_required
+@ensure_csrf_cookie
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
 
