@@ -17,7 +17,7 @@ function toggleTimer(event) {
         timer.setAttribute("started", Date.now());
     } else if (timer.classList.contains("elapsed")) {
         // Reset the timer
-        resetTimer({ target: timer });
+        resetTimer({ currentTarget: timer });
     } else {
         // Stop timer
         timer.classList.remove("active");
