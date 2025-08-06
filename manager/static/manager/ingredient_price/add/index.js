@@ -41,7 +41,7 @@ function enforceDatalistMatchAndThen(inputId, datalistId, callback = () => { }) 
 }
 
 function fetchAndPrefillFromIngredient(name) {
-    fetch(`/api/latest-ingredient/?name=${encodeURIComponent(name)}`)
+    fetch(`/yum/api/latest-ingredient/?name=${encodeURIComponent(name)}`)
         .then(res => res.ok ? res.json() : null)
         .then(data => {
             if (data) {
