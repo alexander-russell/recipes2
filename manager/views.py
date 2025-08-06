@@ -86,7 +86,7 @@ def explore(request):
     form = SearchForm(request.GET or None)
     recipes = (
         Recipe.objects.active()
-        .select_related("cost__yield_unit", "yield_unit")
+        .select_related("cost", "cost__yield_unit", "yield_unit")
         .prefetch_related("images")
         .order_by("name")
     )
@@ -154,7 +154,7 @@ def explore(request):
 
     # Ensure all recipes have a cost
     for recipe in recipes:
-        recipe.get_cost()
+        recipe.cost = recipe.get_cost()
 
     # Render template (partial for htmx request, whole thing otherwise)
     if request.headers.get("Hx-Request"):

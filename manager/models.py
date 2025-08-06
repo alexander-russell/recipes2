@@ -285,7 +285,7 @@ class Item(models.Model):
         item_cost.amount = None
         item_cost.ingredient_name = self.ingredient.name
         item_cost.item_quantity = self.quantity
-        item_cost.item_unit = self.unit
+        item_cost.item_unit = self.unit.name
         item_cost.price = None
         item_cost.price_quantity = None
         item_cost.price_unit = None
