@@ -399,7 +399,7 @@ class Timer(models.Model):
 
 
 def image_upload_to(instance, filename):
-    return os.path.join("manager", str(instance.recipe.id), "images", filename)
+    return os.path.join("recipes2", str(instance.recipe.id), "images", filename)
 
 def validate_avif_extension(value):
     extension = os.path.splitext(value.name)[1].lower()
