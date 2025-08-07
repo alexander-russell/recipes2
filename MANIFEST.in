@@ -1,0 +1,4 @@
+recursive-include recipes2/templates *
+recursive-include recipes2/static *
+recursive-include recipes2/migrations *.py
+include README.md

@@ -16,3 +16,5 @@ media/manager/*/images/
 
 # Ignore static files
 staticfiles/
+
+recipes2.egg-info/
