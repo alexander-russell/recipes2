@@ -20,7 +20,7 @@
       <ul class="search-results">
         {% for recipe in recipes %}
           <li class="search-result hidden">
-            <a href="{% url 'manager:viewer' recipe.slug %}">{{ recipe.name }}</a>
+            <a href="{% url 'recipes2:viewer' recipe.slug %}">{{ recipe.name }}</a>
           </li>
         {% endfor %}
       </ul>

@@ -13,7 +13,7 @@ urlpatterns = [
     path("accounts/login/", auth_views.LoginView.as_view(template_name="admin/login.html"), name="login"),
     path("accounts/login/success/", views.accounts_login_success, name="accounts_login_success"),
     path("quick-search/", views.quick_search, name="quick_search"),
-    path("q/", RedirectView.as_view(pattern_name='manager:quick_search', permanent=False)),
+    path("q/", RedirectView.as_view(pattern_name='recipes2:quick_search', permanent=False)),
     path("index/", views.index, name="index"),
     path("gallery/", views.gallery, name="gallery"),
     path("explore/", views.explore, name="explore"),

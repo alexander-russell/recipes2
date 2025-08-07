@@ -17,16 +17,16 @@
     <nav>
       <ul>
         <li>
-          <a href="{% url 'manager:contents' %}"><button>Contents</button></a>
+          <a href="{% url 'recipes2:contents' %}"><button>Contents</button></a>
         </li>
         <li>
-          <a href="{% url 'manager:explore' %}"><button>Explore</button></a>
+          <a href="{% url 'recipes2:explore' %}"><button>Explore</button></a>
         </li>
         <li>
-          <a href="{% url 'manager:gallery' %}"><button>Gallery</button></a>
+          <a href="{% url 'recipes2:gallery' %}"><button>Gallery</button></a>
         </li>
         <li>
-          <a href="{% url 'manager:index' %}"><button>Index</button></a>
+          <a href="{% url 'recipes2:index' %}"><button>Index</button></a>
         </li>
       </ul>
     </nav>
@@ -43,7 +43,7 @@
       <ul class="search-results">
         {% for recipe in recipes %}
           <li class="search-result hidden">
-            <a href="{% url 'manager:viewer' recipe.slug %}">{{ recipe.name }}</a>
+            <a href="{% url 'recipes2:viewer' recipe.slug %}">{{ recipe.name }}</a>
           </li>
         {% endfor %}
       </ul>

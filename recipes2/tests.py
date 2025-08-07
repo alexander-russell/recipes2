@@ -45,28 +45,28 @@ class ViewTests(TestCase):
         )
 
     def test_explore_view(self):
-        response = self.client.get(reverse("manager:explore"))
+        response = self.client.get(reverse("recipes2:explore"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "manager/explore/index.html")
         self.assertContains(response, self.recipe.name)
 
     def test_home_view(self):
-        response = self.client.get(reverse("manager:home"))
+        response = self.client.get(reverse("recipes2:home"))
         self.assertEqual(response.status_code, 200)
 
     def test_index_view(self):
-        response = self.client.get(reverse("manager:index"))
+        response = self.client.get(reverse("recipes2:index"))
         self.assertEqual(response.status_code, 200)
 
     def test_contents_view(self):
-        response = self.client.get(reverse("manager:contents"))
+        response = self.client.get(reverse("recipes2:contents"))
         self.assertEqual(response.status_code, 200)
 
     def test_gallery_view(self):
-        response = self.client.get(reverse("manager:gallery"))
+        response = self.client.get(reverse("recipes2:gallery"))
         self.assertEqual(response.status_code, 200)
 
     def test_viewer_view(self):
-        response = self.client.get(reverse("manager:viewer", args=[self.recipe.slug]))
+        response = self.client.get(reverse("recipes2:viewer", args=[self.recipe.slug]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.recipe.name)

@@ -4,7 +4,7 @@
 
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'manager:diagnostics_index' %}">Manager diagnostics</a></h1>
+<h1 id="site-name"><a href="{% url 'recipes2:diagnostics_index' %}">Manager diagnostics</a></h1>
 {% endblock %}
 
 {% block breadcrumbs %}{% endblock %}
@@ -12,7 +12,7 @@
 {% block content %}
   {% for category, details in summary.items %}
     <h2 class="text-lg font-semibold mt-6 mb-2">
-      <a href="{% url 'manager:diagnostics_'|add:category|lower %}" class="text-blue-600 underline hover:text-blue-800">{{ category }} ({{ details.total }} issue{{ details.total|pluralize }})</a>
+      <a href="{% url 'recipes2:diagnostics_'|add:category|lower %}" class="text-blue-600 underline hover:text-blue-800">{{ category }} ({{ details.total }} issue{{ details.total|pluralize }})</a>
     </h2>
     {% comment %} <h2 class="text-lg font-semibold mt-6 mb-2">{{ category }} ({{ details.total }} issue{{ details.total|pluralize }})</h2> {% endcomment %}
     <table class="table-auto w-full border border-collapse mb-4">
@@ -26,7 +26,7 @@
         {% for test_name, count in details.tests.items %}
           <tr>
             <td class="px-3 py-1 border">
-              <a href="{% url 'manager:diagnostics_'|add:category|lower %}#section-{{ test_name|slugify }}">{{ test_name }}</a>
+              <a href="{% url 'recipes2:diagnostics_'|add:category|lower %}#section-{{ test_name|slugify }}">{{ test_name }}</a>
             </td>
             <td class="px-3 py-1 border">{{ count }} issue{{ count|pluralize }}</td>
           </tr>
