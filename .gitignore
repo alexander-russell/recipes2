@@ -9,7 +9,7 @@
 /backups
 
 # Ignore recipe images
-media/manager/*/images/
+media/recipes2/*/images/
 
 # Ignore .env
 .env
