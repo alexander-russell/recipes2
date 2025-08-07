@@ -1,4 +1,4 @@
-from manager.models import (
+from recipes2.models import (
     Category,
     Cuisine,
     IngredientPrice,

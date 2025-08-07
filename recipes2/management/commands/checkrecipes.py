@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from manager.models import Recipe, Ingredient
+from recipes2.models import Recipe, Ingredient
 
 class Command(BaseCommand):
     help = "Run all recipe data quality checks"

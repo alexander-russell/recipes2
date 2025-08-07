@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-from manager.models import (
+from recipes2.models import (
     Type, Category, Classification,
     YieldUnit, Cuisine, Recipe
 )

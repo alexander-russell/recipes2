@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from django.db import transaction
 
-from manager.models import Recipe, Image  # Adjust your app name here
+from recipes2.models import Recipe, Image  # Adjust your app name here
 
 # note, call like this: py .\manage.py importrecipeimages "C:/Users/alexa/Desktop/Phonebook/Databases/Recipes/images"
 

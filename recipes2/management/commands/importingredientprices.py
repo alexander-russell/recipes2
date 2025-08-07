@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
 from django.core.management.base import BaseCommand
-from manager.models import Ingredient, Unit, IngredientSource, IngredientPrice
+from recipes2.models import Ingredient, Unit, IngredientSource, IngredientPrice
 from django.db import IntegrityError
 
 class Command(BaseCommand):

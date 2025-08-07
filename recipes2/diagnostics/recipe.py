@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.utils.timezone import now
-from manager.models import Recipe
+from recipes2.models import Recipe
 from django.db.models import Count
 
 
@@ -20,7 +20,7 @@ def run():
 
 from datetime import timedelta
 from django.utils.timezone import now
-from manager.models import Recipe
+from recipes2.models import Recipe
 
 
 def run():

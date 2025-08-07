@@ -1,4 +1,4 @@
-from manager.models import Item, Recipe
+from recipes2.models import Item, Recipe
 
 
 def run():

@@ -1,7 +1,7 @@
 import csv
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
-from manager.models import Unit, Ingredient, Conversion
+from recipes2.models import Unit, Ingredient, Conversion
 
 class Command(BaseCommand):
     help = 'Imports conversion rules from a CSV file'
@@ -36,4 +36,4 @@ class Command(BaseCommand):
 
                     print(f"Conversion created: {from_unit.name} -> {to_unit.name}, Factor: {conversion.factor}")
                 except IntegrityError as e:
-                    self.stderr.write(f"Error saving price for {name}: {e}")
+                    self.stderr.write(f"Error importing conversion {from_unit}->{to_unit} ({ingredient if ingredient is not None else ""}): {e}")

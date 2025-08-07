@@ -6,9 +6,9 @@ from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.templatetags.static import static
-import manager.diagnostics as diagnostics
-from manager.forms import IngredientPriceForm, SearchForm
-from manager.models import Cuisine, Diary, Ingredient, IngredientPrice, Recipe
+import recipes2.diagnostics as diagnostics
+from recipes2.forms import IngredientPriceForm, SearchForm
+from recipes2.models import Cuisine, Diary, Ingredient, IngredientPrice, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now

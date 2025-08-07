@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
-from manager.models import (
+from recipes2.models import (
     Timer, Type, Category, Classification, YieldUnit, Cuisine,
     Recipe, Ingredient, Unit, ItemGroup, Item, Step, Diary
 )

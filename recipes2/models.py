@@ -319,7 +319,7 @@ class Item(models.Model):
                 if self.unit.name == latest_price.unit.name:
                     conversion_factor = 1
                 else:
-                    from manager.utils.cost_utils2 import get_conversion_factor
+                    from recipes2.utils.cost_utils2 import get_conversion_factor
 
                     conversion_factor = get_conversion_factor(
                         self.unit.name, latest_price.unit.name, self.ingredient.id
