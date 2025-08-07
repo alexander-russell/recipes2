@@ -47,7 +47,7 @@ class ViewTests(TestCase):
     def test_explore_view(self):
         response = self.client.get(reverse("recipes2:explore"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "manager/explore/index.html")
+        self.assertTemplateUsed(response, "recipes2/explore/index.html")
         self.assertContains(response, self.recipe.name)
 
     def test_home_view(self):

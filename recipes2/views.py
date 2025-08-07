@@ -21,7 +21,7 @@ from django.db.models import Q
 
 def home(request):
     recipes = Recipe.objects.active().only("name", "slug").order_by("name")
-    return render(request, "manager/home/index.html", {"recipes": recipes})
+    return render(request, "recipes2/home/index.html", {"recipes": recipes})
 
 
 def quick_search(request):
@@ -30,7 +30,7 @@ def quick_search(request):
         .only("name", "slug")
         .order_by("name")
     )
-    return render(request, "manager/quick_search/index.html", {"recipes": recipes})
+    return render(request, "recipes2/quick_search/index.html", {"recipes": recipes})
 
 
 def index(request):
@@ -72,14 +72,14 @@ def index(request):
 
     return render(
         request,
-        "manager/index/index.html",
+        "recipes2/index/index.html",
         {"recipes": recipes, "index_entries": index_entries},
     )
 
 
 def gallery(request):
     recipes = Recipe.objects.all()
-    return render(request, "manager/gallery/index.html", {"recipes": recipes})
+    return render(request, "recipes2/gallery/index.html", {"recipes": recipes})
 
 
 def explore(request):
@@ -159,11 +159,11 @@ def explore(request):
     # Render template (partial for htmx request, whole thing otherwise)
     if request.headers.get("Hx-Request"):
         return render(
-            request, "manager/explore/partials/_results.html", {"recipes": recipes}
+            request, "recipes2/explore/partials/_results.html", {"recipes": recipes}
         )
     else:
         return render(
-            request, "manager/explore/index.html", {"form": form, "recipes": recipes}
+            request, "recipes2/explore/index.html", {"form": form, "recipes": recipes}
         )
 
 def gallery(request):
@@ -205,7 +205,7 @@ def contents(request):
 
     return render(
         request,
-        "manager/contents/index.html",
+        "recipes2/contents/index.html",
         {"recipes": recipes, "grouped_recipes": grouped, "focus": focus},
     )
 
@@ -254,7 +254,7 @@ def viewer(request, recipe_slug):
 
     return render(
         request,
-        "manager/viewer/index.html",
+        "recipes2/viewer/index.html",
         {
             "recipe": recipe,
             "item_costs": item_costs,
@@ -271,7 +271,7 @@ def get_csrf_token(request):
 
 @login_required
 def accounts_login_success(request):
-    return render(request, "manager/accounts/login/success/index.html")
+    return render(request, "recipes2/accounts/login/success/index.html")
 
 def add_diary_entry(request, recipe_slug):
     if request.method == "POST":
@@ -289,7 +289,7 @@ def add_diary_entry(request, recipe_slug):
         Diary.objects.create(recipe=recipe, date=now(), content=content, user=request.user)
         recipe.refresh_from_db()
         html = render_to_string(
-            "manager/viewer/partials/_diary_overlay.html",
+            "recipes2/viewer/partials/_diary_overlay.html",
             {
                 "diaryentries": recipe.diaryentries.all(),
                 "overlay_name": "diary-overlay",
@@ -312,7 +312,7 @@ def add_ingredient_price(request):
     initial_date = request.session.get("last_price_date") or now().date().isoformat()
     form = IngredientPriceForm(initial={"date": initial_date})
 
-    return render(request, "manager/ingredient_price/add/index.html", {"form": form})
+    return render(request, "recipes2/ingredient_price/add/index.html", {"form": form})
 
 
 def get_latest_ingredient_price(request):
@@ -356,7 +356,7 @@ def diagnostics_index(request):
 
     return render(
         request,
-        "manager/diagnostics/index.html",
+        "recipes2/diagnostics/index.html",
         {
             "title": "Diagnostics Summary",
             "summary": summary,
@@ -368,7 +368,7 @@ def diagnostics_index(request):
 def diagnostics_recipe(request):
     return render(
         request,
-        "manager/diagnostics/report.html",
+        "recipes2/diagnostics/report.html",
         {
             "title": "Recipe Diagnostics",
             "admin_change_url": "admin:manager_recipe_change",
@@ -381,7 +381,7 @@ def diagnostics_recipe(request):
 def diagnostics_item(request):
     return render(
         request,
-        "manager/diagnostics/report.html",
+        "recipes2/diagnostics/report.html",
         {
             "title": "Item Diagnostics",
             "admin_change_url": "admin:manager_item_change",
@@ -394,7 +394,7 @@ def diagnostics_item(request):
 def diagnostics_ingredient(request):
     return render(
         request,
-        "manager/diagnostics/report.html",
+        "recipes2/diagnostics/report.html",
         {
             "title": "Ingredient Diagnostics",
             "admin_change_url": "admin:manager_ingredient_change",

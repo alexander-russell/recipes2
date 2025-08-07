@@ -10,7 +10,7 @@ def run():
     )
     return {
         "No Cost": {
-            "template": "manager/diagnostics/partials/_results_table_item_cost.html",
+            "template": "recipes2/diagnostics/partials/_results_table_item_cost.html",
             "data": failed_items
         }
     }

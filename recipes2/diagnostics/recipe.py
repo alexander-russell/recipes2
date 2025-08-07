@@ -28,31 +28,31 @@ def run():
 
     return {
         "No Yield Quantity": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(yield_quantity__isnull=True),
         },
         "No Time Quantity": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(time_quantity__isnull=True),
         },
         "Stale": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(date_updated__lt=old_threshold),
         },
         "Untested": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(tested=False),
         },
         "Marked For Revision": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(needs_revision=True),
         },
         "Recipes Missing Main Image": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_base.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().exclude(images__name="main"),
         },
         "Only Recipe in Classification": {
-            "template": "manager/diagnostics/partials/_results_table_recipe_classification.html",
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_classification.html",
             "data": (
                 Recipe.objects.active()
                 .annotate(recipe_in_classification_count=Count("classification__recipes"))
