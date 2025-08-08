@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     src_path = os.path.join(folder_path, filename)
 
                     # Use your image_upload_to logic to get destination relative path
-                    relative_dest_path = os.path.join("manager", str(recipe.id), "images", filename)
+                    relative_dest_path = os.path.join("recipes2", str(recipe.id), "images", filename)
                     dest_path = os.path.join(settings.MEDIA_ROOT, relative_dest_path)
 
                     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
