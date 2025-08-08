@@ -144,12 +144,12 @@ def get_conversion_factor(start, goal, ingredient_id):
     return Decimal(np.prod(factors))
 
 
-# to load into django shell: from manager.utils.cost_utils import *
+# to load into django shell: from recipes2.utils.cost_utils import *
 
 # or:
 
-# import manager.utils.cost_utils; import importlib; importlib.reload(manager.utils.cost_utils); from manager.utils.cost_utils import *
+# import recipes2.utils.cost_utils; import importlib; importlib.reload(recipes2.utils.cost_utils); from recipes2.utils.cost_utils import *
 
 # or:
 
-# import manager.utils.cost_utils2; import importlib; importlib.reload(manager.utils.cost_utils2); from manager.utils.cost_utils2 import *
+# import recipes2.utils.cost_utils2; import importlib; importlib.reload(recipes2.utils.cost_utils2); from recipes2.utils.cost_utils2 import *
