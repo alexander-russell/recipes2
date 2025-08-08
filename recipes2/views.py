@@ -182,7 +182,7 @@ def gallery(request):
     context = {
         'images': images,
     }
-    return render(request, 'manager/gallery/index.html', context)
+    return render(request, 'recipes2/gallery/index.html', context)
 
 def contents(request):
     focus = request.GET.get("focus")

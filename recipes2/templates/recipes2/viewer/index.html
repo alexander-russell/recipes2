@@ -5,10 +5,10 @@
   <head>
     <title>{{ recipe.name }} | Alex's Recipes!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'manager/master/forms.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/viewer/viewer.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/viewer/overlay.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/viewer/diary.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/master/forms.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/viewer/viewer.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/viewer/overlay.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/viewer/diary.css' %}" />
     <meta name="csrf-token" content="{{ csrf_token }}">
   </head>
 
@@ -236,15 +236,15 @@
             </ol>
           </div>
         </div>
-        {% include 'manager/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" %}
-        {% include 'manager/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" diaryentries=recipe.diaryentries %}
-        {% include 'manager/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
+        {% include 'recipes2/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" %}
+        {% include 'recipes2/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" diaryentries=recipe.diaryentries %}
+        {% include 'recipes2/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
       </section>
     </div>
-    <script src="{% static 'manager/viewer/diary.js' %}"></script>
-    <script src="{% static 'manager/viewer/scaling.js' %}"></script>
-    <script src="{% static 'manager/viewer/timers.js' %}"></script>
-    <script src="{% static 'manager/viewer/overlays.js' %}"></script>
+    <script src="{% static 'recipes2/viewer/diary.js' %}"></script>
+    <script src="{% static 'recipes2/viewer/scaling.js' %}"></script>
+    <script src="{% static 'recipes2/viewer/timers.js' %}"></script>
+    <script src="{% static 'recipes2/viewer/overlays.js' %}"></script>
     {% if yield_param %}
       <script>
         scale()

@@ -4,9 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'manager/master/master.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/master/forms.css' %}" />
-    <link rel="stylesheet" href="{% static 'manager/explore/explore.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/master/master.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/master/forms.css' %}" />
+    <link rel="stylesheet" href="{% static 'recipes2/explore/explore.css' %}" />
     <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <title>Explore | Alex's Recipes</title>
   </head>
@@ -30,7 +30,7 @@
     </form>
 
     <div class="results-wrapper">
-      {% include 'manager/explore/partials/_results.html' %}
+      {% include 'recipes2/explore/partials/_results.html' %}
     </div>
   </body>
 </html>
