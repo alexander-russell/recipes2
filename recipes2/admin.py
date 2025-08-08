@@ -21,12 +21,6 @@ from .models import (
     Unit,
     YieldUnit,
 )
-from adminsortable2.admin import (
-    SortableInlineAdminMixin,
-    SortableTabularInline,
-    SortableAdminBase,
-    SortableAdminMixin,
-)
 
 
 @admin.register(Type)
