@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 
 from . import views
 
-app_name = "manager"
+app_name = "recipes2"
 urlpatterns = [
     path("", views.home, name="home"),
     path("csrf/", views.get_csrf_token, name="get_csrf_token"),
