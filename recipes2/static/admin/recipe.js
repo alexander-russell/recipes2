@@ -54,3 +54,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const changeForm = document.querySelector("div.submit-row");
+    if (!changeForm) return;
+
+    // Get the object ID from the URL if present
+    const match = window.location.pathname.match(/\/(\d+)\/change\/$/);
+    if (!match) return; // Don't show button on "Add" form
+
+    const slug = document.getElementById("id_slug").value
+
+    // Create the button
+    const viewBtn = document.createElement("a");
+    viewBtn.href = `/yum/${slug}/`;
+    viewBtn.className = "button";
+    viewBtn.style = "line-height: 15px; padding: 10px 15px;";
+    viewBtn.textContent = "View";
+    viewBtn.target = "_blank"; 
+    
+    // Insert into both top and bottom bars
+    document.querySelectorAll("div.submit-row").forEach(row => {
+        const clone = viewBtn.cloneNode(true);
+        row.insertBefore(clone, row.querySelector("a.deletelink"));
+    });
+});
