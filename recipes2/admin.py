@@ -35,7 +35,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Classification)
 class ClassificationAdmin(admin.ModelAdmin):
-    search_fields = ["category__name"]
+    search_fields = ["type__name", "category__name"]
 
 
 @admin.register(Cuisine)
