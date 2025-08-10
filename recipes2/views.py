@@ -8,7 +8,7 @@ from django.template import loader
 from django.templatetags.static import static
 import recipes2.diagnostics as diagnostics
 from recipes2.forms import IngredientPriceForm, SearchForm
-from recipes2.models import Cuisine, Diary, Ingredient, IngredientPrice, Recipe
+from recipes2.models import Cuisine, Diary, Image, Ingredient, IngredientPrice, Recipe
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.utils.timezone import now
@@ -75,11 +75,6 @@ def index(request):
         "recipes2/index/index.html",
         {"recipes": recipes, "index_entries": index_entries},
     )
-
-
-def gallery(request):
-    recipes = Recipe.objects.all()
-    return render(request, "recipes2/gallery/index.html", {"recipes": recipes})
 
 
 def explore(request):
@@ -167,22 +162,8 @@ def explore(request):
         )
 
 def gallery(request):
-    recipes = Recipe.objects.active().prefetch_related('images')
-
-    images = []
-    for recipe in recipes:
-        first_image = recipe.images.first()
-        if first_image:
-            images.append({
-                'slug': recipe.slug,
-                'image_url': first_image.image.url,
-                'alt_text': first_image.alt_text,
-            })
-
-    context = {
-        'images': images,
-    }
-    return render(request, 'recipes2/gallery/index.html', context)
+    images = Image.objects.filter(show_in_gallery=True, recipe__status=Recipe.Status.ACTIVE).select_related('recipe')
+    return render(request, 'recipes2/gallery/index.html', {'images': images})
 
 def contents(request):
     focus = request.GET.get("focus")

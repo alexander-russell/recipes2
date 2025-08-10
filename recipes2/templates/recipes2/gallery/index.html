@@ -26,7 +26,7 @@
       <div class="gallery" id="gallery">
         {% for image in images %}
           <div class="gallery-item">
-            <a href="{% url 'recipes2:viewer' image.slug %}"><img src="{{ image.image_url }}" alt="{{ image.alt_text }}" /></a>
+            <a href="{% url 'recipes2:viewer' image.recipe.slug %}"><img src="{{ image.image.url }}" alt="{{ image.alt_text }}" /></a>
           </div>
         {% endfor %}
       </div>
