@@ -35,3 +35,9 @@
     #diary-add-login-tip>a:hover {
         color: darkred;
     }
+
+    #diary-empty-message {
+        text-align: center;
+        margin-left: 0;
+        margin-bottom: 1em;
+    }

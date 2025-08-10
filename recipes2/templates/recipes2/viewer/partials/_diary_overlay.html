@@ -2,19 +2,23 @@
 
 {% block content %}
   <dl class="recipe-diary" onclick="event.stopPropagation()">
-    {% regroup diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
-    {% for day in diaryentries_by_day %}
-      <dt>{{ day.grouper }}</dt>
-      <dd>
-        {% for diaryentry in day.list %}
-          <strong>{{ diaryentry.date|date:'H:i' }}</strong>
-          {% if diaryentry.user and diaryentry.user.username != 'alrus' %}
-            <span class="diary-username">&lt;{{ diaryentry.user.username }}&gt;</span>
-          {% endif %}
-          {{ diaryentry.content }}
-        {% endfor %}
-      </dd>
-    {% endfor %}
+    {% if diaryentries.all.count > 0 %}
+      {% regroup diaryentries.all by date|date:'Y-m-d' as diaryentries_by_day %}
+      {% for day in diaryentries_by_day %}
+        <dt>{{ day.grouper }}</dt>
+        <dd>
+          {% for diaryentry in day.list %}
+            <strong>{{ diaryentry.date|date:'H:i' }}</strong>
+            {% if diaryentry.user and diaryentry.user.username != 'alrus' %}
+              <span class="diary-username">&lt;{{ diaryentry.user.username }}&gt;</span>
+            {% endif %}
+            {{ diaryentry.content }}
+          {% endfor %}
+        </dd>
+      {% endfor %}
+    {% else %}
+      <dd id="diary-empty-message">[all empty, there are no diary entries yet]</dd>
+    {% endif %}
     <dt>{% now "Y-m-d" %}</dt>
     <dd class="form">
       <strong id="diary-current-time">{% now 'H:i' %}</strong>
