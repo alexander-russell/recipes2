@@ -8,5 +8,4 @@ class Recipes2Config(AppConfig):
     label = "manager" 
     
     def ready(self):
-        logging.warning("Importing recipes2.signals")
         import recipes2.signals
