@@ -35,3 +35,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // On page load, restore scroll position
+    const scrollY = sessionStorage.getItem("admin-scroll-position");
+    if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY));
+        sessionStorage.removeItem("admin-scroll-position");
+    }
+
+    const form = document.querySelector("#recipe_form");
+
+    form.addEventListener("submit", function (e) {
+        // Check if the pressed button is "Save and continue editing"
+        const activeElement = document.activeElement;
+        if (activeElement && activeElement.name === "_continue") {
+            sessionStorage.setItem("admin-scroll-position", window.scrollY);
+        }
+    });
+});
