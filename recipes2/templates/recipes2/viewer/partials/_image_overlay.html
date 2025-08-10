@@ -1,7 +1,21 @@
 {% extends 'recipes2/viewer/partials/_overlay.html' %}
 
 {% block content %}
-  {% with image=recipe.images.all|first %}
-    <img class="" src="{{ image.image.url }}" alt="{{ image.alt_text }}" onclick="event.stopPropagation()" />
+  {% with images=recipe.images.all %}
+    {% if images %}
+      <div class="carousel-container" onclick="event.stopPropagation()">
+        {% with image=images|first %}
+          <img id="main-image" src="{{ image.image.url }}" alt="{{ image.alt_text }}" />
+        {% endwith %}
+        <div class="thumbnail-strip">
+          {% for image in images %}
+            <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" data-full-src="{{ image.image.url }}" class="{% if forloop.first %}selected{% endif %}" onclick="selectImage(event)" />
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
   {% endwith %}
+  <script>
+    document.querySelector('#image-overlay').classList.remove('hidden')
+  </script>
 {% endblock %}

@@ -1,0 +1,55 @@
+.carousel-container {
+    border: none !important;
+    display: flex !important;
+    flex-direction: column;
+}
+
+#main-image {
+    display: block;
+    max-height: 80vh;
+    border: 1px solid black;
+}
+
+.thumbnail-strip {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    margin-top: 0.2em;
+    gap: 0.2em;
+}
+
+.thumbnail-strip img {
+    height: 15vh;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+}
+
+.thumbnail-strip img:first-child {
+    margin-left: 0px;
+}
+
+.thumbnail-strip img.selected {
+    border-color: black;
+}
+
+.thumbnail-strip img:hover {
+    border-color: darkred;
+}
+
+
+
+@media not print {
+    @media (min-aspect-ratio: 3/3) {
+        .carousel-container {
+            flex-direction: row-reverse;
+        }
+        
+        .thumbnail-strip {
+            flex-direction: column;
+            margin-top: 0px;
+            margin-right: 0.2em;
+        }
+    }
+}
