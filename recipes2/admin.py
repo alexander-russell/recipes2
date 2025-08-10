@@ -130,6 +130,7 @@ class RecipeAdmin(admin.ModelAdmin):
     # pass
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
     # readonly_fields = ("slug",)
+    save_on_top = True
     prepopulated_fields = {"slug": ("name",)}
     inlines = [ItemInline, StepInline, ImageInline, TimerInline, DiaryInline, TagInline]
     fieldsets = [
@@ -175,7 +176,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
     class Media:
         css = {"all": ("admin/recipe.css",)}
-
+        js = ("admin/recipe.js",)
 
 @admin.register(Conversion)
 class ConversionAdmin(admin.ModelAdmin):

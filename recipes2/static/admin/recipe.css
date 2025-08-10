@@ -11,3 +11,10 @@
 textarea {
     height: 5em;
 }
+
+/* Sticky save buttons container */
+#content-main form .submit-row {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
