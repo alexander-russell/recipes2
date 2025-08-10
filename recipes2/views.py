@@ -48,7 +48,7 @@ def index(request):
             }
         )
 
-        if recipe.cuisine is not None:
+        if recipe.cuisine is not None and recipe.cuisine.name:
             index_entries.append(
                 {
                     "first_letter": recipe.cuisine.name[0].upper(),
