@@ -102,7 +102,7 @@ class Recipe(models.Model):
     )
     bulk = models.BooleanField(default=False)
     favourite = models.BooleanField(default=False)
-    tested = models.BooleanField(default=False)
+    tested = models.BooleanField(default=True)
     vegetarian = models.BooleanField(default=False)
     vegan = models.BooleanField(default=False)
     gluten_free = models.BooleanField(default=False)
