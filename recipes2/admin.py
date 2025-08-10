@@ -119,6 +119,12 @@ class DiaryInline(admin.TabularInline):
     model = Diary
     extra = 0
 
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super().get_formset(request, obj, **kwargs)
+        # Set the default for the `user` field to the logged-in user
+        formset.form.base_fields["user"].initial = request.user
+        return formset
+
 
 class TagInline(admin.TabularInline):
     model = Tag

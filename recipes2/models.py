@@ -412,7 +412,7 @@ class Image(models.Model):
     position = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
     alt_text = models.CharField(max_length=200, null=True)
-    show_in_gallery = models.BooleanField()
+    show_in_gallery = models.BooleanField(default=True)
     image = models.FileField(upload_to=image_upload_to, validators=[validate_avif_extension])
 
     class Meta:
