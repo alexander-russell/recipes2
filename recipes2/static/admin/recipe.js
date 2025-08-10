@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// Add a confirmation dialog for unsaved changes
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("#recipe_form");
     let isDirty = false;
