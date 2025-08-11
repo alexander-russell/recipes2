@@ -1,5 +1,32 @@
+@font-face {
+    font-family: "MyGaramond";
+    src: url("/static/fonts/Garamond.woff2") format("woff2"),
+         url("/static/fonts/Garamond.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "MyGaramond";
+    src: url("/static/fonts/Garamond-Bold.woff2") format("woff2"),
+         url("/static/fonts/Garamond-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "MyGaramond";
+    src: url("/static/fonts/Garamond-Italic.woff2") format("woff2"),
+         url("/static/fonts/Garamond-Italic.woff") format("woff");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
 * {
-    font-family: Garamond, Baskerville, Baskerville Old Face, Hoefler Text, Times New Roman, serif, monospace;
+    font-family: MyGaramond, Baskerville, Baskerville Old Face, Hoefler Text, Times New Roman, serif, monospace;
 }
 
 .hidden {
