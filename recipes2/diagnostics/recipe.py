@@ -8,25 +8,6 @@ def run():
     old_threshold = now().date() - timedelta(days=60)
 
     return {
-        "Missing Yield Quantity": Recipe.objects.filter(yield_quantity__isnull=True),
-        "Missing Time Quantity": Recipe.objects.filter(time_quantity__isnull=True),
-        "Recipes Not Updated Recently": Recipe.objects.filter(
-            date_updated__lt=old_threshold
-        ),
-        "Untested Recipes": Recipe.objects.filter(tested=False),
-        "Recipes Needing Revision": Recipe.objects.filter(needs_revision=True),
-    }
-
-
-from datetime import timedelta
-from django.utils.timezone import now
-from recipes2.models import Recipe
-
-
-def run():
-    old_threshold = now().date() - timedelta(days=60)
-
-    return {
         "No Yield Quantity": {
             "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.active().filter(yield_quantity__isnull=True),
@@ -55,8 +36,14 @@ def run():
             "template": "recipes2/diagnostics/partials/_results_table_recipe_classification.html",
             "data": (
                 Recipe.objects.active()
-                .annotate(recipe_in_classification_count=Count("classification__recipes"))
+                .annotate(
+                    recipe_in_classification_count=Count("classification__recipes")
+                )
                 .filter(recipe_in_classification_count=1)
             ),
+        },
+        "Recipes In Draft": {
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
+            "data": Recipe.objects.filter(status=Recipe.Status.DRAFT),
         },
     }
