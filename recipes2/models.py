@@ -375,12 +375,14 @@ class StepGroup(models.Model):
 
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="steps")
-    position = models.PositiveIntegerField()
+    position = models.PositiveIntegerField(default=0, db_index=True)
     content = models.TextField()
     group = models.ForeignKey(
         StepGroup, on_delete=models.CASCADE, blank=True, null=True
     )
 
+    class Meta:
+        ordering = ["position"]
 
 class Diary(models.Model):
     recipe = models.ForeignKey(
