@@ -17,9 +17,13 @@
     border-left: 2px solid black;
 }
 
+.recipe-list-simple details[open] .name {
+    font-weight: bold;
+}
+
 .recipe-list-simple details[open] .count {
     display: none;
-}
+}   
 
 .recipe-list-simple summary,
 .recipe-list-simple li {
