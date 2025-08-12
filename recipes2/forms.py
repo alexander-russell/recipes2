@@ -49,6 +49,7 @@ class SearchForm(forms.Form):
         ("difficulty", "Difficulty"),
         ("cost", "Cost"),
         ("cost_per_serve", "Cost per serve"),
+        ("random", "Random"),
     ]
     sort = forms.ChoiceField(
         label="Sort by",

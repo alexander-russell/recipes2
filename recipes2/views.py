@@ -135,17 +135,17 @@ def explore(request):
         elif sort == "cost":
             sort_field = "cost__total"
         elif sort == "cost_per_serve":
-            # cost per serve uses amount_per_unit, join on cost and yield_unit
             sort_field = "cost__amount_per_unit"
+        elif sort == "random":
+            sort_field = "?"
         else:
             sort_field = "name"
 
-        # Prefix with '-' if descending
-        if sort_dir == "desc":
+        # Prefix with '-' if descending (and not random)
+        if sort_dir == "desc" and sort != "random":
             sort_field = "-" + sort_field
 
         recipes = recipes.order_by(sort_field)
-
 
     # Ensure all recipes have a cost
     for recipe in recipes:
