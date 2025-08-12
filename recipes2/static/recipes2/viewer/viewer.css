@@ -285,9 +285,12 @@ body {
 
 .items-list-gap,
 .steps-list-gap {
+    height: 0.8rem;
+}
+
+.items-list-gap {
     float: left;
     clear: both;
-    height: 0.8rem;
 }
 
 .item {
