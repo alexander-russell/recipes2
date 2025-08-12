@@ -162,7 +162,7 @@ def explore(request):
         )
 
 def gallery(request):
-    images = Image.objects.filter(show_in_gallery=True, recipe__status=Recipe.Status.ACTIVE).select_related('recipe')
+    images = Image.objects.filter(show_in_gallery=True, recipe__status=Recipe.Status.ACTIVE).select_related('recipe').order_by("?")
     return render(request, 'recipes2/gallery/index.html', {'images': images})
 
 def contents(request):
