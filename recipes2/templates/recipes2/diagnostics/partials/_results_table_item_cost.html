@@ -11,7 +11,7 @@
 
 {% block extra_columns_before %}
 <td class="border px-2 py-1">{{ obj.recipe.name }}</td>
-<td class="border px-2 py-1"><a href="{{ obj.recipe.slug }}">View</a></td>
+<td class="border px-2 py-1"><a href="{% url "recipes2:viewer" obj.recipe.slug %}">View</a></td>
 {% endblock %}
 
 {% block extra_headers_after %}
