@@ -151,7 +151,7 @@ class Recipe(models.Model):
         if (
             self.yield_unit is not None
             and self.yield_quantity is not None
-            and self.yield_quantity is not 0
+            and self.yield_quantity != 0
         ):  # TODO this last check shouldn't be necessary with proper data import
             recipe_cost.amount_per_unit = total / self.yield_quantity
             recipe_cost.yield_unit = self.yield_unit
@@ -419,6 +419,8 @@ class Image(models.Model):
 
     class Meta:
         unique_together = ("recipe", "name")
+        ordering = ["position"]
+
 
     # def clean(self):
     #     if False and not self.image.name.lower().endswith(".avif"):
