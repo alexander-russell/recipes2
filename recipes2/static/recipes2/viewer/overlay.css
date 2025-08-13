@@ -39,3 +39,7 @@
 .overlay-close:hover {
     color: darkred;
 }
+
+.overlay-print-heading {
+    display: none;
+}

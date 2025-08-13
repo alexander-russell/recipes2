@@ -236,9 +236,9 @@
             </ol>
           </div>
         </div>
-        {% include 'recipes2/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" %}
-        {% include 'recipes2/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" diaryentries=recipe.diaryentries %}
-        {% include 'recipes2/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" %}
+        {% include 'recipes2/viewer/partials/_image_overlay.html' with overlay_name="image-overlay" overlay_title="Image" %}
+        {% include 'recipes2/viewer/partials/_diary_overlay.html' with overlay_name="diary-overlay" overlay_title="Diary" diaryentries=recipe.diaryentries %}
+        {% include 'recipes2/viewer/partials/_cost_overlay.html' with overlay_name="cost-overlay" overlay_title="Cost" %}
       </section>
     </div>
     <script src="{% static 'recipes2/viewer/diary.js' %}"></script>

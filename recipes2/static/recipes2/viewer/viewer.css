@@ -435,6 +435,7 @@ body {
 
 @media not print {
     @media (min-aspect-ratio: 3/3) {
+
         /* Use multicolumn */
         .recipe-content-wrapper {
             flex-direction: row;
@@ -531,6 +532,7 @@ body {
 }
 
 @media print {
+
     /* Remove heading border */
     .recipe-header-wrapper {
         border-bottom: none;
@@ -548,49 +550,58 @@ body {
         color: black;
     }
 
-    a::after {
+    a:not(.icons-wrapper a)::after {
         content: " [" attr(href) "] ";
         font-weight: normal;
         text-decoration: none !important;
     }
 
-    /* Show image and diary at bottom of recipe */
-    .recipe-image-background,
-    .recipe-diary-background {
-        display: flex !important;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        background: none;
+    /* Restyle overlays to display like normal document flow text with headers */
+    .overlay-print-heading {
+        display: block !important;
+    }
+
+    .overlay-background {
         page-break-before: always;
+        display: block !important;
+        position: static !important;
+        width: 100%;
+    }
+    
+    .overlay-content-wrapper> :first-child {
+        max-height: none !important;
+        max-width: none !important;
+        height: auto !important;
+        overflow: visible !important;
     }
 
-    .recipe-image-background {
-        height: 100vh;
+    /* Hide close buttons */
+    .overlay-close-wrapper {
+        display: none !important;
     }
 
-    .recipe-image-background::before,
-    .recipe-diary-background::before {
-        font-weight: bold;
-        font-size: 1.2em;
+    /* Special overlay case: centre cost table */
+    .overlay-content-wrapper>table.recipe-cost {
+        margin: auto;
+        width: auto;
+        display: table;
     }
 
-    .recipe-image-background::before {
-        content: "Image";
+    /* Special overlay case: resize and centre image */
+    .overlay-content-wrapper>div.carousel-container {
+        max-height: none;
+        align-items: center;
     }
 
-    .recipe-diary-background::before {
-        content: "Diary";
+    .overlay-content-wrapper>div.carousel-container>img#main-image {
+        max-height: none;
+        max-width: none;
+        width: 60vw;
+        height: auto;
     }
 
-    .recipe-image,
-    .recipe-diary {
-        border: none;
-    }
-
-    .image-close-wrapper,
-    .diary-close-wrapper {
+    .thumbnail-strip:has(> img:only-child) {
         display: none;
     }
+
 }
