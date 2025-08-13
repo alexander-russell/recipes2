@@ -19,7 +19,7 @@
       <section class="recipe">
         <div class="recipe-header-wrapper">
           <div class="recipe-glance">
-            <h2 class="recipe-grouping"><a href="{% url 'recipes2:contents' %}?focus={{ recipe.classification.id }}"><span class="grouping-type">{{ recipe.classification.type }}</span><span class="grouping-category">{{ recipe.classification.category }}</span></a></h2>
+            <h2 class="recipe-grouping"><a href="{% url 'recipes2:contents' %}?focus={{ recipe.classification.id }}"><span class="grouping-type">{{ recipe.classification.type }}</span><span class="separator-slash">/</span><span class="grouping-category">{{ recipe.classification.category }}</span></a></h2>
             <div class="icons-wrapper">
               <ul class="icons-list">
                 <li class="icon-wrapper clickable">
@@ -118,13 +118,13 @@
                 {% endif %}
                 {% if recipe.time_quantity %}
                   <span class="time">
-                    <span class="attribute-name">Time</span>
+                    <span class="attribute-name">Time:</span>
                     <span class="time-value">{{ recipe.time_quantity|format_duration }}</span>
                   </span>
                 {% endif %}
                 {% if recipe.yield_quantity %}
                   <span class="yield">
-                    <span class="attribute-name">Yields</span>
+                    <span class="attribute-name">Yields:</span>
                     <span class="yield-value">
                       {% if yield_param %}
                         <input class="yield-quantity inline-form" size="1" value="{{ yield_param }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
@@ -141,7 +141,7 @@
                 {% endif %}
                 {% if cost_per_serve or total_cost %}
                   <span class="cost-wrapper">
-                    <span class="attribute-name">Cost</span>
+                    <span class="attribute-name">Cost:</span>
                     {% if cost_per_serve %}
                       <span class="cost-value">${{ cost_per_serve|floatformat:2 }} per {{ recipe.yield_unit.name }}</span>
                     {% else %}
@@ -151,7 +151,7 @@
                 {% endif %}
                 {% if recipe.difficulty %}
                   <span class="difficulty">
-                    <span class="attribute-name">Difficulty</span>
+                    <span class="attribute-name">Difficulty:</span>
                     <span class="difficulty-value">{{ recipe.difficulty }}/10</span>
                   </span>
                 {% endif %}
@@ -198,7 +198,7 @@
                     <span class="item-name-wrapper">
                       <span class="item-name">{{ item.ingredient.name }}</span>
                       {% if item.ingredient_detail %}
-                        <span class="item-name-extra">{{ item.ingredient_detail }}</span>
+                        <span class="item-name-extra"> ({{ item.ingredient_detail }})</span>
                       {% endif %}
                     </span>
                     <span class="item-details">
@@ -206,12 +206,12 @@
                         {% if item.quantity != 0 %}
                           <span class="item-quantity">{{ item.quantity|floatformat:'-3'|detrail|wrap_scalable }}</span>
                         {% endif %}{{ cost.itemunit }}
-                        <span class="item-unit">{{ item.unit.name }}</span>
+                        <span class="item-unit"> {{ item.unit.name }}</span>
                         {% if item.unit_detail %}
-                          <span class="item-unit-extra">{{ item.unit_detail|wrap_marked_scalables }}</span>
+                          <span class="item-unit-extra"> ({{ item.unit_detail|wrap_marked_scalables }})</span>
                         {% endif %}
                       {% else %}
-                        <span class="item-unit">{{ item.unit_detail }}</span>
+                        <span class="item-unit"> {{ item.unit_detail }}</span>
                       {% endif %}
                     </span>
                   </li>

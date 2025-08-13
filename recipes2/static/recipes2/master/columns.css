@@ -45,16 +45,7 @@
 }
 
 .recipe-list-simple summary>span.count {
-    padding-left: 0.2em;
     color: #aaaaaa;
-}
-
-.recipe-list-simple summary>span.count::before {
-    content: "(";
-}
-
-.recipe-list-simple summary>span.count::after {
-    content: ")";
 }
 
 .recipe-list-simple ul {

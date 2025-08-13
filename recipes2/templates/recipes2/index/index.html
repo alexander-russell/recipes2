@@ -39,7 +39,7 @@
             {% else %}
               <details>
                 <summary>
-                  <span class="name">{{ group.grouper }}</span><span class="count">{{ group.list|length }}</span>
+                  <span class="name">{{ group.grouper }}</span><span class="count"> ({{ group.list|length }})</span>
                 </summary>
                 <ol>
                   {% for entry in group.list %}

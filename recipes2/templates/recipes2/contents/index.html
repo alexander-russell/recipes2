@@ -55,7 +55,7 @@
           {% with classificationid=category_group.list.0.classification.id|stringformat:'s' %}
             <details {% if classificationid == focus %}open="open" class="focused"{% endif %}>
               <summary>
-                <span class="name">{{ category_group.grouper }}</span><span class="count">{{ category_group.list|length }}</span>
+                <span class="name">{{ category_group.grouper }}</span><span class="count"> ({{ category_group.list|length }})</span>
               </summary>
               <ul>
                 {% for recipe in category_group.list %}

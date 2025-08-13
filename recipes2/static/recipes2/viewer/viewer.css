@@ -42,8 +42,7 @@ body {
     color: grey;
 }
 
-.grouping-type::after {
-    content: "/";
+.separator-slash {
     font-weight: lighter;
     font-size: 1.2em;
 }
@@ -123,10 +122,6 @@ body {
     font-weight: bold;
 }
 
-.attribute-name::after {
-    content: ":";
-}
-
 .yield-quantity {
     border: none;
     padding: 0;
@@ -159,7 +154,7 @@ body {
     border-bottom: 1px solid black;
 }
 
-.notes-wrapper > p {
+.notes-wrapper>p {
     margin: 0;
 }
 
@@ -299,40 +294,12 @@ body {
     color: darkgray;
 }
 
-.item-name-extra:not(:empty)::before {
-    content: "(";
-}
-
-.item-name-extra:not(:empty)::after {
-    content: ")";
-}
-
-.item:has(.item-name-extra:not(:empty)) .item-name::after {
-    content: " ";
-}
-
 .item-details {
     float: right;
 }
 
-.item-quantity::after {
-    content: " ";
-}
-
-.item:has(.item-unit-extra:not(:empty)) .item-unit::after {
-    content: " ";
-}
-
 .item-unit-extra {
     color: darkgray;
-}
-
-.item-unit-extra:not(:empty)::before {
-    content: "(";
-}
-
-.item-unit-extra:not(:empty)::after {
-    content: ")";
 }
 
 .items-list-float-clear {
@@ -416,17 +383,8 @@ body {
     color: grey;
 }
 
-.recipe-cost td:empty::after {
-    content: "–";
-    /* background-color: red; */
-}
-
 .recipe-diary>dt {
     font-weight: bold;
-}
-
-.recipe-diary:empty::after {
-    content: "(none)";
 }
 
 /* end Stuff for image and diary */
