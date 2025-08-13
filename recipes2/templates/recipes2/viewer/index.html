@@ -127,9 +127,9 @@
                     <span class="attribute-name">Yields</span>
                     <span class="yield-value">
                       {% if yield_param %}
-                        <input class="yield-quantity" size="1" value="{{ yield_param }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
+                        <input class="yield-quantity inline-form" size="1" value="{{ yield_param }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
                       {% else %}
-                        <input class="yield-quantity" size="1" value="{{ recipe.yield_quantity }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
+                        <input class="yield-quantity inline-form" size="1" value="{{ recipe.yield_quantity }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
                       {% endif %}
                       <span></span>
                       <span class="yield-unit">{{ recipe.yield_unit|pluralise_unit:recipe.yield_quantity }}</span>

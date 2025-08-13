@@ -63,7 +63,8 @@ a {
 a:hover,
 button:hover,
 summary>span.name:hover,
-.form .toggle label:hover {
+.form .toggle label:hover,
+.clickable:hover {
     color: darkred;
     fill: darkred;
     text-decoration: underline;

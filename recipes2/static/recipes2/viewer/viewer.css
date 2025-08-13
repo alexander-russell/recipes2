@@ -38,14 +38,8 @@ body {
     color: grey;
 }
 
-.recipe-grouping>a {
+.recipe-grouping>a:not(:hover) {
     color: grey;
-    text-decoration: none;
-}
-
-.recipe-grouping>a:hover {
-    color: darkred;
-    text-decoration: underline;
 }
 
 .grouping-type::after {
@@ -73,10 +67,6 @@ body {
 
 .icon-wrapper.clickable {
     cursor: pointer;
-}
-
-.icon-wrapper.clickable:hover {
-    fill: darkred;
 }
 
 /* Additional rule for icons wrapped in anchor tags to fix vertical sizing */
@@ -143,12 +133,6 @@ body {
     border-bottom: 2px solid black;
     border-radius: 0px;
     text-align: center;
-}
-
-.yield-quantity:focus {
-    outline: none;
-    color: darkred;
-    border-bottom-color: darkred;
 }
 
 .cost-attribute-extra-wrapper {

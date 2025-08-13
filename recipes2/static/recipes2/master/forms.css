@@ -36,6 +36,7 @@ div:has(> input[type="checkbox"]) {
 }
 
 .form input:focus,
+input.inline-form:focus,
 .form select:focus,
 .form span[contenteditable]:focus,
 .form span[contenteditable]:active {
