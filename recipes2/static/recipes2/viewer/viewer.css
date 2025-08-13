@@ -163,6 +163,10 @@ body {
     margin: 0;
 }
 
+.notes-wrapper>p>a {
+    text-decoration: underline;
+}
+
 /* end Stuff for notes section */
 
 /* Stuff for timers section */
