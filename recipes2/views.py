@@ -324,6 +324,7 @@ def diagnostics_index(request):
     for category_name, module in [
         ("Recipe", diagnostics.recipe),
         ("Item", diagnostics.item),
+        ("Step", diagnostics.step),
         ("Ingredient", diagnostics.ingredient),
     ]:
         tests = module.run()
@@ -367,6 +368,18 @@ def diagnostics_item(request):
             "title": "Item Diagnostics",
             "admin_change_url": "admin:manager_item_change",
             "diagnostics": diagnostics.item.run(),
+        },
+    )
+
+@staff_member_required
+def diagnostics_step(request):
+    return render(
+        request,
+        "recipes2/diagnostics/report.html",
+        {
+            "title": "Step Diagnostics",
+            "admin_change_url": "admin:manager_item_change",
+            "diagnostics": diagnostics.step.run(),
         },
     )
 

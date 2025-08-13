@@ -1,0 +1,15 @@
+{% extends "recipes2/diagnostics/partials/_results_table_base.html" %}
+
+{% block name_value %}
+  Step {{ obj.position }}
+{% endblock %}
+
+{% block extra_headers_after %}
+<th class="text-left border px-2 py-1">Recipe</th>
+<th class="text-left border px-2 py-1">Group Recipe</th>
+{% endblock %}
+
+{% block extra_columns_after %}
+<td class="border px-2 py-1">{{ obj.recipe.name }}</td>
+<td class="border px-2 py-1">{{ obj.group.recipe.name }}</td>
+{% endblock %}
