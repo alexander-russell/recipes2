@@ -384,6 +384,10 @@ class Step(models.Model):
     class Meta:
         ordering = ["position"]
 
+    def __str__(self):
+        return f"Step {self.position}."
+
+
 class Diary(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name="diaryentries"
