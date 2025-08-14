@@ -46,4 +46,8 @@ def run():
             "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.filter(status=Recipe.Status.DRAFT),
         },
+        "Note Contains LaTeX": {
+            "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
+            "data": Recipe.objects.filter(description__contains='\\'),
+        },
     }
