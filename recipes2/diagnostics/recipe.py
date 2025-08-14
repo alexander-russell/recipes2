@@ -50,8 +50,8 @@ def run():
             "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
             "data": Recipe.objects.filter(description__contains='\\'),
         },
-        "Missing Serve Unit": {
+        "Missing Yield Unit": {
             "template": "recipes2/diagnostics/partials/_results_table_recipe_base.html",
-            "data": Recipe.objects.active().filter(serve_unit__isnull=True),
+            "data": Recipe.objects.active().filter(yield_unit__isnull=True),
         }
     }
