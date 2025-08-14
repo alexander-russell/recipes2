@@ -162,7 +162,7 @@
                 <p class="cost-attribute-extra"></p>
               </div>
             </div>
-            <div class="notes-wrapper">{{ recipe.description|wrap_marked_scalables|render_markdown }}</div>
+            <div class="notes-wrapper">{{ recipe.description|smartquote|safe|wrap_marked_scalables|render_markdown }}</div>
             {% if recipe.timers %}
               <div class="timers-wrapper">
                 <div class="timers">

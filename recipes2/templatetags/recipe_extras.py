@@ -2,6 +2,7 @@ from decimal import Decimal
 from django import template
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
+import smartypants
 import re
 import markdown
 
@@ -77,3 +78,12 @@ def format_duration(value):
     #     return f"{hours} hr"
     # else:
     #     return f"{minutes} min"
+
+@register.filter
+def smartquote(value):
+    """
+    Convert straight quotes in the text to typographic (curly) quotes.
+    """
+    if not value:
+        return ""
+    return smartypants.smartypants(value)
