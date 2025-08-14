@@ -51,7 +51,9 @@ class YieldUnitAdmin(admin.ModelAdmin):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
+    list_display = ("recipe__name", "ingredient__name", "quantity", "unit__name", "group__name")
+    list_display_links = ("ingredient__name",)
+    search_fields = ("recipe__name", "ingredient__name", "unit__name", "group__name")
 
 
 class ItemInline(SortableInlineAdminMixin, admin.TabularInline):
