@@ -1,16 +1,10 @@
 {% extends 'recipes2/diagnostics/partials/_results_table_base.html' %}
 
 {% block extra_headers_after %}
-  {% block extra_headers_before_view %}
-
-  {% endblock %}
   <th class="text-left border px-2 py-1">Open in viewer</th>
 {% endblock %}
 
 {% block extra_columns_after %}
-  {% block extra_columns_before_view %}
-
-  {% endblock %}
   <td class="border px-2 py-1">
     <a href="{% url 'recipes2:viewer' obj.slug %}">View</a>
   </td>

@@ -1,9 +1,11 @@
-{% extends "recipes2/diagnostics/partials/_results_table_recipe_base.html" %}
+{% extends 'recipes2/diagnostics/partials/_results_table_recipe_base.html' %}
 
-{% block extra_headers_before_view %}
-<th class="text-left border px-2 py-1">Classification</th>
+{% block extra_headers_after %}
+  <th class="text-left border px-2 py-1">Classification</th>
+  {{ block.super }}
 {% endblock %}
 
-{% block extra_columns_before_view %}
-<td class="border px-2 py-1">{{ obj.items.first.recipe.classification }}</a></td>
+{% block extra_columns_after %}
+  <td class="border px-2 py-1">{{ obj.items.first.recipe.classification }}</td>
+  {{ block.super }}
 {% endblock %}
