@@ -132,7 +132,9 @@
                         <input class="yield-quantity inline-form" size="1" value="{{ recipe.yield_quantity }}" placeholder="{{ recipe.yield_quantity }}" data-original-value="{{ recipe.yield_quantity }}" autocomplete="off" oninput="scale()" />
                       {% endif %}
                       <span></span>
+                      {% if recipe.yield_unit %}
                       <span class="yield-unit">{{ recipe.yield_unit|pluralise_unit:recipe.yield_quantity }}</span>
+                      {% endif %}
                       {% if recipe.yield_detail %}
                         <span class="yield-detail">({{ recipe.yield_detail|wrap_marked_scalables }})</span>
                       {% endif %}

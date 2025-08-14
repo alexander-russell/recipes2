@@ -18,7 +18,7 @@
                 {% if recipe.time_quantity %}
                 <li>{{ recipe.time_quantity|format_duration }}</li>
                 {% endif %}
-                {% if recipe.yield_quantity %}
+                {% if recipe.yield_quantity and recipe.yield_unit %}
                   <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
                 {% endif %}
                 {% if recipe.cost.amount_per_unit %}
