@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
     viewBtn.className = "button";
     viewBtn.style = "line-height: 15px; padding: 10px 15px;";
     viewBtn.textContent = "View";
-    viewBtn.target = "_blank"; 
-    
+    viewBtn.target = "_blank";
+
     // Insert into both top and bottom bars
     document.querySelectorAll("div.submit-row").forEach(row => {
         const clone = viewBtn.cloneNode(true);
