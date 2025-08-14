@@ -18,3 +18,7 @@ textarea {
     top: 0;
     z-index: 1000;
 }
+
+fieldset.sortable table tr.form-row.has_original td.original p {
+    background-image: none;
+}

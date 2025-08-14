@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from adminsortable2.admin import SortableAdminBase, SortableInlineAdminMixin
 from .models import (
     Category,
     Classification,
@@ -53,7 +54,7 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
-class ItemInline(admin.TabularInline):
+class ItemInline(SortableInlineAdminMixin, admin.TabularInline):
     autocomplete_fields = ["ingredient", "unit"]
     model = Item
     extra = 0
@@ -115,7 +116,7 @@ class ItemGroupAdmin(admin.ModelAdmin):
         return form
 
 
-class StepInline(admin.TabularInline):
+class StepInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Step
     extra = 0
 
@@ -145,12 +146,12 @@ class StepGroupAdmin(admin.ModelAdmin):
         return form
 
 
-class ImageInline(admin.TabularInline):
+class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
     extra = 0
 
 
-class TimerInline(admin.TabularInline):
+class TimerInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Timer
     extra = 0
 
@@ -172,7 +173,7 @@ class TagInline(admin.TabularInline):
 
 
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(SortableAdminBase, admin.ModelAdmin):
     # pass
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
     # readonly_fields = ("slug",)

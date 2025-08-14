@@ -399,6 +399,8 @@ class Timer(models.Model):
     name = models.CharField(max_length=100)
     duration = models.DurationField()
 
+    class Meta:
+        ordering = ["position"]
 
 def image_upload_to(instance, filename):
     return os.path.join("recipes2", str(instance.recipe.id), "images", filename)
