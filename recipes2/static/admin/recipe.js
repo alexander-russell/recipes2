@@ -79,3 +79,21 @@ document.addEventListener("DOMContentLoaded", function () {
         row.insertBefore(clone, row.querySelector("a.deletelink"));
     });
 });
+
+// Automatically add recipe ID to related item group links
+document.addEventListener("DOMContentLoaded", function () {
+    // Extract recipe ID from the admin URL: /admin/<app>/recipe/<id>/change/
+    var match = window.location.pathname.match(/\/recipe\/(\d+)\/change\//);
+    if (!match) return; // No recipe ID (probably new recipe form)
+    var recipeId = match[1];
+
+    // Patch all add-related (+) links pointing to "*group/add/"
+    document.querySelectorAll(".add-related").forEach(function (link) {
+        if (link.href.match(/group\/add\/\?/)) {
+            var sep = link.href.includes("?") ? "&" : "?";
+            if (!link.href.includes("recipe=")) {
+                link.href += sep + "recipe=" + recipeId;
+            }
+        }
+    });
+});

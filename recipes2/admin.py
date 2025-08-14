@@ -58,6 +58,15 @@ class ItemInline(admin.TabularInline):
     model = Item
     extra = 0
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "group":
+            recipe_id = request.resolver_match.kwargs.get("object_id")
+            if recipe_id:
+                kwargs["queryset"] = ItemGroup.objects.filter(recipe_id=recipe_id)
+            else:
+                kwargs["queryset"] = ItemGroup.objects.none()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
@@ -92,17 +101,48 @@ class UnitAdmin(admin.ModelAdmin):
 
 @admin.register(ItemGroup)
 class ItemGroupAdmin(admin.ModelAdmin):
-    pass
+    def get_changeform_initial_data(self, request):
+        data = super().get_changeform_initial_data(request)
+        recipe_id = request.GET.get("recipe")
+        if recipe_id:
+            data["recipe"] = recipe_id
+        return data
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if request.GET.get("recipe") and "recipe" in form.base_fields:
+            form.base_fields["recipe"].disabled = True
+        return form
 
 
 class StepInline(admin.TabularInline):
     model = Step
     extra = 0
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "group":
+            recipe_id = request.resolver_match.kwargs.get("object_id")
+            if recipe_id:
+                kwargs["queryset"] = StepGroup.objects.filter(recipe_id=recipe_id)
+            else:
+                kwargs["queryset"] = StepGroup.objects.none()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 @admin.register(StepGroup)
-class StepGroupAdmin(admin.ModelAdmin):
-    pass
+class StepGroupAdmin(admin.ModelAdmin): 
+    def get_changeform_initial_data(self, request):
+        data = super().get_changeform_initial_data(request)
+        recipe_id = request.GET.get("recipe")
+        if recipe_id:
+            data["recipe"] = recipe_id
+        return data
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if request.GET.get("recipe") and "recipe" in form.base_fields:
+            form.base_fields["recipe"].disabled = True
+        return form
 
 
 class ImageInline(admin.TabularInline):
