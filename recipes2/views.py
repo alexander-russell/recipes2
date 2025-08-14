@@ -221,11 +221,23 @@ def viewer(request, recipe_slug):
         for item_cost in item_costs
     )
 
+    # Calculate cost per serve
     cost_per_serve = (
         total_cost / recipe.yield_quantity
         if recipe.yield_quantity is not None
         else None
     )
+
+    # Determine cost exclusions string (any item_cost with success=False)
+    failed_ingredients = []
+    for item_cost in item_costs:
+        if not item_cost.success and item_cost.ingredient_name not in failed_ingredients:
+            failed_ingredients.append(item_cost.ingredient_name)
+
+    if failed_ingredients:
+        cost_exclusions = "Cost excludes: " + ", ".join(failed_ingredients)
+    else:
+        cost_exclusions = None
 
     # Get URL yield paramter if specified
     yield_param = request.GET.get("yield")
@@ -241,6 +253,7 @@ def viewer(request, recipe_slug):
             "item_costs": item_costs,
             "total_cost": total_cost,
             "cost_per_serve": cost_per_serve,
+            "cost_exclusions": cost_exclusions,
             "stale": stale,
             "yield_param": yield_param,
         },

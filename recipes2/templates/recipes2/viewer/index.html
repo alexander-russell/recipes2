@@ -158,9 +158,9 @@
                   </span>
                 {% endif %}
               </p>
-              <div class="cost-attribute-extra-wrapper">
-                <p class="cost-attribute-extra"></p>
-              </div>
+              <p class="cost-exclusions hidden">
+                {{ cost_exclusions }}                
+              </p>
             </div>
             <div class="notes-wrapper">{{ recipe.description|smartquote|safe|wrap_marked_scalables|render_markdown }}</div>
             {% if recipe.timers %}
@@ -244,6 +244,7 @@
       </section>
     </div>
     <script src="{% static 'recipes2/viewer/diary.js' %}"></script>
+    <script src="{% static 'recipes2/viewer/cost-popup.js' %}"></script>
     <script src="{% static 'recipes2/viewer/image.js' %}"></script>
     <script src="{% static 'recipes2/viewer/scaling.js' %}"></script>
     <script src="{% static 'recipes2/viewer/timers.js' %}"></script>

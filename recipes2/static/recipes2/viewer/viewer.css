@@ -130,17 +130,15 @@ body {
     text-align: center;
 }
 
-.cost-attribute-extra-wrapper {
-    display: none;
+.cost-exclusions {
+    display: flex;
     position: absolute;
-    max-width: 30%;
+    min-width: 250px;
+    width: 25%;
+    margin: 0px;
     padding: 10px;
     background-color: rgb(250, 255, 175);
     border: 1px solid black;
-}
-
-.cost-attribute-extra {
-    margin: 0;
 }
 
 /* end Stuff for cost attribute extra info */
