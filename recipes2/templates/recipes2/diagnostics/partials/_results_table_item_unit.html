@@ -1,17 +1,13 @@
 {% extends 'recipes2/diagnostics/partials/_results_table_item_base.html' %}
 
-{% block name_value %}
-  {{ obj.ingredient.name }}
-{% endblock %}
-
-{% block extra_headers_after %}
+{% block headers %}
+  {{ block.super }}
   <th class="text-left border px-2 py-1">Unit</th>
   <th class="text-left border px-2 py-1">Unit Detail</th>
-  {{ block.super }}
 {% endblock %}
 
-{% block extra_columns_after %}
+{% block columns %}
+  {{ block.super }}
   <td class="border px-2 py-1">{{ obj.unit.name }}</td>
   <td class="border px-2 py-1">{{ obj.unit_detail }}</td>
-  {{ block.super }}
 {% endblock %}

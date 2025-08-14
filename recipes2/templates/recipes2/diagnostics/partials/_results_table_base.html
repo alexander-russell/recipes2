@@ -2,32 +2,30 @@
   <table class="table-auto border border-collapse mb-4 w-full">
     <thead class="bg-gray-100">
       <tr>
-        {% block extra_headers_before %}
+        {% block headers %}
+          <th class="text-left border px-2 py-1">Name</th>
+          <th class="text-left border px-2 py-1">ID</th>
+          {% block extra_headers_after %}
 
-        {% endblock %}
-        <th class="text-left border px-2 py-1">Name</th>
-        <th class="text-left border px-2 py-1">ID</th>
-        {% block extra_headers_after %}
-
+          {% endblock %}
         {% endblock %}
       </tr>
     </thead>
     <tbody>
       {% for obj in data %}
         <tr>
-          {% block extra_columns_before %}
+          {% block columns %}
+            <td class="border px-2 py-1">
+              {% block name_value %}
+                {{ obj.name }}
+              {% endblock %}
+            </td>
+            <td class="border px-2 py-1">
+              <a class="text-blue-600 underline" href="{% url admin_change_url obj.id %}">{{ obj.id }}</a>
+            </td>
+            {% block extra_columns_after %}
 
-          {% endblock %}
-          <td class="border px-2 py-1">
-            {% block name_value %}
-              {{ obj.name }}
             {% endblock %}
-          </td>
-          <td class="border px-2 py-1">
-            <a class="text-blue-600 underline" href="{% url admin_change_url obj.id %}">{{ obj.id }}</a>
-          </td>
-          {% block extra_columns_after %}
-
           {% endblock %}
         </tr>
       {% endfor %}
