@@ -70,10 +70,10 @@ class ItemInline(SortableInlineAdminMixin, admin.TabularInline):
                 kwargs["queryset"] = ItemGroup.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-class ItemInlineForIngredient(admin.StackedInline):
+class ItemInlineForIngredient(admin.TabularInline):
     model = Item
     extra = 0
-    fields = ("recipe",)
+    fields = ("recipe", "ingredient_detail", "quantity", "unit", "unit_detail")
 
 class IngredientPriceInlineForIngredient(admin.TabularInline):
     model = IngredientPrice
