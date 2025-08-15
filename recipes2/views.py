@@ -19,6 +19,12 @@ from django.contrib import messages
 from django.middleware.csrf import get_token
 from django.db.models import Q
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from recipes2.serializers import IngredientPriceSerializer
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
 def home(request):
     recipes = Recipe.objects.active().only("name", "slug").order_by("name")
     return render(request, "recipes2/home/index.html", {"recipes": recipes})
@@ -329,6 +335,16 @@ def get_latest_ingredient_price(request):
     except Ingredient.DoesNotExist:
         pass
     return JsonResponse({}, status=404)
+
+@api_view(["GET"])
+def get_ingredient_prices(request):
+    data = cache.get("ingredient_prices_data")
+    if data is None:
+        prices = IngredientPrice.objects.all().order_by("-date")
+        serializer = IngredientPriceSerializer(prices, many=True)
+        data = serializer.data
+        cache.set("ingredient_prices_data", data, timeout=None)  # 5-minute fallback
+    return Response(data)
 
 @staff_member_required
 def diagnostics_index(request):

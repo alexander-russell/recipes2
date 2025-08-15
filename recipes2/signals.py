@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.core.cache import cache
 from django.utils import timezone
 from .models import IngredientPrice, Item, ItemCost, ItemGroup, Recipe, Step, StepGroup, Tag, Timer
 
@@ -44,3 +45,10 @@ def update_recipe_cost_on_item_cost_change(sender, instance, **kwargs):
     logger.warning(f"Signal (update_recipe_cost_on_item_cost_change) fired for {sender.__name__} with instance {instance}")
     recipe = instance.item.recipe
     recipe.update_cost()
+
+# Clear ingredient price data cache when an ingredient price is saved or deleted
+@receiver(post_save, sender=IngredientPrice)
+@receiver(post_delete, sender=IngredientPrice)
+def clear_ingredient_price_cache(sender, instance, **kwargs):
+    logger.warning(f"Signal (clear_ingredient_price_cache) fired for {sender.__name__} with instance {instance}")
+    cache.delete("ingredient_prices_data")
