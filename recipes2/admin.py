@@ -115,6 +115,9 @@ class ItemInlineForUnit(admin.TabularInline):
 class IngredientPriceInlineForUnit(admin.TabularInline):
     model = IngredientPrice
     extra = 0
+    can_delete = False
+    readonly_fields = ("ingredient", "date", "price", "quantity", "unit", "detail")
+    fields = ("ingredient", "date", "price", "quantity", "unit", "detail")
 
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
