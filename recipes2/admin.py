@@ -70,10 +70,22 @@ class ItemInline(SortableInlineAdminMixin, admin.TabularInline):
                 kwargs["queryset"] = ItemGroup.objects.none()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+class ItemInlineForIngredient(admin.StackedInline):
+    model = Item
+    extra = 0
+    fields = ("recipe",)
+
+class IngredientPriceInlineForIngredient(admin.TabularInline):
+    model = IngredientPrice
+    extra = 0
+    # fields = ("date", "source", "price", "quantity", "unit", "detail")
+    # readonly_fields = ("date", "source", "price", "quantity", "unit", "detail")
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     search_fields = ["name"]
+    inlines = [ItemInlineForIngredient, IngredientPriceInlineForIngredient]
+    
 
 
 @admin.register(IngredientSource)
