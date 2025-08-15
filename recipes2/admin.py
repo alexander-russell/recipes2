@@ -122,6 +122,7 @@ class IngredientPriceInlineForUnit(admin.TabularInline):
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
     search_fields = ["singular"]
+    list_display = ["singular", "plural"]
     ordering = ["singular"]
     inlines = [ItemInlineForUnit, IngredientPriceInlineForUnit]
 
