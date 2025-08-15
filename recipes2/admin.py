@@ -43,10 +43,19 @@ class ClassificationAdmin(admin.ModelAdmin):
 class CuisineAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
+class RecipeInlineForYieldUnit(admin.TabularInline):
+    model = Recipe
+    extra = 0
+    can_delete = False
+    readonly_fields = ("name", "slug", "yield_quantity", "yield_detail")
+    fields = ("name", "slug", "yield_quantity", "yield_detail")
 
 @admin.register(YieldUnit)
 class YieldUnitAdmin(admin.ModelAdmin):
     search_fields = ["singular"]
+    list_display = ["singular", "plural"]
+    ordering = ["singular"]
+    inlines = [RecipeInlineForYieldUnit]
 
 
 @admin.register(Item)
@@ -213,6 +222,7 @@ class TagInline(admin.TabularInline):
 class RecipeAdmin(SortableAdminBase, admin.ModelAdmin):
     # pass
     autocomplete_fields = ["cuisine", "classification", "yield_unit"]
+    search_fields = ["name", "slug", "description"]
     # readonly_fields = ("slug",)
     save_on_top = True
     prepopulated_fields = {"slug": ("name",)}
