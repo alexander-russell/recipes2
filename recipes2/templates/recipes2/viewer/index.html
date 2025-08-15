@@ -133,7 +133,7 @@
                       {% endif %}
                       <span></span>
                       {% if recipe.yield_unit %}
-                      <span class="yield-unit">{{ recipe.yield_unit|pluralise_unit:recipe.yield_quantity }}</span>
+                      <span class="yield-unit">{% pluralise_unit recipe.yield_unit recipe.yield_quantity %}</span>
                       {% endif %}
                       {% if recipe.yield_detail %}
                         <span class="yield-detail">({{ recipe.yield_detail|wrap_marked_scalables }})</span>
@@ -208,7 +208,7 @@
                         {% if item.quantity != 0 %}
                           <span class="item-quantity">{{ item.quantity|floatformat:'-3'|detrail|wrap_scalable }}</span>
                         {% endif %}{{ cost.itemunit }}
-                        <span class="item-unit"> {{ item.unit.singular }}</span>
+                        <span class="item-unit"> {% pluralise_unit item.unit item.quantity %}</span>
                         {% if item.unit_detail %}
                           <span class="item-unit-extra"> ({{ item.unit_detail|wrap_marked_scalables }})</span>
                         {% endif %}

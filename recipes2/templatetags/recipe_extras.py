@@ -35,10 +35,17 @@ def wrap_scalable(value, autoescape=True):
     # Wrap value with a span
     return mark_safe(f'<span class="scalable" data-original-value="{clean_value}">{clean_value}</span>')
 
-@register.filter()
-def pluralise_unit(value, quantity):
-    pluralised = value.singular if quantity <= 1 else value.plural
-    return pluralised if pluralised is not None else value.name
+@register.simple_tag
+def pluralise_unit(unit, quantity):
+    """
+    Render a <span> for a unit with singular, plural, and original-quantity as data attributes.
+    The visible text is correct for the current quantity.
+    """
+    singular = unit.singular
+    plural = unit.plural or unit.singular
+    display_text = singular if quantity == 1 else plural
+
+    return mark_safe(f'<span class="scalable-word" data-singular="{singular}" data-plural="{plural}" data-original-quantity="{quantity}">{display_text}</span>')
 
 
 @register.filter()
