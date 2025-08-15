@@ -191,13 +191,14 @@ class Ingredient(models.Model):
 
 
 class Unit(models.Model):
-    name = models.CharField(max_length=100)
+    singular = models.CharField(max_length=100)
+    plural = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["singular"]
 
     def __str__(self):
-        return self.name
+        return self.singular
 
 
 class Conversion(models.Model):
@@ -215,7 +216,7 @@ class Conversion(models.Model):
     )
 
     def __str__(self):
-        return f"{self.from_unit.name}->{self.to_unit.name}{' (' + self.ingredient.name + ')' if self.ingredient else ''}"
+        return f"{self.from_unit.singular}->{self.to_unit.singular}{' (' + self.ingredient.name + ')' if self.ingredient else ''}"
 
 
 class IngredientSource(models.Model):
@@ -285,7 +286,7 @@ class Item(models.Model):
         item_cost.amount = None
         item_cost.ingredient_name = self.ingredient.name
         item_cost.item_quantity = self.quantity
-        item_cost.item_unit = self.unit.name
+        item_cost.item_unit = self.unit.singular
         item_cost.price = None
         item_cost.price_quantity = None
         item_cost.price_unit = None
@@ -312,17 +313,17 @@ class Item(models.Model):
                 item_cost.price = latest_price.price
                 item_cost.price_quantity = latest_price.quantity
                 item_cost.price_unit = (
-                    latest_price.unit.name if latest_price.unit else None
+                    latest_price.unit.singular if latest_price.unit else None
                 )
 
                 # If units are the same use 1, otherwise calculate it with unit graph
-                if self.unit.name == latest_price.unit.name:
+                if self.unit.singular == latest_price.unit.singular:
                     conversion_factor = 1
                 else:
                     from recipes2.utils.cost_utils2 import get_conversion_factor
 
                     conversion_factor = get_conversion_factor(
-                        self.unit.name, latest_price.unit.name, self.ingredient.id
+                        self.unit.singular, latest_price.unit.singular, self.ingredient.id
                     )
                 # If conversion failed, stop, otherwise calculate amount and return
                 if conversion_factor is None:
