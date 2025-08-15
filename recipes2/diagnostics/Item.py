@@ -27,7 +27,7 @@ def run():
             "data": (
                 Item.objects.filter(recipe__status=Recipe.Status.ACTIVE)
                 .filter(quantity=0)
-                .exclude(unit__name="manual")
+                .exclude(unit__singular="manual")
             ),
         },
     }
