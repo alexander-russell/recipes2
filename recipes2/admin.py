@@ -46,7 +46,7 @@ class CuisineAdmin(admin.ModelAdmin):
 
 @admin.register(YieldUnit)
 class YieldUnitAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
+    search_fields = ["singular"]
 
 
 @admin.register(Item)

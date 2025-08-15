@@ -35,12 +35,11 @@ class Classification(models.Model):
 
 
 class YieldUnit(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    singular = models.CharField(max_length=50, unique=True)
     plural = models.CharField(max_length=50)
-    singular = models.CharField(max_length=50, null=True)
 
     def __str__(self):
-        return self.name
+        return self.singular
 
     def label(self, quantity):
         return (

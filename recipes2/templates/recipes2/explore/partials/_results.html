@@ -22,7 +22,7 @@
                   <li>{{ recipe.yield_quantity }} {{ recipe.yield_unit }}</li>
                 {% endif %}
                 {% if recipe.cost.amount_per_unit %}
-                  <li>${{ recipe.cost.amount_per_unit|floatformat:2 }} per {{ recipe.cost.yield_unit.name }}</li>
+                  <li>${{ recipe.cost.amount_per_unit|floatformat:2 }} per {{ recipe.cost.yield_unit.singular }}</li>
                 {% elif recipe.cost.amount %}
                   <li>${{ recipe.cost.total|floatformat:2 }}</li>
                 {% endif %}
