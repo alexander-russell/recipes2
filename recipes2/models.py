@@ -177,7 +177,7 @@ class RecipeCost(models.Model):
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     class Meta:
         ordering = ["name"]
@@ -190,7 +190,7 @@ class Ingredient(models.Model):
 
 
 class Unit(models.Model):
-    singular = models.CharField(max_length=100)
+    singular = models.CharField(max_length=100, unique=True)
     plural = models.CharField(max_length=100, null=True, blank=True)
 
     class Meta:
