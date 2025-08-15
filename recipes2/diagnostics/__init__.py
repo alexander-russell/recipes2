@@ -1,9 +1,9 @@
-from . import item, step, recipe, ingredient
+from . import Item, Step, Recipe, Ingredient
 
 def run_all():
     results = {}
-    results.update(item.run())
-    results.update(step.run())
-    results.update(recipe.run())
-    results.update(ingredient.run())
+    results.update(Item.run())
+    results.update(Step.run())
+    results.update(Recipe.run())
+    results.update(Ingredient.run())
     return results

@@ -351,10 +351,10 @@ def diagnostics_index(request):
     summary = {}
 
     for category_name, module in [
-        ("Recipe", diagnostics.recipe),
-        ("Item", diagnostics.item),
-        ("Step", diagnostics.step),
-        ("Ingredient", diagnostics.ingredient),
+        ("Recipe", diagnostics.Recipe),
+        ("Item", diagnostics.Item),
+        ("Step", diagnostics.Step),
+        ("Ingredient", diagnostics.Ingredient),
     ]:
         tests = module.run()
         counts = {
@@ -383,7 +383,7 @@ def diagnostics_recipe(request):
         {
             "title": "Recipe Diagnostics",
             "admin_change_url": "admin:manager_recipe_change",
-            "diagnostics": diagnostics.recipe.run(),
+            "diagnostics": diagnostics.Recipe.run(),
         },
     )
 
@@ -396,7 +396,7 @@ def diagnostics_item(request):
         {
             "title": "Item Diagnostics",
             "admin_change_url": "admin:manager_item_change",
-            "diagnostics": diagnostics.item.run(),
+            "diagnostics": diagnostics.Item.run(),
         },
     )
 
@@ -408,7 +408,7 @@ def diagnostics_step(request):
         {
             "title": "Step Diagnostics",
             "admin_change_url": "admin:manager_item_change",
-            "diagnostics": diagnostics.step.run(),
+            "diagnostics": diagnostics.Step.run(),
         },
     )
 
@@ -421,6 +421,6 @@ def diagnostics_ingredient(request):
         {
             "title": "Ingredient Diagnostics",
             "admin_change_url": "admin:manager_ingredient_change",
-            "diagnostics": diagnostics.ingredient.run(),
+            "diagnostics": diagnostics.Ingredient.run(),
         },
     )
