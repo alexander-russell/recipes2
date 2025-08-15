@@ -22,10 +22,7 @@ urlpatterns = [
     path("api/latest-ingredient/", views.get_latest_ingredient_price, name="latest_ingredient"),
     path("api/ingredient-prices/", views.get_ingredient_prices, name="ingredient_prices"),
     path("diagnostics/", views.diagnostics_index, name="diagnostics_index"),
-    path("diagnostics/recipe/", views.diagnostics_recipe, name="diagnostics_recipe"),
-    path("diagnostics/item/", views.diagnostics_item, name="diagnostics_item"),
-    path("diagnostics/step/", views.diagnostics_step, name="diagnostics_step"),
-    path("diagnostics/ingredient/", views.diagnostics_ingredient, name="diagnostics_ingredient"),
+    path("diagnostics/<slug:module_name>/", views.diagnostics_report, name="diagnostics_report"),
     path("<slug:recipe_slug>/", views.viewer, name="viewer"),
     path("<slug:recipe_slug>/diary/add/", views.add_diary_entry, name="add_diary_entry"),
 ]

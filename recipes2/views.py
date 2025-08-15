@@ -1,7 +1,7 @@
 from collections import defaultdict
 import os
 from django.conf import settings
-from django.http import HttpResponseBadRequest
+from django.http import Http404, HttpResponseBadRequest
 from datetime import date, datetime, timedelta
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
@@ -350,12 +350,7 @@ def get_ingredient_prices(request):
 def diagnostics_index(request):
     summary = {}
 
-    for category_name, module in [
-        ("Recipe", diagnostics.Recipe),
-        ("Item", diagnostics.Item),
-        ("Step", diagnostics.Step),
-        ("Ingredient", diagnostics.Ingredient),
-    ]:
+    for category_name, module in diagnostics.modules.items():
         tests = module.run()
         counts = {
             test_name: len(test_data["data"]) for test_name, test_data in tests.items()
@@ -376,51 +371,20 @@ def diagnostics_index(request):
 
 
 @staff_member_required
-def diagnostics_recipe(request):
+def diagnostics_report(request, module_name):
+    modules_by_key = {name.lower(): mod for name, mod in diagnostics.modules.items()}
+    module = modules_by_key.get(module_name.lower())
+    if module is None or not hasattr(module, "run"):
+        raise Http404(f"No diagnostics module named '{module_name}'")
+
+    tests = module.run()
+
     return render(
         request,
         "recipes2/diagnostics/report.html",
         {
-            "title": "Recipe Diagnostics",
-            "admin_change_url": "admin:manager_recipe_change",
-            "diagnostics": diagnostics.Recipe.run(),
-        },
-    )
-
-
-@staff_member_required
-def diagnostics_item(request):
-    return render(
-        request,
-        "recipes2/diagnostics/report.html",
-        {
-            "title": "Item Diagnostics",
-            "admin_change_url": "admin:manager_item_change",
-            "diagnostics": diagnostics.Item.run(),
-        },
-    )
-
-@staff_member_required
-def diagnostics_step(request):
-    return render(
-        request,
-        "recipes2/diagnostics/report.html",
-        {
-            "title": "Step Diagnostics",
-            "admin_change_url": "admin:manager_item_change",
-            "diagnostics": diagnostics.Step.run(),
-        },
-    )
-
-
-@staff_member_required
-def diagnostics_ingredient(request):
-    return render(
-        request,
-        "recipes2/diagnostics/report.html",
-        {
-            "title": "Ingredient Diagnostics",
-            "admin_change_url": "admin:manager_ingredient_change",
-            "diagnostics": diagnostics.Ingredient.run(),
+            "title": f"{module_name.capitalize()} Diagnostics",
+            "admin_change_url": f"admin:manager_{module_name.lower()}_change",
+            "diagnostics": tests,
         },
     )
