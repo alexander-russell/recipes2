@@ -105,11 +105,32 @@ class IngredientPriceAdmin(admin.ModelAdmin):
     ]
     ordering = ["-date"]
 
+class ItemInlineForUnit(admin.TabularInline):
+    model = Item
+    extra = 0
+    can_delete = False
+    readonly_fields = ('recipe', 'ingredient', 'quantity', 'unit', 'group', 'ingredient_detail', 'unit_detail')
+    fields = ('recipe', 'ingredient', 'quantity', 'unit', 'group', 'ingredient_detail', 'unit_detail')
+
+class IngredientPriceInlineForUnit(admin.TabularInline):
+    model = IngredientPrice
+    extra = 0
 
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
     search_fields = ["singular"]
     ordering = ["singular"]
+    inlines = [ItemInlineForUnit, IngredientPriceInlineForUnit]
+
+    
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        unit = self.get_object(request, object_id)
+        if unit:
+            extra_context = extra_context or {}
+            extra_context['items_url'] = (
+                f"/admin/manager/item/?unit__id__exact={unit.id}"
+            )
+        return super().change_view(request, object_id, form_url, extra_context)
 
 
 @admin.register(ItemGroup)

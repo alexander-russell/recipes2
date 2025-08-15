@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+    {% if items_url %}
+        <p>
+            <a href="{{ items_url }}" target="_blank">
+                View all related items for this unit
+            </a>
+        </p>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
