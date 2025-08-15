@@ -78,8 +78,6 @@ class ItemInlineForIngredient(admin.TabularInline):
 class IngredientPriceInlineForIngredient(admin.TabularInline):
     model = IngredientPrice
     extra = 0
-    # fields = ("date", "source", "price", "quantity", "unit", "detail")
-    # readonly_fields = ("date", "source", "price", "quantity", "unit", "detail")
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
