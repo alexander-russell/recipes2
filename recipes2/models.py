@@ -79,7 +79,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     classification = models.ForeignKey(
-        Classification, on_delete=models.CASCADE, related_name="recipes"
+        Classification, on_delete=models.PROTECT, related_name="recipes"
     )
     date_created = models.DateField(default=timezone.now)
     date_updated = models.DateField(default=timezone.now)
@@ -91,7 +91,7 @@ class Recipe(models.Model):
     needs_revision = models.BooleanField()
     yield_quantity = models.SmallIntegerField(blank=True, null=True)
     yield_unit = models.ForeignKey(
-        YieldUnit, blank=True, null=True, on_delete=models.CASCADE
+        YieldUnit, blank=True, null=True, on_delete=models.SET_NULL, related_name="recipes"
     )
     yield_detail = models.CharField(max_length=200, blank=True, null=True)
     time_quantity = models.DurationField(blank=True, null=True)
@@ -171,7 +171,7 @@ class RecipeCost(models.Model):
     amount_per_unit = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True
     )
-    yield_unit = models.ForeignKey(YieldUnit, on_delete=models.SET_NULL, null=True)
+    yield_unit = models.ForeignKey(YieldUnit, on_delete=models.CASCADE, null=True)
     full_success = models.BooleanField()
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -202,10 +202,10 @@ class Unit(models.Model):
 
 class Conversion(models.Model):
     from_unit = models.ForeignKey(
-        Unit, on_delete=models.CASCADE, related_name="conversions_from"
+        Unit, on_delete=models.PROTECT, related_name="conversions_from"
     )
     to_unit = models.ForeignKey(
-        Unit, on_delete=models.CASCADE, related_name="conversions_to"
+        Unit, on_delete=models.PROTECT, related_name="conversions_to"
     )
     factor = models.DecimalField(
         max_digits=7, decimal_places=3, validators=[MinValueValidator(0)]
@@ -252,11 +252,11 @@ class Item(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="items")
     position = models.PositiveIntegerField(default=0, db_index=True)
     ingredient = models.ForeignKey(
-        Ingredient, on_delete=models.CASCADE, related_name="items"
+        Ingredient, on_delete=models.PROTECT, related_name="items"
     )
     ingredient_detail = models.CharField(max_length=100, blank=True)
     quantity = models.DecimalField(max_digits=10, decimal_places=3)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name="items")
+    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="items")
     unit_detail = models.CharField(max_length=100, blank=True)
     group = models.ForeignKey(
         ItemGroup,
@@ -378,7 +378,7 @@ class Step(models.Model):
     position = models.PositiveIntegerField(default=0, db_index=True)
     content = models.TextField()
     group = models.ForeignKey(
-        StepGroup, on_delete=models.CASCADE, blank=True, null=True
+        StepGroup, on_delete=models.SET_NULL, blank=True, null=True
     )
 
     class Meta:
