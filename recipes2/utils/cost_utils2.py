@@ -14,21 +14,21 @@ def build_unit_conversion_graph():
     # Add units as nodes
     units = Unit.objects.all()
     for unit in units:
-        graph.add_node(unit.name)
+        graph.add_node(unit.singular)
 
     # Add conversions as edges
     conversions = Conversion.objects.all()
     for conversion in conversions:
         # Add them in the forward direction, and then in the reverse using the reciprocal factor
         graph.add_edge(
-            conversion.from_unit.name,
-            conversion.to_unit.name,
+            conversion.from_unit.singular,
+            conversion.to_unit.singular,
             factor=conversion.factor,
             ingredient_id=conversion.ingredient.id if conversion.ingredient else None,
         )
         graph.add_edge(
-            conversion.to_unit.name,
-            conversion.from_unit.name,
+            conversion.to_unit.singular,
+            conversion.from_unit.singular,
             factor=1 / conversion.factor,
             ingredient_id=conversion.ingredient.id if conversion.ingredient else None,
         )
@@ -45,18 +45,18 @@ def get_conversion_path(subgraph, start, goal, ingredient):
 
     # Get shortest path to ingredient rule and then shortest path from there to goal
     path_to_ingredient_rule = nx.shortest_path(
-        subgraph, source=start, target=ingredient_rule.from_unit.name
+        subgraph, source=start, target=ingredient_rule.from_unit.singular
     )
     path_from_ingredient_rule = nx.shortest_path(
-        subgraph, source=ingredient_rule.to_unit.name, target=goal
+        subgraph, source=ingredient_rule.to_unit.singular, target=goal
     )
 
     # If ingredient rule ends at goal, return that
     # print("hey1")
     # print(f"goal={goal}")
     # print(f"ingredient_rule={ingredient_rule}")
-    # print(f"ingredient_rule.to_unit.name={ingredient_rule.to_unit.name}")
-    # print(f"ingredient_rule.from_unit.name={ingredient_rule.from_unit.name}")
+    # print(f"ingredient_rule.to_unit.singular={ingredient_rule.to_unit.singular}")
+    # print(f"ingredient_rule.from_unit.singular={ingredient_rule.from_unit.singular}")
     # print(f"path_to_ingredient_rule={path_to_ingredient_rule}")
     # print(f"path_from_ingredient_rule={path_from_ingredient_rule}")
     # print(

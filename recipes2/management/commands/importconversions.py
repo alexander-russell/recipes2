@@ -34,6 +34,6 @@ class Command(BaseCommand):
                     )
                     conversion.save()
 
-                    print(f"Conversion created: {from_unit.name} -> {to_unit.name}, Factor: {conversion.factor}")
+                    print(f"Conversion created: {from_unit.singular} -> {to_unit.singular}, Factor: {conversion.factor}")
                 except IntegrityError as e:
                     self.stderr.write(f"Error importing conversion {from_unit}->{to_unit} ({ingredient if ingredient is not None else ""}): {e}")

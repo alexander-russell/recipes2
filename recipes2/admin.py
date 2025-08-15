@@ -51,9 +51,9 @@ class YieldUnitAdmin(admin.ModelAdmin):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ("recipe__name", "ingredient__name", "quantity", "unit__name", "group__name")
+    list_display = ("recipe__name", "ingredient__name", "quantity", "unit__singular", "group__name")
     list_display_links = ("ingredient__name",)
-    search_fields = ("recipe__name", "ingredient__name", "unit__name", "group__name")
+    search_fields = ("recipe__name", "ingredient__name", "unit__singular", "group__name")
 
 
 class ItemInline(SortableInlineAdminMixin, admin.TabularInline):
@@ -98,8 +98,8 @@ class IngredientPriceAdmin(admin.ModelAdmin):
 
 @admin.register(Unit)
 class UnitAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
-    ordering = ["name"]
+    search_fields = ["singular"]
+    ordering = ["singular"]
 
 
 @admin.register(ItemGroup)

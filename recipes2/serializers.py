@@ -4,7 +4,7 @@ from .models import IngredientPrice
 
 class IngredientPriceSerializer(serializers.ModelSerializer):
     ingredient = serializers.CharField(source="ingredient.name")
-    unit = serializers.CharField(source="unit.name")
+    unit = serializers.CharField(source="unit.singular")
     source = serializers.CharField(source="source.name")
     price = serializers.FloatField()
     quantity = serializers.FloatField()

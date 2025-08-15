@@ -329,7 +329,7 @@ def get_latest_ingredient_price(request):
             return JsonResponse({
                 "price": latest.price,
                 "quantity": latest.quantity,
-                "unit": latest.unit.name,
+                "unit": latest.unit.singular,
                 "source": latest.source.name,
             })
     except Ingredient.DoesNotExist:

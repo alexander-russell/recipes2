@@ -204,11 +204,11 @@
                       {% endif %}
                     </span>
                     <span class="item-details">
-                      {% if item.unit.name != 'manual' %}
+                      {% if item.unit.singular != 'manual' %}
                         {% if item.quantity != 0 %}
                           <span class="item-quantity">{{ item.quantity|floatformat:'-3'|detrail|wrap_scalable }}</span>
                         {% endif %}{{ cost.itemunit }}
-                        <span class="item-unit"> {{ item.unit.name }}</span>
+                        <span class="item-unit"> {{ item.unit.singular }}</span>
                         {% if item.unit_detail %}
                           <span class="item-unit-extra"> ({{ item.unit_detail|wrap_marked_scalables }})</span>
                         {% endif %}
