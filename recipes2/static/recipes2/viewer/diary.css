@@ -2,6 +2,10 @@
     min-width: 40vw;
 }
 
+#diary-overlay dd p {
+    display: inline;
+}
+
 #diary-overlay #diary-input {
     display: inline-flex;
     min-width: 4em;
