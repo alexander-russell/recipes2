@@ -1,4 +1,5 @@
 {% extends 'recipes2/viewer/partials/_overlay.html' %}
+{% load recipe_extras %}
 
 {% block content %}
   <dl class="recipe-diary" onclick="event.stopPropagation()">
@@ -12,7 +13,7 @@
             {% if diaryentry.user and diaryentry.user.username != 'alrus' %}
               <span class="diary-username">&lt;{{ diaryentry.user.username }}&gt;</span>
             {% endif %}
-            {{ diaryentry.content }}
+            {{ diaryentry.content|smartquote|safe|render_markdown }}
           {% endfor %}
         </dd>
       {% endfor %}
