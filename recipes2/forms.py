@@ -80,7 +80,7 @@ class IngredientPriceForm(forms.ModelForm):
 
         # Create dictionary of instances by name for all the datalist fields
         self.ingredients_by_name = {obj.name: obj for obj in Ingredient.objects.all()}
-        self.units_by_name = {obj.name: obj for obj in Unit.objects.all()}
+        self.units_by_singular = {obj.singular: obj for obj in Unit.objects.all()}
         self.sources_by_name = {obj.name: obj for obj in IngredientSource.objects.all()}
 
         # Style the foreign key fields as text inputs with data lists, autofocus ingredient input
@@ -108,10 +108,10 @@ class IngredientPriceForm(forms.ModelForm):
         return object
 
     def clean_unit(self):
-        name = self.cleaned_data.get("unit")
-        object = self.units_by_name.get(name)
+        singular = self.cleaned_data.get("unit")
+        object = self.units_by_singular.get(singular)
         if not object:
-            raise forms.ValidationError(f"No unit named '{name}' found.")
+            raise forms.ValidationError(f"No unit named '{singular}' found.")
         return object
 
     def clean_source(self):

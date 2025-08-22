@@ -15,8 +15,8 @@
         {% endfor %}
       </datalist>
       <datalist id="unit-list">
-        {% for obj in form.units_by_name.values %}
-          <option value="{{ obj.name }}"></option>
+        {% for obj in form.units_by_singular.values %}
+          <option value="{{ obj.singular }}"></option>
         {% endfor %}
       </datalist>
       <datalist id="source-list">
